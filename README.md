@@ -1,2 +1,2 @@
 # GoldLucks-Web
-Account-book Project based on Tizen web application.
+Account-book project based on Tizen web application.
