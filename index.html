@@ -1,23 +1,49 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+ <html lang="en">
+ <head>
+ <meta charset="utf-8">
+ <title>income</title>
+ <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+ <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+ <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+ <script type="javascript" src= "C:/Users/clara/Desktop/jquery-1.11.0.min.js"></script>
+ <link rel="stylesheet" href="/resources/demos/style.css">
+ <script>
+ $(function() {
+    $( "#datepicker" ).datepicker();
+ });
 
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <meta name="description" content="Tizen Mobile Web Basic Template" />
-
-    <title>Tizen Mobile Web Basic Application</title>
-
-    <link rel="stylesheet" type="text/css" href="css/style.css" />
-    <script src="js/main.js"></script>
-</head>
-
-<body>
-    <div id="main" class="page">
-        <div class="contents">
-            <span id="content-text">Basic</span>
-        </div>
-    </div>
-</body>
-
-</html>
+function myfunction() { 
+    date = document.getElementById("datepicker").value;
+    amount = document.getElementById("amount").value;
+    usage = document.getElementById('usage').value;
+    category = document.getElementById('category').value;
+    var result = document.getElementById('result');
+    result.value = amount;
+    var datevalue = document.getElementById('date_value');
+    datevalue.value = date; 
+    category = document.getElementById("category");
+    element = document.getElementById("element");
+    element.value = category.options[category.selectedIndex].text;
+}
+ </script>
+ </head>
+ <body>
+     <p>Date: <input type="text" id="datepicker"></p>
+     <p>Amount: <input type="text" id="amount" /> won</p>
+     <p>usage?: <input type="text"  id="usage" /> </p>
+    category:  <select id = "category">
+     <option>Unselected</option>
+     <option >Soccer</option>
+     <option>Tennis</option>
+     <option>Basketball</option>
+     <option>Badminton</option>
+     </select>
+     <p><input type="button" id="save" onclick="myfunction()" value="save" />
+     <input type="button" id="saveandwrite" onlick="myfunction()" value="save&write"/>
+     <input type="button" id="cancel" onlick="myfunction()" value="cancel"/></p>
+     <p>On <input type="text" id="date_value" readonly="true"/>, </p> 
+     your income is:<input type="text" id="result" readonly="true"/> won
+    <p>Your category is : <input type="text" id="element"></p>
+ </body>
+ </html>
