@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+
+<html>
+
+<head>
+    <script>
+    </script>
+</head>
+<body>
+    
+    <div data-role="page" class="" id="add">
+    	<div data-role="header" data-add-back-btn="true">
+    	    <h1>ADD PAGE</h1>
+    	</div>
+        <div  data-role="navbar" class="tabbar">
+            <ul>
+                <li><a href="#page1" class="ui-btn-active">expense</a></li>
+                <li><a href="#page2">income</a></li>
+            </ul>
+        </div>
+    	<div data-role="content" id="income">
+            <div data-role="fieldcontain">
+                <label for="textarea">Amount</label>
+                <input id="textarea" />
+            </div>
+            <div data-role="fieldcontain">
+                <label for="textarea">Usage</label>
+                <input id="usage" />
+            </div>
+            <div data-role="fieldcontain">
+                <div data-role="collapsible">
+                    <h1>Category</h1>
+                    <div class ="ui-grid-b">
+                    <div class="ui-block-a"><a data-role="button">food</a></div>
+                    <div class="ui-block-b"><a data-role="button">cloth</a></div>
+                    <div class="ui-block-c"><a data-role="button">house</a></div>
+                    <div class="ui-block-a"><a data-role="button">health</a></div>
+                    <div class="ui-block-b"><a data-role="button">traffic</a></div>
+                    <div class="ui-block-c"><a data-role="button">save</a></div>
+                    </div>
+                </div>
+            </div>
+            <div data-role="fieldcontain" class="ui-grid-a">
+                <label>Method</label>
+                <div class ="ui-block-a"><a data-role="button" class="ui-btn-active">cash</a></div>
+                <div class ="ui-block-b"><a data-role="button">credit card</a></div>
+            </div>
+            <div data-role="fieldcontain">
+                <label>Memo</label>
+                <textarea id="memo"></textarea>
+            </div>
+            <div class = "ui-grid-a">
+                <div class ="ui-block-a"><a href="#" data-role="button">submit</a></div>
+                <div class ="ui-block-b"><a href="#" data-role="button">cancel</a></div>
+            </div>
+    	</div>
+    </div>
+        
+</body>
+</html>
