@@ -1,0 +1,5 @@
+*.info
+*.tmp
+*.xml
+*.wgt
+!config.xml
