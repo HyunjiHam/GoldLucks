@@ -11,6 +11,44 @@
     <script type="text/javascript" src="js/jquery-1.10.2.js"></script>
     <script type="text/javascript" src="js/jquery.mobile-1.4.5.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
+    <script>
+        
+        
+        $(document).on('pagechange', function () {
+            //Indicates selected category
+            $('#category>*').click(function (){  
+                var category = $(this).text();
+                var select = $('a', this);
+                
+                $('a','#category>*').removeClass('ui-btn-active');
+                $(select).attr('class', 'ui-btn-active');
+                $('body').trigger('create');
+
+                //alert(category);
+            });
+
+            //indicates selected method
+            $('a', '#method>*').click(function () {
+                var method = $(this).text();
+                var select = $('a', this);
+                $('a', '#method>*').removeClass('ui-btn-active');
+                $(this).attr('class', 'ui-btn-active');
+                $('body').trigger('create');
+                //alert(method);
+            });
+
+            $('a', '#nav>*').click(function () {
+                var insert = $(this).text();
+                var select = $('a', this);
+                $('a', '#nav>*').removeClass('ui-btn-active');
+                $(this).attr('class', 'ui-btn-active');
+                $('div[data-role=navbar]').trigger('create');
+                alert(insert);
+            });
+
+        });
+
+    </script>
     
 </head>
 <body>
@@ -21,7 +59,11 @@
       		<a href="insertpage.html" data-icon="plus">ADD</a>
   		</div>
         <div data-role="content">
+
+
             
+            
+
         </div>
     </div>
 </body>

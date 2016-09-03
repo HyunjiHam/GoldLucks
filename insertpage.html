@@ -3,17 +3,18 @@
 <html>
 
 <head>
+    <title></title>
     <script>
     </script>
 </head>
 <body>
     
-    <div data-role="page" class="" id="add">
+    <div data-role="page" id="page1">
     	<div data-role="header" data-add-back-btn="true">
     	    <h1>ADD PAGE</h1>
     	</div>
         <div  data-role="navbar" class="tabbar">
-            <ul>
+            <ul id="nav">
                 <li><a href="#page1" class="ui-btn-active">expense</a></li>
                 <li><a href="#page2">income</a></li>
             </ul>
@@ -30,20 +31,20 @@
             <div data-role="fieldcontain">
                 <div data-role="collapsible">
                     <h1>Category</h1>
-                    <div class ="ui-grid-b">
+                    <div class ="ui-grid-b" id="category">
                     <div class="ui-block-a"><a data-role="button">food</a></div>
                     <div class="ui-block-b"><a data-role="button">cloth</a></div>
-                    <div class="ui-block-c"><a data-role="button">house</a></div>
-                    <div class="ui-block-a"><a data-role="button">health</a></div>
-                    <div class="ui-block-b"><a data-role="button">traffic</a></div>
-                    <div class="ui-block-c"><a data-role="button">save</a></div>
+                    <div class="ui-block-c"><a data-role="button">house </a></div>
+                    <div class="ui-block-a"><a data-role="button">health </a></div>
+                    <div class="ui-block-b"><a data-role="button">traffic </a></div>
+                    <div class="ui-block-c"><a data-role="button">save </a></div>
                     </div>
                 </div>
             </div>
-            <div data-role="fieldcontain" class="ui-grid-a">
+            <div data-role="fieldcontain" class="ui-grid-a" id="method">
                 <label>Method</label>
                 <div class ="ui-block-a"><a data-role="button" class="ui-btn-active">cash</a></div>
-                <div class ="ui-block-b"><a data-role="button">credit card</a></div>
+                <div class ="ui-block-b"><a data-role="button" class="button">credit card</a></div>
             </div>
             <div data-role="fieldcontain">
                 <label>Memo</label>
