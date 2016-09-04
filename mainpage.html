@@ -15,30 +15,38 @@
     <script type="text/javascript" src="js/main.js"></script>
     
     <script>
-
+        
 
     </script>
     
 </head>
 <body>
-    <div data-role="page" id="page0">
+
+
+    <div data-role="page" id="main">
+        <div data-role="panel" id="menu">
+            <div class="menu">
+                <h2>GoldLucks</h2>
+                <div class="logo">
+                    <ul data-role="listview">
+                        <li><a href="#menu" rel="close"><span>Home</span></a></li>
+                        <li><a href="alarmpage.html" rel="external"><span>Alarm</span></a></li>
+                        <li><a class="link" href="#"><span>Analysis</span></a></li>
+                        <li><a class="link" href="#"><span>Share</span></a></li>
+                        <li><a class="link" href="#"><span>About</span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
     	<div data-role="header" data-theme="b" data-position="fixed">
-      		<a href="#" data-icon="home">Home</a>
+      		<a href="#menu" data-icon="home">Menu</a>
       		<h1>GoldLucks</h1>
       		<a href="insertpage.html" rel="external" data-icon="plus">ADD</a>
   		</div>
         <div data-role="content">
         </div>
     </div>
-
-
-
-
-    
-
-
-
-
 
 </body>
 </html>
