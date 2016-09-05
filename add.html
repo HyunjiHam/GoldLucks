@@ -1,0 +1,158 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>add</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.css" />
+    <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.10.0.css" />
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <script type="text/javascript" src="js/jquery-2.2.4.js"></script>
+    <script type="text/javascript" src="js/jquery.mobile-1.4.5.js"></script>
+    <script type="text/javascript" src="js/jquery-ui-1.10.0.js"></script>
+    <script>
+        $(document).ready(function () {
+            //Indicates selected category
+            $('#category>*').click(function () {
+                var category = $(this).text();
+                var select = $('a', this);
+                $('a', '#category>*').removeClass('ui-btn-active');
+                $(select).attr('class', 'ui-btn-active');
+                $('body').trigger('create');
+                //alert(category);
+            });
+            //indicates selected method
+            $('a', '#method>*').click(function () {
+                var method = $(this).text();
+                var select = $('a', this);
+                $('a', '#method>*').removeClass('ui-btn-active');
+                $(this).attr('class', 'ui-btn-active');
+                $('body').trigger('create');
+                //alert(method);
+            });
+        });
+        $(function () {
+            $('#datepicker,#datepicker2').datepicker();
+        });
+    </script>
+</head>
+<body>
+   <div data-role="page" id="page1">
+         <div data-role="header" data-position="fixed" data-tap-toggle="false">
+            <a href="index.html" rel="external" class="menu-link"><i class="fa fa-chevron-left fa-lg"></i></a>
+            <h1>add</h1>
+            <a href="#" class="link"><i class="fa fa-check fa-lg"></i></a>
+        </div>
+              <div  data-role="navbar" data-id="mode" data-position="fixed" class="tabbar" id="navi">
+            <ul>
+                <li><a href="#" class="ui-btn-active ui-state-persist">expense</a></li>
+                <li><a href="#page2" >income</a></li>
+            </ul>
+        </div>
+    	<div data-role="content" id="income">
+            <div data-role="fieldcontain">
+                <input type="text" id="datepicker" placeholder="Date"/>
+            </div>
+            <div data-role="fieldcontain">
+                <input id="textarea" placeholder="Amount"/>
+            </div>
+            <div data-role="fieldcontain">
+                <input id="usage" placeholder="Usage"/>
+            </div>
+            <div data-role="fieldcontain">
+                <div data-role="collapsible">
+                    <h1>Category</h1>
+                    <div class ="ui-grid-b" id="category">
+                    <div class="ui-block-a"><a data-role="button">food</a></div>
+                    <div class="ui-block-b"><a data-role="button">cloth</a></div>
+                    <div class="ui-block-c"><a data-role="button">house </a></div>
+                    <div class="ui-block-a"><a data-role="button">health </a></div>
+                    <div class="ui-block-b"><a data-role="button">traffic </a></div>
+                    <div class="ui-block-c"><a data-role="button">save </a></div>
+                    </div>
+                </div>
+            </div>
+            <div data-role="fieldcontain" class="ui-grid-a" id="method">
+                <div class ="ui-block-a"><a data-role="button" class="ui-btn-active">cash</a></div>
+                <div class ="ui-block-b"><a data-role="button" class="button">credit card</a></div>
+            </div>
+            <div data-role="fieldcontain">
+                <textarea id="memo" placeholder="Memo"></textarea>
+            </div>
+                        <div data-role="fieldcontain">
+                        <label>고정지출 체크칸 >탭하면 알람설정부분 활성화</label>
+                        <!-- 
+                                    <div data-role="fieldcontain">
+                <label>Alarm</label>
+                <div class="ui-grid-c">
+                    <div class="ui-block-a">
+                        <select data-role="slider">
+                            <option>OFF</option>
+                            <option>ON</option>
+                        </select>
+                    </div>
+
+                    <div class="ui-block-a">
+                        <select data-inline="true">
+                            <option>0</option>
+                            <option>1</option>
+                            <option>3</option>
+                            <option>5</option>
+                            <option>7</option>
+                        </select>
+                    </div>
+                    <label class="ui-block-b" for="before">days before</label>
+                    <div class="ui-block-c">
+                        <select data-inline="false">
+                            <option>0</option>
+                            <option>9</option>
+                            <option>12</option>
+                            <option>17</option>
+                            <option>21</option>
+                        </select>
+                    </div>
+                    <div class="ui-block-d">o'clock</div>
+                </div>
+            </div> -->
+                        </div>
+    	</div>
+    </div>
+
+    <div data-role="page" id="page2">
+              <div data-role="header" data-position="fixed" data-tap-toggle="false">
+            <a href="index.html" rel="external" class="menu-link"><i class="fa fa-chevron-left fa-lg"></i></a>
+            <h1>add</h1>
+            <a href="#" class="link"><i class="fa fa-check fa-lg"></i></a>
+        </div>
+        <div  data-role="navbar" data-id="mode" data-position="fixed" class="tabbar">
+            <ul>
+                <li><a href="#page1">expense</a></li>
+                <li><a href="#" class="ui-btn-active ui-state-persist">income</a></li>
+            </ul>
+        </div>
+        <div data-role="content" id="Div1">
+            <div data-role="fieldcontain">
+                <input type="text" id="datepicker2" placeholder="Date"/>
+            </div>
+            <div data-role="fieldcontain">
+                <input id="text1" placeholder="Amount"/>
+            </div>
+           <div data-role="fieldcontain">
+                <div data-role="collapsible">
+                    <h1>Category</h1>
+                    <div class ="ui-grid-b" id="Div2">
+                    <div class="ui-block-a"><a data-role="button">salary</a></div>
+                    <div class="ui-block-b"><a data-role="button">side income</a></div>
+                    <div class="ui-block-c"><a data-role="button">etc </a></div>
+                    </div>
+                </div>
+            </div>
+            <div data-role="fieldcontain">
+                <textarea id="Textarea1" placeholder="Memo"></textarea>
+            </div>
+    	</div>
+    </div>
+
+
+</body>
+</html>
