@@ -1,22 +1,123 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="UTF-8">
-<title>Fixed expences</title>
-    <link rel="stylesheet" href="css/jquery.mobile-1.4.5.css">
-    <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.10.0.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <script src="js/jquery-2.2.4.js"></script>
-    <script src="js/jquery.mobile-1.4.5.js"></script>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Fixed expenses</title>
+    <link rel="stylesheet" type="text/css" href="css/jquery.mobile.theme.css">
+    <script type="text/javascript" src="js/jquery-2.2.4.js"></script>
+    <script type="text/javascript" src="js/jquery.mobile-1.4.5.js"></script>
 </head>
+
 <body>
-     <div data-role="page" id="fixed">
+    <div data-role="page" id="fixed">
         <div data-role="header" data-position="fixed" data-tap-toggle="false">
-            <a href="index.html" rel="external" class="menu-link"><i class="fa fa-chevron-left fa-lg"></i></a>
-            <h1>Fixed expences</h1>
+            <a href="#sidebar" data-icon="ion-navicon-round" data-iconpos="notext"></a>
+            <h1 class="header-title">Fixed expenses</h1>
+            <a href="#fixedadd" data-ajax="false" data-icon="ion-plus" data-iconpos="notext"></a>
+        </div>
+        <div data-role="panel" data-display="push" id="sidebar">
+            <ul data-role="listview">
+                <li>
+                    <h1>GoldLucks</h1>
+                </li>
+                <li><a href="index.html" data-ajax="false"><i class="ui-icon-ion-android-home"></i>
+                Home</a>
+                </li>
+                <li><a href="#slidebar" data-ajax="false"><i class="ui-icon-ion-card"></i>
+                Fixed expenses</a>
+                </li>
+                <li><a href="analysis.html" data-ajax="false"><i class="ui-icon-ion-pie-graph"></i>
+                Analysis</a>
+                </li>
+                <li><a href="share.html" data-ajax="false"><i class="ui-icon-ion-android-people"></i>
+                Share</a>
+                </li>
+                <li><a href="setting.html" data-ajax="false"><i class="ui-icon-ion-android-settings"></i>
+                Setting</a>
+                </li>
+            </ul>
         </div>
         <div data-role="content">
+            <ul data-role="listview" data-inset="true">
+                <li><a href="#" data-ajax="false">every week; fri; coffee; 5000</a></li>
+                <li><a href="#" data-ajax="false">every month; day 5; debt; 80000</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div data-role="page" id="fixedadd">
+        <div data-role="header" data-position="fixed" data-tap-toggle="false">
+            <a href="fixed.html" rel="external" data-icon="ion-chevron-left" data-iconpos="notext"></a>
+            <h1 class="header-title">Fixed expenses add</h1>
+            <a href="#" data-icon="ion-checkmark-round" data-iconpos="notext"></a>
+        </div>
+        <div data-role="content">
+            <ul data-role="listview">
+                <li data-role="fieldcontain">
+                    <label>Date</label>
+                    <input ata-corners="false" type="date" value="" data-clear-btn="true" data-clear-btn-text="" placeholder="01.01.2000" data-mini="true">
+                </li>
+                <li data-role="fieldcontain">
+                    <input data-corners="false" type="number" value="" data-clear-btn="true" data-clear-btn-text="" placeholder="Amount">
+                </li>
+                <li data-role="fieldcontain">
+                    <input data-corners="false" type="text" value="" data-clear-btn-text="" data-clear-btn="true" placeholder="Usage">
+                </li>
+                <div data-role="collapsible" data-inset="false">
+                    <h3>Category</h3>
+                    <div class="ui-grid-b" id="category" data-mini="true">
+                        <div class="ui-block-a"><a data-role="button" data-mini="true">food</a>
+                        </div>
+                        <div class="ui-block-b"><a data-role="button" data-mini="true">cloth</a>
+                        </div>
+                        <div class="ui-block-c"><a data-role="button" data-mini="true">house</a>
+                        </div>
+                        <div class="ui-block-a"><a data-role="button" data-mini="true">health</a>
+                        </div>
+                        <div class="ui-block-b"><a data-role="button" data-mini="true">traffic</a>
+                        </div>
+                        <div class="ui-block-c"><a data-role="button" data-mini="true">save</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-grid-a" id="method">
+                    <div class="ui-block-a"><a data-role="button" class="ui-btn-active" data-mini="true">cash</a>
+                    </div>
+                    <div class="ui-block-b"><a data-role="button" class="button" data-mini="true">credit card</a>
+                    </div>
+                </div>
+
+                <li data-role="fieldcontain">
+                    <textarea data-corners="false" cols="40" rows="5" placeholder="Memo"></textarea>
+                </li>
+                <li data-role="fieldcontain">
+                    <label>Alarm:</label>
+                    <select data-wrapper-class="ios-switch" data-role="flipswitch" data-corners="false" data-mini="true">
+                        <option value="off">Off</option>
+                        <option value="on">On</option>
+                    </select>
+                </li>
+                <li data-role="fieldcontain">
+                    <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true" data-corners="false">
+                        <legend>Day's before</legend>
+                        <input type="radio" name="radio2" id="radio4" checked="checked">
+                        <label for="radio4">one day</label>
+                        <input type="radio" name="radio2" id="radio5">
+                        <label for="radio5">two days</label>
+                        <input type="radio" name="radio2" id="radio6">
+                        <label for="radio6">three days</label>
+                    </fieldset>
+                </li>
+                <li data-role="fieldcontain">
+                    <label>Time:</label>
+                    <input data-corners="false" type="time" value="" data-clear-btn="true" data-clear-btn-text="" placeholder="">
+                </li>
+            </ul>
+
         </div>
     </div>
 </body>
+
 </html>

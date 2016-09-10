@@ -1,39 +1,50 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
+
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Goldlucks</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-    <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.css" />
-    <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.10.0.css" />
-    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/jquery.mobile.theme.css">
     <script type="text/javascript" src="js/jquery-2.2.4.js"></script>
     <script type="text/javascript" src="js/jquery.mobile-1.4.5.js"></script>
-    <script type="text/javascript" src="js/jquery-ui-1.10.0.js"></script>
 </head>
+
 <body>
-    <div data-role="page" id="main">
-    <div data-role="header" data-position="fixed" data-tap-toggle="false">
-            <a href="#menu" class="menu-link"><i class="fa fa-bars fa-lg"></i></a>
-            <h1>GoldLucks</h1>
-            <a href="add.html" rel="external" class="menu-link"><i class="fa fa-pencil fa-lg"></i></a>
+    <div data-role="page">
+        <div data-role="header" data-position="fixed" data-tap-toggle="false">
+            <a href="#sidebar" data-icon="ion-navicon-round" data-iconpos="notext"></a>
+            <h1 class="header-title">Goldlucks</h1>
+            <a href="add.html" data-ajax="false" data-icon="ion-plus" data-iconpos="notext"></a>
         </div>
-        <div data-role="panel" id="menu">
-            <div class="menu">
-                <h2>GoldLucks</h2>
-                <div class="panel">
-                    <ul data-role="listview">
-                        <li><a href="#menu" rel="close"><i class="fa fa-home"></i><span> Home</span></a></li>
-                        <li><a href="fixed.html" rel="external"><i class="fa fa-credit-card"></i><span> Fixed expences</span></a></li>
-                        <li><a href="analysis.html" rel="external"><i class="fa fa-pie-chart"></i><span> Analysis</span></a></li>
-                        <li><a href="share.html" rel="external"><i class="fa fa-user"></i><span> Share</span></a></li>
-                        <li><a href="setting.html" rel="external"><i class="fa fa-cog"></i><span> Setting</span></a></li>
-                    </ul>
+        <div data-role="panel" data-display="push" id="sidebar">
+            <ul data-role="listview">
+                <li>
+                    <h1>GoldLucks</h1>
+                </li>
+                <li><a href="#slidebar" data-ajax="false"><i class="ui-icon-ion-android-home"></i>
+                Home</a></li>
+                <li><a href="fixed.html" data-ajax="false"><i class="ui-icon-ion-card"></i>
+                Fixed expenses</a></li>
+                <li><a href="analysis.html" data-ajax="false"><i class="ui-icon-ion-pie-graph"></i>
+                Analysis</a></li>
+                <li><a href="share.html" data-ajax="false"><i class="ui-icon-ion-android-people"></i>
+                Share</a></li>
+                <li><a href="setting.html" data-ajax="false"><i class="ui-icon-ion-android-settings"></i>
+                Setting</a></li>
+            </ul>
+        </div>
+        <div data-role="content">
+                    <div class="ui-padding">
+                <div class="ui-card ui-card-d">
+                    <p>did ~10 : chart change&layout, some ui, fixed menu add page<br><br>
+                    will do ~12: add page layout, chart detail, setting menu list<br><br>
+                    help : calendar swipe(???), main color
+                    </p>
                 </div>
             </div>
         </div>
-        <div data-role="content">
-        </div>
     </div>
 </body>
+
 </html>
