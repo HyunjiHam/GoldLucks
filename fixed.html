@@ -19,7 +19,7 @@
         </div>
         <div data-role="panel" data-display="push" id="sidebar">
             <ul data-role="listview">
-                <li>
+                <li class="aa">
                     <h1>GoldLucks</h1>
                 </li>
                 <li><a href="index.html" data-ajax="false"><i class="ui-icon-ion-android-home"></i>
@@ -41,8 +41,8 @@
         </div>
         <div data-role="content">
             <ul data-role="listview" data-inset="true">
-                <li><a href="#" data-ajax="false">every week; fri; coffee; 5000</a></li>
-                <li><a href="#" data-ajax="false">every month; day 5; debt; 80000</a></li>
+                <li><a href="#fixededit" data-ajax="false">(day) of every month (category) (amount)</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -50,72 +50,113 @@
     <div data-role="page" id="fixedadd">
         <div data-role="header" data-position="fixed" data-tap-toggle="false">
             <a href="fixed.html" rel="external" data-icon="ion-chevron-left" data-iconpos="notext"></a>
-            <h1 class="header-title">Fixed expenses add</h1>
+            <h1 class="header-title">Add</h1>
             <a href="#" data-icon="ion-checkmark-round" data-iconpos="notext"></a>
         </div>
         <div data-role="content">
             <ul data-role="listview">
                 <li data-role="fieldcontain">
-                    <label>Date</label>
-                    <input ata-corners="false" type="date" value="" data-clear-btn="true" data-clear-btn-text="" placeholder="01.01.2000" data-mini="true">
+                    <div class="ui-field-contain">
+                        <label for="select1">day of every month</label>
+                        <select name="select1" id="select1" data-mini="true">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>7</option>
+                            <option>8</option>
+                            <option>9</option>
+                            <option>10</option>
+                            <option>11</option>
+                            <option>12</option>
+                            <option>13</option>
+                            <option>14</option>
+                            <option>15</option>
+                            <option>16</option>
+                            <option>17</option>
+                            <option>18</option>
+                            <option>19</option>
+                            <option>20</option>
+                            <option>21</option>
+                            <option>22</option>
+                            <option>23</option>
+                            <option>24</option>
+                            <option>25</option>
+                            <option>26</option>
+                            <option>27</option>
+                            <option>28</option>
+                            <option>29</option>
+                            <option>30</option>
+                            <option>31</option>
+                        </select>
+                    </div>
                 </li>
                 <li data-role="fieldcontain">
-                    <input data-corners="false" type="number" value="" data-clear-btn="true" data-clear-btn-text="" placeholder="Amount">
+                    <input data-corners="false" type="number" value="" placeholder="Amount">
                 </li>
                 <li data-role="fieldcontain">
-                    <input data-corners="false" type="text" value="" data-clear-btn-text="" data-clear-btn="true" placeholder="Usage">
+                    <input data-corners="false" type="text" value="" placeholder="Usage">
                 </li>
                 <div data-role="collapsible" data-inset="false">
                     <h3>Category</h3>
-                    <div class="ui-grid-b" id="category" data-mini="true">
-                        <div class="ui-block-a"><a data-role="button" data-mini="true">food</a>
-                        </div>
-                        <div class="ui-block-b"><a data-role="button" data-mini="true">cloth</a>
-                        </div>
-                        <div class="ui-block-c"><a data-role="button" data-mini="true">house</a>
-                        </div>
-                        <div class="ui-block-a"><a data-role="button" data-mini="true">health</a>
-                        </div>
-                        <div class="ui-block-b"><a data-role="button" data-mini="true">traffic</a>
-                        </div>
-                        <div class="ui-block-c"><a data-role="button" data-mini="true">save</a>
-                        </div>
-                    </div>
+                    <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true" data-corners="false">
+                        <input type="radio" name="radio3" id="cat1" checked="checked">
+                        <label for="cat1">food</label>
+                        <input type="radio" name="radio3" id="cat2">
+                        <label for="cat2">cloth</label>
+                        <input type="radio" name="radio3" id="cat3">
+                        <label for="cat3">house</label>
+                        <input type="radio" name="radio3" id="cat4">
+                        <label for="cat4">health</label>
+                        <input type="radio" name="radio3" id="cat5">
+                        <label for="cat5">traffic</label>
+                        <input type="radio" name="radio3" id="cat6">
+                        <label for="cat6">save</label>
+                    </fieldset>
                 </div>
-                <div class="ui-grid-a" id="method">
-                    <div class="ui-block-a"><a data-role="button" class="ui-btn-active" data-mini="true">cash</a>
-                    </div>
-                    <div class="ui-block-b"><a data-role="button" class="button" data-mini="true">credit card</a>
-                    </div>
-                </div>
-
                 <li data-role="fieldcontain">
-                    <textarea data-corners="false" cols="40" rows="5" placeholder="Memo"></textarea>
+                    <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+                        <legend>Methods</legend>
+                        <input type="radio" name="radio" id="radio1" value="on" checked="checked">
+                        <label for="radio1">Cash</label>
+                        <input type="radio" name="radio" id="radio2" value="off">
+                        <label for="radio2">Credit card</label>
+                    </fieldset>
                 </li>
                 <li data-role="fieldcontain">
-                    <label>Alarm:</label>
-                    <select data-wrapper-class="ios-switch" data-role="flipswitch" data-corners="false" data-mini="true">
-                        <option value="off">Off</option>
-                        <option value="on">On</option>
-                    </select>
+                    <textarea cols="40" rows="5" placeholder="Memo"></textarea>
+                </li>
+                <li class="ui-grid-a" data-role="fieldcontain">
+                    <div class="ui-block-a">
+                        <div class="ui-field-contain">
+                            <label>Alarm</label>
+                            <select data-role="flipswitch" data-mini="true">
+                                <option value="off">Off</option>
+                                <option value="on">On</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="ui-block-b">
+                        <div class="ui-field-contain">
+                            <label>Time</label>
+                            <input type="time" value="">
+                        </div>
+                    </div>
                 </li>
                 <li data-role="fieldcontain">
                     <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true" data-corners="false">
                         <legend>Day's before</legend>
-                        <input type="radio" name="radio2" id="radio4" checked="checked">
-                        <label for="radio4">one day</label>
+                        <input type="radio" name="radio2" id="radio3" checked="checked">
+                        <label for="radio3">one day</label>
+                        <input type="radio" name="radio2" id="radio4">
+                        <label for="radio4">two days</label>
                         <input type="radio" name="radio2" id="radio5">
-                        <label for="radio5">two days</label>
-                        <input type="radio" name="radio2" id="radio6">
-                        <label for="radio6">three days</label>
+                        <label for="radio5">three days</label>
                     </fieldset>
                 </li>
-                <li data-role="fieldcontain">
-                    <label>Time:</label>
-                    <input data-corners="false" type="time" value="" data-clear-btn="true" data-clear-btn-text="" placeholder="">
-                </li>
             </ul>
-
         </div>
     </div>
 </body>

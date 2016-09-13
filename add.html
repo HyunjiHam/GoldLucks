@@ -39,28 +39,29 @@
                 </li>
                 <div data-role="collapsible" data-inset="false">
                     <h3>Category</h3>
-                    <div class="ui-grid-b" id="category">
-                        <div class="ui-block-a"><a data-role="button" data-mini="true">food</a>
-                        </div>
-                        <div class="ui-block-b"><a data-role="button" data-mini="true">cloth</a>
-                        </div>
-                        <div class="ui-block-c"><a data-role="button" data-mini="true">house</a>
-                        </div>
-                        <div class="ui-block-a"><a data-role="button" data-mini="true">health</a>
-                        </div>
-                        <div class="ui-block-b"><a data-role="button" data-mini="true">traffic</a>
-                        </div>
-                        <div class="ui-block-c"><a data-role="button" data-mini="true">save</a>
-                        </div>
-                    </div>
+                    <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true" data-corners="false">
+                        <input type="radio" name="radio3" id="cat1" checked="checked">
+                        <label for="cat1">food</label>
+                        <input type="radio" name="radio3" id="cat2">
+                        <label for="cat2">cloth</label>
+                        <input type="radio" name="radio3" id="cat3">
+                        <label for="cat3">house</label>
+                        <input type="radio" name="radio3" id="cat4">
+                        <label for="cat4">health</label>
+                        <input type="radio" name="radio3" id="cat5">
+                        <label for="cat5">traffic</label>
+                        <input type="radio" name="radio3" id="cat6">
+                        <label for="cat6">save</label>
+                    </fieldset>
                 </div>
                 <li data-role="fieldcontain">
-                    <div class="ui-grid-a" id="method">
-                        <div class="ui-block-a"><a data-role="button" class="ui-btn-active" data-mini="true">cash</a>
-                        </div>
-                        <div class="ui-block-b"><a data-role="button" class="button" data-mini="true">credit card</a>
-                        </div>
-                    </div>
+                    <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+                        <legend>Methods</legend>
+                        <input type="radio" name="radio" id="radio1" value="on" checked="checked">
+                        <label for="radio1">Cash</label>
+                        <input type="radio" name="radio" id="radio2" value="off">
+                        <label for="radio2">Credit card</label>
+                    </fieldset>
                 </li>
                 <li data-role="fieldcontain">
                     <textarea data-corners="false" cols="30" rows="3" placeholder="Memo"></textarea>
