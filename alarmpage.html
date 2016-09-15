@@ -8,39 +8,12 @@
     <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.css" />
     <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.10.0.css" />
 
-    
+
     <script type="text/javascript" src="js/jquery-2.2.4.js"></script>
     <script type="text/javascript" src="js/jquery.mobile-1.4.5.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
 
-    <script>
-        $(document).ready(function () {
-
-
-            //Indicates selected category
-            $('#category>*').click(function () {
-                var category = $(this).text();
-                var select = $('a', this);
-
-                $('a', '#category>*').removeClass('ui-btn-active');
-                $(select).attr('class', 'ui-btn-active');
-                $('body').trigger('create');
-
-                //alert(category);
-            });
-
-            //indicates selected method
-            $('a', '#method>*').click(function () {
-                var method = $(this).text();
-                var select = $('a', this);
-                $('a', '#method>*').removeClass('ui-btn-active');
-                $(this).attr('class', 'ui-btn-active');
-                $('body').trigger('create');
-                //alert(method);
-            });
-
-        });
-    </script>
+    
 </head>
 <body>
 
@@ -49,7 +22,7 @@
     	    <h1>FIXED EXPENSES</h1>
     	</div>
     	<div data-role="content">
-            
+
             <div data-role="fieldcontain">
                 <label for="textarea">Usage</label>
                 <input type="text" id="usage" data-clear-btn="true"/>
@@ -71,7 +44,7 @@
                         <option>31th</option>
                     </select>
                 </div>
-                
+
                 <label class="ui-block-b">day of each month</label>
             </div>
             <div data-role="fieldcontain">
@@ -92,7 +65,7 @@
                 <div class ="ui-block-a"><a data-role="button" class="ui-btn-active">cash</a></div>
                 <div class ="ui-block-b"><a data-role="button" class="button">credit card</a></div>
             </div>
-            
+
             <div data-role="fieldcontain">
                 <label>Alarm</label>
                 <div class="ui-grid-c">
@@ -100,8 +73,8 @@
                         <select data-role="slider">
                             <option>OFF</option>
                             <option>ON</option>
-                        </select> 
-                    </div>  
+                        </select>
+                    </div>
 
                     <div class="ui-block-a">
                         <select data-inline="true">
@@ -124,8 +97,8 @@
                     </div>
                     <div class="ui-block-d">o'clock</div>
 
-                    
-                </div>          
+
+                </div>
             </div>
 
             <div class = "ui-grid-a">
