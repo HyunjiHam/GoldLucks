@@ -35,7 +35,7 @@ $(document).ready(function(){
 		}
 	});
 	
-	var methodId =1;
+	var methodId 88881;
 	$("#radio1, #radio2").click(function(){
 		methodId = event.target.id;
 		if(methodId === "radio2")
