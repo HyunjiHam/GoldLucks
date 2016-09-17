@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 
 <head>
@@ -8,6 +8,10 @@
     <link rel="stylesheet" type="text/css" href="css/jquery.mobile.theme.css">
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/jquery.mobile-1.4.5.js"></script>
+    <script type="text/javascript" src="js/alarm.js"></script>
+
+
+    </script>
 </head>
 
 <body>
@@ -39,7 +43,7 @@
             </ul>
         </div>
         <div data-role="content">
-            <ul data-role="listview" data-inset="true">
+            <ul id="alarmList"data-role="listview" data-inset="true">
                 <li><a href="#fixededit" data-ajax="false">(day) of every month (category) (amount)</a>
                 </li>
             </ul>
@@ -50,7 +54,7 @@
         <div data-role="header" data-position="fixed" data-tap-toggle="false">
             <a href="fixed.html" rel="external" data-icon="ion-chevron-left" data-iconpos="notext"></a>
             <h1 class="header-title">Add</h1>
-            <a href="#" data-icon="ion-checkmark-round" data-iconpos="notext"></a>
+            <a id="fixed-add-btn" data-icon="ion-checkmark-round" data-iconpos="notext"></a>
         </div>
         <div data-role="content">
             <ul data-role="listview">
@@ -93,11 +97,12 @@
                     </div>
                 </li>
                 <li data-role="fieldcontain">
-                    <input data-corners="false" type="number" value="" placeholder="Amount">
+                    <input id="fixedAmount"data-corners="false" type="number" value="" placeholder="Amount">
                 </li>
                 <li data-role="fieldcontain">
-                    <input data-corners="false" type="text" value="" placeholder="Usage">
+                    <input id="fixedUsage"data-corners="false" type="text" value="" placeholder="Usage">
                 </li>
+<<<<<<< HEAD
                 <li data-role="fieldcontain">
                     <label for="select2">Category</label>
                     <select name="select2" id="select2" data-mini="true">
@@ -112,7 +117,7 @@
                     </select>
                 </li>
                 <li data-role="fieldcontain">
-                    <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+                    <fieldset id="fixedMethod" data-role="controlgroup" data-type="horizontal" data-mini="true">
                         <legend>Methods</legend>
                         <input type="radio" name="radio" id="radio1" value="on" checked="checked">
                         <label for="radio1">Cash</label>
@@ -121,7 +126,7 @@
                     </fieldset>
                 </li>
                 <li data-role="fieldcontain">
-                    <textarea cols="40" rows="5" placeholder="Memo"></textarea>
+                    <textarea id="fixedMemo"cols="40" rows="5" placeholder="Memo"></textarea>
                 </li>
                 <li class="ui-grid-a" data-role="fieldcontain">
                     <div class="ui-block-a">
@@ -136,12 +141,12 @@
                     <div class="ui-block-b">
                         <div class="ui-field-contain">
                             <label>Time</label>
-                            <input type="time" value="">
+                            <input type="time" id="fixedTime">
                         </div>
                     </div>
                 </li>
                 <li data-role="fieldcontain">
-                    <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true" data-corners="false">
+                    <fieldset id="fixedBefore"data-role="controlgroup" data-type="horizontal" data-mini="true" data-corners="false">
                         <legend>Day's before</legend>
                         <input type="radio" name="radio2" id="radio3" checked="checked">
                         <label for="radio3">one day</label>
@@ -154,7 +159,7 @@
             </ul>
         </div>
     </div>
-    
+
         <div data-role="page" id="fixededit">
         <div data-role="header" data-position="fixed" data-tap-toggle="false">
             <a href="fixed.html" rel="external" data-icon="ion-chevron-left" data-iconpos="notext"></a>
@@ -263,7 +268,7 @@
             </ul>
         </div>
     </div>
-    
+
 </body>
 
 </html>
