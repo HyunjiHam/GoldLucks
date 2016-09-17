@@ -20,7 +20,7 @@
     });
 };*/
 
-window.onload = function(){
+/*window.onload = function(){
 	document.addEventListener('tizenhwkey',function(e){
 		var activePageId = $.mobile.activePage.attr('id');
 		if(e.keyName==='back'){
@@ -39,3 +39,4 @@ $('#fixed').on('pagebeforeshow',function beforeshow(){
 	alert('hi');
 	$('#startTime').val(startTime);
 });
+*/
