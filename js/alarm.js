@@ -1,4 +1,5 @@
-$(document).ready(function(){
+window.onload=function(){
+			//initDB();
             var expenses = window.localStorage.getItem('expenses');
             expenses = expenses ? JSON.parse(expenses) : [];
             //alert('document ready' + expenses.length);
@@ -118,6 +119,7 @@ $(document).ready(function(){
                 expense.usage = $('#fixedUsage').val().trim();
                 expense.time = $('#fixedTime').val();
                 saveAlarm(expense);
+                insertData("fromFixed");
                 $.mobile.changePage('#fixed');
             });
 
@@ -133,4 +135,4 @@ $(document).ready(function(){
                     $('#alarmList').listview('refresh');
                 }
             });*/
-});
+};
