@@ -10,34 +10,24 @@ $(document).ready(function(){
 	
 	var catId=1;
 	$("#cat1, #cat2, #cat3, #cat4, #cat5, #cat6").click(function(){
-		catId = event.target.id;
-		switch (catId) {
-		case "cat1":
-			catId=1;
-			break;
-		case "cat2":
-			catId=2;
-			break;
-		case "cat3":
-			catId=3;
-			break;
-		case "cat4":
-			catId=4;
-			break;
-		case "cat5":
-			catId=5;
-			break;
-		case "cat6":
-			catId=6;
-			break;	
-		default:
-			break;
-		}
+		catId = this.id;
+		if (catId === "cat2")
+			catId = 2;
+		else if (catId === "cat3")
+			catId = 3;
+		else if (catId === "cat4")
+			catId = 4;
+		else if (catId === "cat5")
+			catId = 5;
+		else if (catId === "cat6")
+			catId = 6;
+		else
+			catId = 1;
 	});
 	
 	var methodId = 1;
 	$("#radio1, #radio2").click(function(){
-		methodId = event.target.id;
+		methodId = this.id;
 		if(methodId === "radio2")
 			methodId = 2;
 		else methodId = 1;
@@ -110,7 +100,7 @@ $(document).ready(function(){
 				inputAmount = $("#eAmount").val(),
 				inputused = $("#eUsed").val(),
 				inputCategory = catId,
-				inputMethod = methodId;
+				inputMethod = methodId,
 				inputMemo = $("#eMemo").val();
 			
 			db.transaction(function(tx){
