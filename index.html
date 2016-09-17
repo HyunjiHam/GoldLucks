@@ -6,28 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Goldlucks</title>
     <link rel="stylesheet" type="text/css" href="css/jquery.mobile.theme.css">
-    <script type="text/javascript" src="js/jquery-2.2.4.js"></script>
+    <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/jquery.mobile-1.4.5.js"></script>
-
-    <link href='css/fullcalendar.css' rel='stylesheet' />
-    <link href='css/fullcalendar.print.css' rel='stylesheet' media='print' />
-    <script src='js/moment.min.js'></script>
 </head>
 
 <body>
     <div data-role="page">
         <div data-role="header" data-position="fixed" data-tap-toggle="false">
             <a href="#sidebar" data-icon="ion-navicon-round" data-iconpos="notext"></a>
-            <h1 class="header-title">Goldlucks</h1>
+            <h1 class="header-title"><img src="images/logo.png" width="150" height="45"></h1>
             <a href="add.html" data-ajax="false" data-icon="ion-plus" data-iconpos="notext"></a>
         </div>
         <div data-role="panel" data-display="push" id="sidebar">
             <ul data-role="listview">
-                <li class="aa">
-                    <h1>GoldLucks</h1>
-                    <!--<div class="ui-margin-top">
-          <img class="ui-center" src="images/money.png"><br>
-        </div> -->
+                <li class="aa"><div><img class="ui-center" src="images/panel.png" width="150" height="45"></div>
                 </li>
                 <li><a href="#slidebar" data-ajax="false"><i class="ui-icon-ion-android-home"></i>
                 Home</a>
@@ -47,7 +39,99 @@
             </ul>
         </div>
         <div data-role="content">
-
+            <div data-role="content" data-theme="c" data-position="fixed" data-tap-toggle="false">
+                <h3>(Account name)</h3>
+                <h2>
+                <a href="#"><i class="ui-icon-ion-ios-arrow-back"></i></a>
+                2016.09 
+                <a href="#"><i class="ui-icon-ion-ios-arrow-forward"></i></a></h2>
+            </div>
+            <ul data-role="listview">
+                <li data-role="fieldcontain">
+                    Balance (+700000)
+                    <p class="ui-li-aside">+(1200000) -(500000)</p>
+                </li>
+            </ul>
+            <section id="cd-timeline" class="cd-container">
+                <div class="cd-timeline-block">
+                    <div class="cd-timeline-img">
+                        <span class="cd-date">8</span>
+                    </div>
+                    <div class="cd-timeline-content">
+                        <ul data-role="listview">
+                            <li>(food)
+                                <p class="ui-li-aside">(-12000)(won)</p>
+                            </li>
+                            <li>(coffee)
+                                <p class="ui-li-aside">(-8000)(won)</p>
+                            </li>  
+                            <li>(education)
+                                <p class="ui-li-aside">(-150000)(won)</p>
+                            </li>                                                      
+                        </ul>
+                    </div>
+                </div>
+                <div class="cd-timeline-block">
+                    <div class="cd-timeline-img">
+                        <span class="cd-date">9</span>
+                    </div>
+                    <div class="cd-timeline-content">
+                        <ul data-role="listview">
+                            <li>(coffee)
+                                <p class="ui-li-aside">(-6000)(won)</p>
+                            </li>
+                            <li>(allowance)
+                                <p class="ui-li-aside">(+50000)(won)</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="cd-timeline-block">
+                    <div class="cd-timeline-img">
+                        <span class="cd-date">10</span>
+                    </div>
+                    <div class="cd-timeline-content">
+                        <ul data-role="listview">
+                            <li>(traffic)
+                                <p class="ui-li-aside">(-4000)(won)</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="cd-timeline-block">
+                    <div class="cd-timeline-img">
+                        <span class="cd-date">12</span>
+                    </div>
+                    <div class="cd-timeline-content">
+                        <ul data-role="listview">
+                            <li>(salary)
+                                <p class="ui-li-aside">(+900000)(won)</p>
+                            </li>
+                            <li>(food)
+                                <p class="ui-li-aside">(-10000)(won)</p>
+                            </li>
+                            <li>(beauty)
+                                <p class="ui-li-aside">(-35000)(won)</p>
+                            </li>
+                            <li>(clothes)
+                                <p class="ui-li-aside">(-50000)(won)</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="cd-timeline-block">
+                        <div class="cd-timeline-img">
+                            <span class="cd-date">13</span>
+                        </div>
+                        <div class="cd-timeline-content">
+                            <ul data-role="listview">
+                                <li>(coffee)
+                                    <p class="ui-li-aside">(-6000)(won)</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
     </div>
 </body>

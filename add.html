@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Goldlucks</title>
     <link rel="stylesheet" type="text/css" href="css/jquery.mobile.theme.css">
-    <script type="text/javascript" src="js/jquery-2.2.4.js"></script>
+    <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/jquery.mobile-1.4.5.js"></script>
 </head>
 
@@ -17,9 +17,9 @@
             <h1 class="header-title">Add</h1>
             <a href="#" data-icon="ion-checkmark-round" data-iconpos="notext"></a>
         </div>
-        <div data-role="navbar" data-id="mode" data-position="fixed" class="tabbar" id="navi">
+        <div data-role="navbar" data-id="mode" id="navi">
             <ul>
-                <li><a href="#" class="ui-btn-active ui-state-persist">expense</a>
+                <li class="dd" ><a href="#" class="ui-btn-active ui-state-persist">expense</a>
                 </li>
                 <li><a href="#page2">income</a>
                 </li>
@@ -37,23 +37,19 @@
                 <li data-role="fieldcontain">
                     <input data-corners="false" type="text" value="" data-clear-btn-text="" data-clear-btn="true" placeholder="Usage">
                 </li>
-                <div data-role="collapsible" data-inset="false">
-                    <h3>Category</h3>
-                    <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true" data-corners="false">
-                        <input type="radio" name="radio3" id="cat1" checked="checked">
-                        <label for="cat1">food</label>
-                        <input type="radio" name="radio3" id="cat2">
-                        <label for="cat2">cloth</label>
-                        <input type="radio" name="radio3" id="cat3">
-                        <label for="cat3">house</label>
-                        <input type="radio" name="radio3" id="cat4">
-                        <label for="cat4">health</label>
-                        <input type="radio" name="radio3" id="cat5">
-                        <label for="cat5">traffic</label>
-                        <input type="radio" name="radio3" id="cat6">
-                        <label for="cat6">save</label>
-                    </fieldset>
-                </div>
+                <li data-role="fieldcontain">
+                    <label for="select1">Category</label>
+                    <select name="select1" id="select1" data-mini="true">
+                        <option>food</option>
+                        <option>clothes</option>
+                        <option>house</option>
+                        <option>health</option>
+                        <option>beauty</option>
+                        <option>traffic</option>
+                        <option>education</option>
+                        <option>saving</option>
+                    </select>
+                </li>
                 <li data-role="fieldcontain">
                     <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
                         <legend>Methods</legend>
