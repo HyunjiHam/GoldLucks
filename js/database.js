@@ -1,38 +1,14 @@
+var GoldLucksDB={};
 var db;
-//database version setting
-var version = 1.0;
-//database name setting
-var dbName = "GoldLucksDB";
-//database display name setting
-var dbDisplayName = "GoldLucksDisplay";
-//database size setting
-var dbSize = 2 * 1024 * 1024;
-
-
-(function initDB(){
-	if(window.openDatabase){
-		db = openDatabase(dbName, version, dbDisplayName, dbSize);
-		createTable(db);
-        
-	}else {
-        alert("Web SQL Database not supported");
-    }
-}());
-	
-
-
+$(document).ready(function(){
 	$("#addExpense").click(function(){
-		insertData("fromExpense");
+		GoldLucksDB.insertData("fromExpense");
 	});
-	
+
 	$("#addIncome").click(function(){
-		insertData("fromIncome");
+		GoldLucksDB.insertData("fromIncome");
 	});
-	
-//	$("#fixed-add-btn").click(function(){
-//		insertData("fromFixed");
-//	});
-	
+
 	var catId=1;
 	$("#cat1, #cat2, #cat3, #cat4, #cat5, #cat6").click(function(){
 		catId = this.id;
@@ -49,7 +25,7 @@ var dbSize = 2 * 1024 * 1024;
 		else
 			catId = 1;
 	});
-	
+
 	var methodId = 1;
 	$("#radio1, #radio2").click(function(){
 		methodId = this.id;
@@ -58,10 +34,29 @@ var dbSize = 2 * 1024 * 1024;
 		else methodId = 1;
 	});
 
+	//database version setting
+	var version = 1.0;
+	//database name setting
+	var dbName = "GoldLucksDB";
+	//database display name setting
+	var dbDisplayName = "GoldLucksDisplay";
+	//database size setting
+	var dbSize = 2 * 1024 * 1024;
+
+	GoldLucksDB.openDatabase = function(){
+		if(window.openDatabase){
+			db = openDatabase(dbName, version, dbDisplayName, dbSize);
+			GoldLucksDB.createTable(db);
+
+		}else {
+	        alert("Web SQL Database not supported");
+		}
+	};
+
 	//reads and displays values from the 'places' table
-	function dataView() {
+	GoldLucksDB.dataView = function dataView() {
 		db.transaction(function(t) {
-			t.executeSql("SELECT * FROM money", [], 
+			t.executeSql("SELECT * FROM money", [],
 				function(tran, r) {
 					for (var i = 0; i < r.rows.length; i++) {
 //						var id = r.rows.item(i).id;
@@ -83,7 +78,7 @@ var dbSize = 2 * 1024 * 1024;
 						newEntryRow.find(".showMethod").text(row.method);
 						newEntryRow.find(".showIncome").text(row.income);
 						newEntryRow.find(".showMemo").text(row.memo);
-						
+
 						//data list rendering
 //						html.innerHTML += " " + id + " " + date + " " + amount + " " + used + " " + memo + "<br/>";
 
@@ -99,9 +94,9 @@ var dbSize = 2 * 1024 * 1024;
 				}
 			);
 		});
-	}  
-	
-	function insertData(fromWhere){
+	};
+
+	GoldLucksDB.insertData = function insertData(fromWhere){
 		if(fromWhere === "fromExpense"){
 			var inputDate = $("#datepicker").val(),
 				inputAmount = $("#eAmount").val(),
@@ -109,20 +104,20 @@ var dbSize = 2 * 1024 * 1024;
 				inputCategory = catId,
 				inputMethod = methodId,
 				inputMemo = $("#eMemo").val();
-			
+
 			db.transaction(function(tx){
 				tx.executeSql(
 					"INSERT INTO money(date, amount, used, category, method, income, memo) VALUES (?,?,?,?,?,?,?);",
 					[inputDate, inputAmount, inputused, inputCategory, inputMethod, 0, inputMemo],
 					function onSuccess() {//run if SQL succeeds
-						dataView();
-					}, 
+						GoldLucksDB.dataView();
+					},
 					function onError(e) { //run if SQL fails
 						alert("Error:" + e.message);
-					}	
-				);	
+					}
+				);
 			});
-			
+
 			$("#datepicker").val("");
 			$("#eAmount").val("");
 			$("#eUsed").val("");
@@ -130,66 +125,36 @@ var dbSize = 2 * 1024 * 1024;
 			methodId=1;
 			$("#eMemo").val("");
 		}
-		
-		else if(fromWhere === "fromIncome"){
+
+		if(fromWhere === "fromIncome"){
 			var inputDate = $("#datepicker2").val(),
 			inputAmount = $("#iAmount").val(),
 			inputused = $("#iUsed").val(),
 			inputMemo = $("#iMemo").val();
-			
+
 			db.transaction(function(tx){
 				tx.executeSql(
 					"INSERT INTO money(date, amount, used, income, memo) VALUES (?,?,?,?,?);",
 					[inputDate, inputAmount, inputused, 1, inputMemo],
 					function onSuccess() {//run if SQL succeeds
-					//	dataView();
-					}, 
+						GoldLucksDB.dataView();
+					},
 					function onError(e) { //run if SQL fails
 						alert("Error:" + e.message);
-					}	
-				);	
+					}
+				);
 			});
-			
-			$("#datepicker2").val("");
-			$("#iAmount").val("");
-			$("#iUsed").val("");
-			$("#iMemo").val("");
 		}
-		
-		else if(fromWhere === "fromFixed"){
-			var inputAmount = $("#fixedAmount").val(),
-			inputused = $("#fixedUsage").val(),
-			inputCategory = catId,
-			inputMethod = methodId,
-			inputMemo = $("#fixedMemo").val();
+	};
 
-			date = datapickerValue2Date(expense.time);
-			inputHour=date.getHours();
-			inputMinute=date.getMinutes();
-		
-			db.transaction(function(tx){
-			tx.executeSql(
-				"INSERT INTO fixedExpenses(amount, used, category, method, alarmHour, alarmMinute, memo) VALUES (?,?,?,?,?,?,?);",
-				[inputAmount, inputused, inputCategory, inputMethod, inputHour, inputMinute, inputMemo],
-					function onSuccess() {//run if SQL succeeds
-						//dataView();
-					}, 
-					function onError(e) { //run if SQL fails
-						alert("Error:" + e.message);
-					}	
-				);	
-			});
-		}
-	}
-	
-    function createTable(db) {
+	GoldLucksDB.createTable = function createTable(db) {
 
         db.transaction(function(tx) {
             tx.executeSql("CREATE TABLE IF NOT EXISTS book"+
             		"(bookName VARCHAR(20) PRIMARY KEY,"+
             		"masterId VARCHAR(10) NOT NULL)");
         });
-        
+
         db.transaction(function(tx) {
             tx.executeSql("CREATE TABLE IF NOT EXISTS user"+
             		"(userId VARCHAR(10) PRIMARY KEY," +
@@ -202,14 +167,12 @@ var dbSize = 2 * 1024 * 1024;
             		"amount FLOAT NOT NULL,"+
             		"used VARCHAR(20) NOT NULL,"+
             		"category INT(1) NOT NULL,"+
-//            		"alarmDay INT(11) NOT NULL,"+
+            		"alarmDay INT(11) NOT NULL,"+
             		"alarmHour INT(11) NOT NULL,"+
             		"alarmMinute INT(11) NOT NULL,"+
             		"memo VARCHAR(50) )" );
-//            		"bookName VARCHAR(20), NOT NULL," +
-//            		"FOREIGN KEY(bookName) REFERENCES book(bookName) )");
         });
-        
+
         db.transaction(function(tx) {
             tx.executeSql("CREATE TABLE IF NOT EXISTS money"+
             		"(id INT PRIMARY KEY,"+
@@ -221,5 +184,8 @@ var dbSize = 2 * 1024 * 1024;
             		"income INT(1) NOT NULL,"+
             		"memo VARCHAR(50) )" );
         });
-    }
-	
+    };
+
+    (GoldLucksDB.openDatabase());
+
+});

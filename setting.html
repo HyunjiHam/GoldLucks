@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Goldlucks</title>
     <link rel="stylesheet" type="text/css" href="css/jquery.mobile.theme.css">
-    <script type="text/javascript" src="js/jquery-2.2.4.js"></script>
+    <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/jquery.mobile-1.4.5.js"></script>
 </head>
 
@@ -18,8 +18,7 @@
         </div>
         <div data-role="panel" data-display="push" id="sidebar">
             <ul data-role="listview">
-                <li class="aa">
-                    <h1>GoldLucks</h1>
+                <li class="aa"><div><img class="ui-center" src="images/panel.png" width="150" height="45"></div>
                 </li>
                 <li><a href="index.html" data-ajax="false"><i class="ui-icon-ion-android-home"></i>
                 Home</a>
@@ -40,46 +39,247 @@
         </div>
         <div data-role="content">
             <div class="ui-padding-left">
-                <p>basic setting</p>
-            </div>
-            <ul data-role="listview" data-divider-theme="a">
-                <li><a href="" data-ajax="false"><i class="ui-icon-ion-android-calendar"></i>
+                <p>User setting</p>
+                <ul data-role="listview">
+                    <li><a href="#signup" data-rel="popup" data-position-to="window"><i class="ui-icon-ion-android-people"></i>
+                Sign up</a>
+                        <div data-role="popup" id="signup">
+                            <div data-role="header" data-theme="c">
+                                <h2 class="header-title">Sign up</h2>
+                            </div>
+                            <form>
+                                <ul data-role="listview">
+                                    <li data-role="fieldcontain">
+                                        <label for="un" class="ui-hidden-accessible">Username:</label>
+                                        <input type="text" id="un" value="" placeholder="Username">
+                                    </li>
+                                   <!-- <li data-role="fieldcontain">
+                                        <label for="pw" class="ui-hidden-accessible">Password:</label>
+                                        <input type="password" id="pw" value="" placeholder="Password">
+                                    </li> --> 
+                                </ul>
+                            </form>
+                            <div role="main" class="ui-content ui-padding">
+                                <a href="#" data-rel="back" class="ui-btn ui-btn-c ui-btn-inline ui-mini">Cancel</a>
+                                <a href="#" data-rel="back" class="ui-btn ui-btn-c ui-btn-inline ui-mini">Sign up</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a href="#signin" data-rel="popup" data-position-to="window"><i class="ui-icon-ion-android-people"></i>
+                Sign in</a>
+                        <div data-role="popup" id="signin">
+                            <div data-role="header" data-theme="c">
+                                <h2 class="header-title">Sign in</h2>
+                            </div>
+                            <form>
+                                <ul data-role="listview">
+                                    <li data-role="fieldcontain">
+                                        <label for="un" class="ui-hidden-accessible">Username:</label>
+                                        <input type="text" id="un" value="" placeholder="Username">
+                                    </li>
+                                  <!-- <li data-role="fieldcontain">
+                                        <label for="pw" class="ui-hidden-accessible">Password:</label>
+                                        <input type="password" id="pw" value="" placeholder="Password">
+                                    </li> -->  
+                                </ul>
+                            </form>
+                            <div role="main" class="ui-content ui-padding">
+                                <a href="#" data-rel="back" class="ui-btn ui-btn-c ui-btn-inline ui-mini">Cancel</a>
+                                <a href="#" data-rel="back" class="ui-btn ui-btn-c ui-btn-inline ui-mini">Sign in</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <p>Basic setting</p>
+                <ul data-role="listview">
+                    <li><a href="#startpop" data-rel="popup" data-position-to="window"><i class="ui-icon-ion-android-calendar"></i>
                 Month start day</a>
-                </li>
-                <li><a href="" data-ajax="false"><i class="ui-icon-ion-grid"></i>
+                        <div data-role="popup" id="startpop">
+                            <div data-role="header" data-theme="c">
+                                <h2 class="header-title">Select</h2>
+                            </div>
+                            <div>
+                                <ul data-role="listview" data-inset="true" style="min-width:250px;">
+                                    <li data-role="fieldcontain">
+                                        <select name="select1" id="select1" data-mini="true">
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                            <option>5</option>
+                                            <option>6</option>
+                                            <option>7</option>
+                                            <option>8</option>
+                                            <option>9</option>
+                                            <option>10</option>
+                                            <option>11</option>
+                                            <option>12</option>
+                                            <option>13</option>
+                                            <option>14</option>
+                                            <option>15</option>
+                                            <option>16</option>
+                                            <option>17</option>
+                                            <option>18</option>
+                                            <option>19</option>
+                                            <option>20</option>
+                                            <option>21</option>
+                                            <option>22</option>
+                                            <option>23</option>
+                                            <option>24</option>
+                                            <option>25</option>
+                                            <option>26</option>
+                                            <option>27</option>
+                                            <option>28</option>
+                                            <option>29</option>
+                                            <option>30</option>
+                                            <option>31</option>
+                                        </select>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div role="main" class="ui-content ui-padding">
+                                <a href="#" data-rel="back" class="ui-btn ui-btn-c ui-btn-inline ui-mini">Cancel</a>
+                                <a href="#" data-rel="back" class="ui-btn ui-btn-c ui-btn-inline ui-mini">Submit</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a href="#catpop" data-rel="popup" data-position-to="window"><i class="ui-icon-ion-grid"></i>
                 Category</a>
-                </li>
-                <li><a href="" data-ajax="false"><i class="ui-icon-ion-android-time"></i>
-                Alarm</a>
-                </li>
-                <li><a href="" data-ajax="false"><i class="ui-icon-ion-social-usd"></i>
+                        <div data-role="popup" id="catpop">
+                            <div data-role="header" data-theme="c">
+                                <h2 class="header-title">Category</h2>
+                            </div>
+                            <ul data-role="listview" style="width:250px;">
+                                <li data-role="fieldcontain">
+                                    <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+                                        <select name="select1" id="select1">
+                                            <option>food</option>
+                                            <option>clothes</option>
+                                            <option>house</option>
+                                            <option>health</option>
+                                            <option>beauty</option>
+                                            <option>traffic</option>
+                                            <option>education</option>
+                                            <option>saving</option>
+                                        </select>
+                                        <a href="#" class="ui-btn ui-btn-c ui-btn-inline">Delete</a>
+                                    </fieldset>
+                                </li>
+                            </ul>
+                            <div role="main" class="ui-content ui-padding">
+                                <ul data-role="listview">
+                                    <li data-role="fieldcontain">
+                                        <input type="text" data-wrapper-class="controlgroup-textinput ui-btn" placeholder="New category name" data-mini="true">
+                                        <a href="#" data-rel="back" class="ui-btn ui-btn-c ui-btn-inline">Add new</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a href="#curpop" data-rel="popup" data-position-to="window"><i class="ui-icon-ion-social-usd"></i>
                 Currency</a>
-                </li>
-                <li><a href="" data-ajax="false"><i class="ui-icon-ion-android-globe"></i>
+                        <div data-role="popup" id="curpop">
+                            <div data-role="header" data-theme="c">
+                                <h2 class="header-title">Select</h2>
+                            </div>
+                            <ul data-role="listview" data-inset="true" style="min-width:250px;">
+                                <li data-role="fieldcontain">
+                                    <select name="select2" id="select2" data-mini="true">
+                                        <option>(USD $)</option>
+                                        <option>(KRW ₩)</option>
+                                        <option>(...)</option>
+                                    </select>
+                                </li>
+                            </ul>
+                            <div role="main" class="ui-content ui-padding">
+                                <a href="#" data-rel="back" class="ui-btn ui-btn-c ui-btn-inline ui-mini">Cancel</a>
+                                <a href="#" data-rel="back" class="ui-btn ui-btn-c ui-btn-inline ui-mini">Submit</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a href="#langpop" data-rel="popup" data-position-to="window"><i class="ui-icon-ion-android-globe"></i>
                 Language</a>
-                </li>
-                <!-- <li><a href="" data-ajax="false"><i class="ui-icon-ion-android-lock"></i>
-                Password</a></li> -->
-            </ul>
-            <div class="ui-padding-left">
-                <p>data setting</p>
-            </div>
-            <ul data-role="listview" data-divider-theme="a">
-                <li><a href="" data-ajax="false"><i class="ui-icon-ion-ios-download"></i>
+                        <div data-role="popup" id="langpop">
+                            <div data-role="header" data-theme="c">
+                                <h2 class="header-title">Select</h2>
+                            </div>
+                            <ul data-role="listview" data-inset="true" style="min-width:250px;">
+                                <li data-role="fieldcontain">
+                                    <select name="select3" id="select3" data-mini="true">
+                                        <option>(English)</option>
+                                        <option>(Korean)</option>
+                                        <option>(...)</option>
+                                    </select>
+                                </li>
+                            </ul>
+                            <div role="main" class="ui-content ui-padding">
+                                <a href="#" data-rel="back" class="ui-btn ui-btn-c ui-btn-inline ui-mini">Cancel</a>
+                                <a href="#" data-rel="back" class="ui-btn ui-btn-c ui-btn-inline ui-mini">Delete</a>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- <li><a href="" data-ajax="false"><i class="ui-icon-ion-android-time"></i>
+                Alarm</a></li>-->
+                <li><a href="" data-ajax="false"><i class="ui-icon-ion-android-lock"></i>
+                Password</a></li>
+                </ul>
+                <p>Data setting</p>
+                <ul data-role="listview">
+                    <li><a href="#backup" data-rel="popup" data-position-to="window"><i class="ui-icon-ion-ios-download"></i>
                 Backup</a>
-                </li>
-                <li><a href="" data-ajax="false"><i class="ui-icon-ion-trash-b"></i>
+                        <div data-role="popup" id="backup">
+                            <div data-role="header" data-theme="c">
+                                <h2 class="header-title">Data backup</h2>
+                            </div>
+                            <div role="main" class="ui-content ui-padding">
+                                <p class="ui-title">Send backup file (csv) to your mail account.</p>
+                            </div>
+                            <div role="main" class="ui-content ui-padding">
+                                <a href="#" data-rel="back" class="ui-btn ui-btn-c ui-btn-inline ui-mini">Cancel</a>
+                                <a href="#" data-rel="back" class="ui-btn ui-btn-c ui-btn-inline ui-mini">Submit</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a href="#initial" data-rel="popup" data-position-to="window"><i class="ui-icon-ion-trash-b"></i>
                 Data initialization</a>
-                </li>
-            </ul>
-            <div class="ui-padding-left">
+                        <div data-role="popup" id="initial">
+                            <div data-role="header" data-theme="c">
+                                <h2 class="header-title">Delete data</h2>
+                            </div>
+                            <div role="main" class="ui-content ui-padding">
+                                <p class="ui-title">Do you want to delete all personal data?</p>
+                                <p>This action cannot be undone.</p>
+                            </div>
+                            <div role="main" class="ui-content ui-padding">
+                                <a href="#" data-rel="back" class="ui-btn ui-btn-c ui-btn-inline ui-mini">Cancel</a>
+                                <a href="#" data-rel="back" class="ui-btn ui-btn-c ui-btn-inline ui-mini">Delete</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
                 <p></p>
-            </div>
-            <ul data-role="listview" data-divider-theme="a">
-                <li><a href="" data-ajax="false"><i class="ui-icon-ion-android-people"></i>
+                <ul data-role="listview">
+                    <li><a href="#about" data-rel="popup" data-position-to="window"><i class="ui-icon-ion-android-people"></i>
                 About us</a>
-                </li>
-            </ul>
+                        <div data-role="popup" id="about">
+                            <div data-role="header" data-theme="c">
+                                <h2 class="header-title">About</h2>
+                            </div>
+                            <div role="main" class="ui-content ui-padding ui-center">
+                                <div class="ui-margin" style="min-width:250px;">
+                                    <img class="ui-center" src="images/logo.png" width="150" height="45">
+                                    <h3>Team wonderladies</h3>
+                                    <p>1315022 김지현 Director</p>
+                                    <p>1315048 이상은 Database</p>
+                                    <p>1205054 함현지 Function</p>
+                                    <p>1015096 이지인 UI</p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <p></p><p></p><p></p><p></p>
+            </div>
         </div>
     </div>
 </body>

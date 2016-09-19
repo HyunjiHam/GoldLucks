@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Goldlucks</title>
     <link rel="stylesheet" type="text/css" href="css/jquery.mobile.theme.css">
-    <script type="text/javascript" src="js/jquery-2.2.4.js"></script>
+    <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/jquery.mobile-1.4.5.js"></script>
 </head>
 
@@ -19,8 +19,7 @@
         </div>
         <div data-role="panel" data-display="push" id="sidebar">
             <ul data-role="listview">
-                <li class="aa">
-                    <h1>GoldLucks</h1>
+                <li class="aa"><div><img class="ui-center" src="images/panel.png" width="150" height="45"></div>
                 </li>
                 <li><a href="index.html" data-ajax="false"><i class="ui-icon-ion-android-home"></i> Home</a>
                 </li>
@@ -67,12 +66,13 @@
                     <input id="Text2" placeholder="Group name">
                 </li>
                 <li data-role="fieldcontain">
-                    <input id="Text2" placeholder="Share with">
-                </li>
+                <label for="with"><a href="#" data-ajax="false"><i class="ui-icon-ion-plus-round"></i></a></label>
+                    <input id="with" placeholder=" Share with">
+                </li>            
             </ul>
         </div>
     </div>
-
+    
      <div data-role="page" id="shareedit">
         <div data-role="header" data-position="fixed" data-tap-toggle="false">
             <a href=# data-icon="ion-trash-b" data-iconpos="notext"></a>

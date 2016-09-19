@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Goldlucks</title>
     <link rel="stylesheet" type="text/css" href="css/jquery.mobile.theme.css">
-    <script type="text/javascript" src="js/jquery-2.2.4.js"></script>
+    <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/jquery.mobile-1.4.5.js"></script>
 </head>
 
@@ -18,8 +18,7 @@
         </div>
         <div data-role="panel" data-display="push" id="sidebar">
             <ul data-role="listview">
-                <li class="aa">
-                    <h1>GoldLucks</h1>
+                <li class="aa"><div><img class="ui-center" src="images/panel.png" width="150" height="45"></div>
                 </li>
                 <li><a href="index.html" data-ajax="false"><i class="ui-icon-ion-android-home"></i> Home</a>
                 </li>
@@ -34,10 +33,17 @@
             </ul>
         </div>
         <div data-role="content">
-            <div id="main" style="height:300px;"></div>
             <ul data-role="listview" data-divider-theme="a">
-                <li data-role="list-divider">total
-                    <p class="ui-li-aside">(Monthly expenses sum)</p>
+                <li style="background: #fefdfe;">
+                    <h2><a href="#"><i class="ui-icon-ion-ios-arrow-back"></i></a>
+                    2016.09 
+                    <a href="#"><i class="ui-icon-ion-ios-arrow-forward"></i></a></h2>
+                </li>
+                <li>
+                    <div id="main" style="height:300px;"></div>
+                </li>
+                <li data-role="list-divider">Total
+                    <p class="ui-li-aside">(Monthly sum)</p>
                 </li>
                 <li>(Category)
                     <p class="ui-li-aside">(amount) (%)</p>
@@ -56,7 +62,7 @@
                 echarts: './js'
             }
         });
-
+        
         // use
         require(
             [
@@ -65,7 +71,7 @@
             ],
             function (ec) {
                 // Initialize after dom ready
-                var myChart = ec.init(document.getElementById('main'));
+                var myChart = ec.init(document.getElementById('main'), 'helianthus'); 
                 var idx = 1;
                 var option = {
     title : {
@@ -88,9 +94,9 @@
         show : false,
         feature : {
             mark : {show: false},
-            dataView : {show: true, readOnly: true},
+            dataView : {show: false, readOnly: true},
             magicType : {
-                show: false,
+                show: false, 
                 type: ['pie', 'funnel'],
                 option: {
                     funnel: {
@@ -120,8 +126,8 @@
             ]
         }
     ]
-};               // Load data into the ECharts instance
-                myChart.setOption(option);
+};               // Load data into the ECharts instance 
+                myChart.setOption(option); 
             }
         );
     </script>
