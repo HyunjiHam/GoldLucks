@@ -2,11 +2,11 @@ var GoldLucksDB={};
 var db;
 $(document).ready(function(){
 	$("#addExpense").click(function(){
-		insertData("fromExpense");
+		GoldLucksDB.insertData("fromExpense");
 	});
 	
 	$("#addIncome").click(function(){
-		insertData("fromIncome");
+		GoldLucksDB.insertData("fromIncome");
 	});
 	
 	var catId=1;
