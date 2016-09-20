@@ -10,20 +10,8 @@ $(document).ready(function(){
 	});
 	
 	var catId=1;
-	$("#cat1, #cat2, #cat3, #cat4, #cat5, #cat6").click(function(){
-		catId = this.id;
-		if (catId === "cat2")
-			catId = 2;
-		else if (catId === "cat3")
-			catId = 3;
-		else if (catId === "cat4")
-			catId = 4;
-		else if (catId === "cat5")
-			catId = 5;
-		else if (catId === "cat6")
-			catId = 6;
-		else
-			catId = 1;
+	$("#select1").change(function(){
+		catId = $(this).val();
 	});
 	
 	var methodId = 1;
@@ -34,6 +22,9 @@ $(document).ready(function(){
 		else methodId = 1;
 	});
 
+    /**
+     * It sets define variables for database.
+     */
 	//database version setting
 	var version = 1.0;
 	//database name setting
@@ -53,31 +44,88 @@ $(document).ready(function(){
 		}
 	};
 	
+	/**
+	 * Gets amounts per category
+	 */
+	GoldLucksDB.getExpenses = function getExpenses(callBack){
+		var sumPerCategory = [];
+		db.transaction(function(t){
+			t.executeSql("SELECT SUM(amount) AS sumAmount FROM money WHERE income=?",[0],
+				function(tran, r) {
+					for (var i = 0; i < r.rows.length; i++) 
+						sumPerCategory.push(r.rows.item(i).sumAmount);
+					callBack(sumPerCategory);
+				}, function(t, e) {
+					alert("Error:" + e.message);
+				}
+			);
+		});
+	};
+	
+	/**
+	 * Gets total expense from the money table
+	 */
+	GoldLucksDB.getTotalExpense = function getTotalExpense(){
+		db.transaction(function(t){
+			var dateee = new Date();
+			var year = dateee.getFullYear();
+			var month = dateee.getMonth()+1;
+			if(month<10) month = "0"+month;
+			var day = dateee.getDate();
+			if(day<10) day = "0"+day;
+			var firstDay=year+"-"+month+"-"+"01";
+			var dateString = year+"-"+month+"-"+day;
+			
+			t.executeSql("SELECT amount FROM money WHERE income=? AND (date >= ? AND date <= ?)",[0,firstDay, dateString],
+				function(tran, r) {
+					for (var i = 0; i < r.rows.length; i++) {
+						var row = r.rows.item(i);
+						var amount = row["amount"];
+					}
+				}, function(t, e) {
+					alert("Error:" + e.message);
+					
+				}
+			);
+		});
+	};
+	
 	//reads and displays values from the 'places' table
 	GoldLucksDB.dataView = function dataView() {
 		db.transaction(function(t) {
-			t.executeSql("SELECT * FROM money", [], 
+//			t.executeSql("SELECT * FROM money AND date('now') GROUP BY category", [], 
+			var dateee = new Date();
+			var year = dateee.getFullYear();
+			var month = dateee.getMonth()+1;
+			if(month<10) month = "0"+month;
+			var day = dateee.getDate();
+			if(day<10) day = "0"+day;
+			var firstDay=year+"-"+month+"-"+"01";
+			var dateString = year+"-"+month+"-"+day;
+			
+//			t.executeSql("SELECT SUM(amount) AS sumAmount FROM money WHERE income=?",[0],
+					
+			
+			t.executeSql("SELECT SUM(amount) AS sumAmount FROM money WHERE income=? AND (date >= ? AND date <= ?) GROUP BY category",[0,firstDay, dateString],
 				function(tran, r) {
 					for (var i = 0; i < r.rows.length; i++) {
-//						var id = r.rows.item(i).id;
-//						var date = r.rows.item(i).date;
-//						var amount = r.rows.item(i).amount;
-//						var used = r.rows.item(i).used;
-//						var category = r.rows.item(i).category;
-//						var method = r.rows.item(i).method;
-//						var memo = r.rows.item(i).memo;
-						var row = r.rows.item(i);
+//						var row = r.rows.item(i);
 						var newEntryRow = $("#sampleList").clone();
 						newEntryRow.removeAttr("id");
 						newEntryRow.removeAttr("style");
 						newEntryRow.appendTo("ol");
-						newEntryRow.find(".showDate").text(row.date);
-						newEntryRow.find(".showAmount").text(row.amount);
-						newEntryRow.find(".showUsed").text(row.used);
-						newEntryRow.find(".showCat").text(row.category);
-						newEntryRow.find(".showMethod").text(row.method);
-						newEntryRow.find(".showIncome").text(row.income);
-						newEntryRow.find(".showMemo").text(row.memo);
+						var amount = r.rows.item(i).sumAmount;
+//						var amount = row["amount"];
+//						var date = row["date"];
+//						var category = row["category"];
+//						var income = row["income"];
+//						newEntryRow.find(".showDate").text(date);
+						newEntryRow.find(".showAmount").text(amount);
+//						newEntryRow.find(".showUsed").text(row.used);
+//						newEntryRow.find(".showCat").text(category);
+//						newEntryRow.find(".showMethod").text(row.method);
+//						newEntryRow.find(".showIncome").text(income);
+//						newEntryRow.find(".showMemo").text(row.memo);
 						
 						//data list rendering
 //						html.innerHTML += " " + id + " " + date + " " + amount + " " + used + " " + memo + "<br/>";
@@ -86,7 +134,6 @@ $(document).ready(function(){
 //						if(toWhere === "page1"){ //page1
 //							var innerHtml = $("#testcase").html();
 //							$("#testcase").html(innerHtml + id + " " + date + " " + amount + " " + used + " " + memo+"<br/>");
-
 //						}
 					}
 				}, function(t, e) {
@@ -110,7 +157,7 @@ $(document).ready(function(){
 					"INSERT INTO money(date, amount, used, category, method, income, memo) VALUES (?,?,?,?,?,?,?);",
 					[inputDate, inputAmount, inputused, inputCategory, inputMethod, 0, inputMemo],
 					function onSuccess() {//run if SQL succeeds
-						GoldLucksDB.dataView();
+						GoldLucksDB.getExpenses(analysis.sumArray2Json);
 					}, 
 					function onError(e) { //run if SQL fails
 						alert("Error:" + e.message);
@@ -163,7 +210,7 @@ $(document).ready(function(){
 
         db.transaction(function(tx) {
             tx.executeSql("CREATE TABLE IF NOT EXISTS fixedExpenses"+
-            		"(id INT(11) PRIMARY KEY,"+
+            		"(_id INTEGER PRIMARY KEY,"+
             		"amount FLOAT NOT NULL,"+
             		"used VARCHAR(20) NOT NULL,"+
             		"category INT(1) NOT NULL,"+
@@ -175,7 +222,7 @@ $(document).ready(function(){
         
         db.transaction(function(tx) {
             tx.executeSql("CREATE TABLE IF NOT EXISTS money"+
-            		"(id INT PRIMARY KEY,"+
+            		"(_id INTEGER PRIMARY KEY,"+
             		"date DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,"+
             		"amount FLOAT NOT NULL,"+
             		"used VARCHAR(30) NOT NULL,"+
