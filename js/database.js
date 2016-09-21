@@ -47,14 +47,36 @@ $(document).ready(function(){
 	/**
 	 * Gets amounts per category
 	 */
+	var expenseArray = [];
 	GoldLucksDB.getExpenses = function getExpenses(callBack){
-		var sumPerCategory = [];
+	    /**
+	     * It sets variables for database query.
+	     */
+		var today = new Date();
+		var year = today.getFullYear();
+		var month = today.getMonth()+1;
+		if(month<10) month = "0"+month;
+		var day = today.getDate();
+		if(day<10) day = "0"+day;
+		var firstDay=year+"-"+month+"-"+"01";
+		var todayString = year+"-"+month+"-"+day;
+			
 		db.transaction(function(t){
-			t.executeSql("SELECT SUM(amount) AS sumAmount FROM money WHERE income=?",[0],
+			t.executeSql("SELECT SUM(amount) AS sumAmount, category FROM money WHERE income=? AND (date >= ? AND date <= ?) GROUP BY category",[0,firstDay, todayString],
 				function(tran, r) {
-					for (var i = 0; i < r.rows.length; i++) 
-						sumPerCategory.push(r.rows.item(i).sumAmount);
-					callBack(sumPerCategory);
+					for (var i = 0; i < r.rows.length; i++){
+						var row = r.rows.item(i);
+						var sumAmount = row.sumAmount;
+						var category = row["category"];
+						
+						var expensePerCat = {
+							"amount" : sumAmount,
+							"cat" : category
+						};
+						
+						expenseArray.push(expensePerCat);
+					} 
+					callBack(expenseArray);
 				}, function(t, e) {
 					alert("Error:" + e.message);
 				}
@@ -106,10 +128,10 @@ $(document).ready(function(){
 //			t.executeSql("SELECT SUM(amount) AS sumAmount FROM money WHERE income=?",[0],
 					
 			
-			t.executeSql("SELECT SUM(amount) AS sumAmount FROM money WHERE income=? AND (date >= ? AND date <= ?) GROUP BY category",[0,firstDay, dateString],
+			t.executeSql("SELECT SUM(amount) AS sumAmount, category FROM money WHERE income=? AND (date >= ? AND date <= ?) GROUP BY category",[0,firstDay, dateString],
 				function(tran, r) {
 					for (var i = 0; i < r.rows.length; i++) {
-//						var row = r.rows.item(i);
+						var row = r.rows.item(i);
 						var newEntryRow = $("#sampleList").clone();
 						newEntryRow.removeAttr("id");
 						newEntryRow.removeAttr("style");
@@ -117,24 +139,17 @@ $(document).ready(function(){
 						var amount = r.rows.item(i).sumAmount;
 //						var amount = row["amount"];
 //						var date = row["date"];
-//						var category = row["category"];
+						var category = row["category"];
 //						var income = row["income"];
 //						newEntryRow.find(".showDate").text(date);
 						newEntryRow.find(".showAmount").text(amount);
 //						newEntryRow.find(".showUsed").text(row.used);
-//						newEntryRow.find(".showCat").text(category);
+						newEntryRow.find(".showCat").text(category);
 //						newEntryRow.find(".showMethod").text(row.method);
 //						newEntryRow.find(".showIncome").text(income);
 //						newEntryRow.find(".showMemo").text(row.memo);
 						
-						//data list rendering
-//						html.innerHTML += " " + id + " " + date + " " + amount + " " + used + " " + memo + "<br/>";
-
-
-//						if(toWhere === "page1"){ //page1
-//							var innerHtml = $("#testcase").html();
-//							$("#testcase").html(innerHtml + id + " " + date + " " + amount + " " + used + " " + memo+"<br/>");
-//						}
+						
 					}
 				}, function(t, e) {
 					alert("Error:" + e.message);
@@ -157,6 +172,7 @@ $(document).ready(function(){
 					"INSERT INTO money(date, amount, used, category, method, income, memo) VALUES (?,?,?,?,?,?,?);",
 					[inputDate, inputAmount, inputused, inputCategory, inputMethod, 0, inputMemo],
 					function onSuccess() {//run if SQL succeeds
+					//	GoldLucksDB.dataView();
 						GoldLucksDB.getExpenses(analysis.sumArray2Json);
 					}, 
 					function onError(e) { //run if SQL fails
