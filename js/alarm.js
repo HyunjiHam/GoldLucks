@@ -18,7 +18,7 @@ window.onload=function(){
                     test = null;
                 alert('fixedadd page before show');
                 $('#select1>option:first').val();
-                
+
                 $('#fixedTime').val(padZero(date.getHours()) + ':' + padZero(date.getMinutes()));
 
                 $('#fixedAmount').val('');
@@ -119,7 +119,7 @@ window.onload=function(){
                 expense.usage = $('#fixedUsage').val().trim();
                 expense.time = $('#fixedTime').val();
                 saveAlarm(expense);
-                insertData("fromFixed");
+                //insertData("fromFixed");
                 $.mobile.changePage('#fixed');
             });
 
@@ -127,7 +127,7 @@ window.onload=function(){
                 alert('pagebeforeshow');
                 displayList(expenses);
             });
-            
+
 
             /*$('#fixed-add-btn').click(function () {
                 for (var i = 0; i < 10; i++) {

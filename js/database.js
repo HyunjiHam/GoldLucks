@@ -42,17 +42,14 @@ $(document).ready(function(){
 	var dbDisplayName = "GoldLucksDisplay";
 	//database size setting
 	var dbSize = 2 * 1024 * 1024;
-
 	GoldLucksDB.openDatabase = function(){
 		if(window.openDatabase){
 			db = openDatabase(dbName, version, dbDisplayName, dbSize);
 			GoldLucksDB.createTable(db);
-
 		}else {
 	        alert("Web SQL Database not supported");
 		}
 	};
-
 	//reads and displays values from the 'places' table
 	GoldLucksDB.dataView = function dataView() {
 		db.transaction(function(t) {
@@ -95,7 +92,6 @@ $(document).ready(function(){
 			);
 		});
 	};
-
 	GoldLucksDB.insertData = function insertData(fromWhere){
 		if(fromWhere === "fromExpense"){
 			var inputDate = $("#datepicker").val(),
@@ -146,7 +142,6 @@ $(document).ready(function(){
 			});
 		}
 	};
-
 	GoldLucksDB.createTable = function createTable(db) {
 
         db.transaction(function(tx) {
@@ -185,7 +180,6 @@ $(document).ready(function(){
             		"memo VARCHAR(50) )" );
         });
     };
-
     (GoldLucksDB.openDatabase());
 
 });
