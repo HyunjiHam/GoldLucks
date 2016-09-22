@@ -69,9 +69,10 @@ $(document).ready(function(){
 						var sumAmount = row.sumAmount;
 						var category = row["category"];
 						
+						//js obj
 						var expensePerCat = {
-							"amount" : sumAmount,
-							"cat" : category
+							"cat" : category,
+							"amount" : sumAmount
 						};
 						
 						expenseArray.push(expensePerCat);
@@ -173,7 +174,7 @@ $(document).ready(function(){
 					[inputDate, inputAmount, inputused, inputCategory, inputMethod, 0, inputMemo],
 					function onSuccess() {//run if SQL succeeds
 					//	GoldLucksDB.dataView();
-						GoldLucksDB.getExpenses(analysis.sumArray2Json);
+						GoldLucksDB.getExpenses(analysis.catNum2Text);
 					}, 
 					function onError(e) { //run if SQL fails
 						alert("Error:" + e.message);
