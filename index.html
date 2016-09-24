@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html>
 
 <head>
@@ -8,15 +8,94 @@
     <link rel="stylesheet" type="text/css" href="css/jquery.mobile.theme.css">
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/jquery.mobile-1.4.5.js"></script>
+    <script type="text/javascript" src="js/alarm.js"></script>
     <script type="text/javascript" src="js/database.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+        <script src="js/echarts.js"></script>
+    <script type="text/javascript">
+        // configure for module loader
+        require.config({
+            paths: {
+                echarts: './js'
+            }
+        });
+
+        // use
+        require(
+            [
+                'echarts', // require the specific chart type
+                'echarts/chart/pie'
+            ],
+            function (ec) {
+                // Initialize after dom ready
+                var myChart = ec.init(document.getElementById('chart'), 'helianthus');
+                var idx = 1;
+                var option = {
+                    title: {
+                        /*
+                            text: 'Analysis',
+                            subtext: 'now successT_T',
+                            x:'center'*/
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    legend: {
+                        /*  orient : 'vertical',
+                          x : 'left', */
+                        y: 'bottom',
+                        data: ['data1', 'data2', 'data3', 'data4', 'data5']
+                    },
+                    toolbox: {
+                        show: false,
+                        feature: {
+                            mark: { show: false },
+                            dataView: { show: false, readOnly: true },
+                            magicType: {
+                                show: false,
+                                type: ['pie', 'funnel'],
+                                option: {
+                                    funnel: {
+                                        x: '25%',
+                                        width: '50%',
+                                        funnelAlign: 'left',
+                                        max: 1548
+                                    }
+                                }
+                            },
+                            restore: { show: false },
+                            saveAsImage: { show: false }
+                        }
+                    },
+                    series: [
+                        {
+                            name: 'ddd',
+                            type: 'pie',
+                            radius: '70%',
+                            center: ['50%', '45%'],
+                            data: [
+                                { value: 335, name: 'data1' },
+                                { value: 310, name: 'data2' },
+                                { value: 234, name: 'data3' },
+                                { value: 135, name: 'data4' },
+                                { value: 1548, name: 'data5' }
+                            ]
+                        }
+                    ]
+                };               // Load data into the ECharts instance 
+                myChart.setOption(option);
+            }
+        );
+    </script>
 </head>
 
 <body>
-    <div data-role="page">
+    <div data-role="page" id="mainpage">
         <div data-role="header" data-position="fixed" data-tap-toggle="false">
             <a href="#sidebar" data-icon="ion-navicon-round" data-iconpos="notext"></a>
             <h1 class="header-title"><img src="images/logo.png" width="150" height="45"></h1>
-            <a href="add.html" data-ajax="false" data-icon="ion-plus" data-iconpos="notext"></a>
+            <a href="#page1" data-ajax="false" data-icon="ion-plus" data-iconpos="notext"></a>
         </div>
         <div data-role="panel" data-display="push" id="sidebar">
             <ul data-role="listview">
@@ -25,24 +104,24 @@
                 <li><a href="#slidebar" data-ajax="false"><i class="ui-icon-ion-android-home"></i>
                 Home</a>
                 </li>
-                <li><a href="fixed.html" data-ajax="false"><i class="ui-icon-ion-card"></i>
+                <li><a href="#fixed" data-ajax="false"><i class="ui-icon-ion-card"></i>
                 Fixed expenses</a>
                 </li>
-                <li><a href="analysis.html" data-ajax="false"><i class="ui-icon-ion-pie-graph"></i>
+                <li><a href="test.html#analysis" data-ajax="false"><i class="ui-icon-ion-pie-graph"></i>
                 Analysis</a>
                 </li>
-                <li><a href="share.html" data-ajax="false"><i class="ui-icon-ion-android-people"></i>
+                <li><a href="#share" data-ajax="false"><i class="ui-icon-ion-android-people"></i>
                 Share</a>
                 </li>
-                <li><a href="setting.html" data-ajax="false"><i class="ui-icon-ion-android-settings"></i>
+                <li><a href="#setting" data-ajax="false"><i class="ui-icon-ion-android-settings"></i>
                 Setting</a>
                 </li>
             </ul>
         </div>
-        <div data-role="content">
+        <div data-role="content" id="mainContents">
             <div data-role="content" data-theme="c" data-position="fixed" data-tap-toggle="false">
                 <h3>(Account name)</h3>
-                <h2>
+                <h2 id="mainMonths">
                 <a href="#"><i class="ui-icon-ion-ios-arrow-back"></i></a>
                 2016.09
                 <a href="#"><i class="ui-icon-ion-ios-arrow-forward"></i></a></h2>
@@ -61,13 +140,13 @@
                     <div class="cd-timeline-content">
                         <ul data-role="listview">
                             <li>(food)
-                                <p class="ui-li-aside">(-12000)(won)</p>
+                                <p class="ui-li-aside2">(-12000)(won)</p>
                             </li>
                             <li>(coffee)
-                                <p class="ui-li-aside">(-8000)(won)</p>
+                                <p class="ui-li-aside2">(-8000)(won)</p>
                             </li>
                             <li>(education)
-                                <p class="ui-li-aside">(-150000)(won)</p>
+                                <p class="ui-li-aside2">(-150000)(won)</p>
                             </li>
                         </ul>
                     </div>
@@ -79,10 +158,10 @@
                     <div class="cd-timeline-content">
                         <ul data-role="listview">
                             <li>(coffee)
-                                <p class="ui-li-aside">(-6000)(won)</p>
+                                <p class="ui-li-aside2">(-6000)(won)</p>
                             </li>
                             <li>(allowance)
-                                <p class="ui-li-aside">(+50000)(won)</p>
+                                <p class="ui-li-aside1">(+50000)(won)</p>
                             </li>
                         </ul>
                     </div>
@@ -94,7 +173,7 @@
                     <div class="cd-timeline-content">
                         <ul data-role="listview">
                             <li>(traffic)
-                                <p class="ui-li-aside">(-4000)(won)</p>
+                                <p class="ui-li-aside2">(-4000)(won)</p>
                             </li>
                         </ul>
                     </div>
@@ -106,16 +185,16 @@
                     <div class="cd-timeline-content">
                         <ul data-role="listview">
                             <li>(salary)
-                                <p class="ui-li-aside">(+900000)(won)</p>
+                                <p class="ui-li-aside1">(+900000)(won)</p>
                             </li>
                             <li>(food)
-                                <p class="ui-li-aside">(-10000)(won)</p>
+                                <p class="ui-li-aside2">(-10000)(won)</p>
                             </li>
                             <li>(beauty)
-                                <p class="ui-li-aside">(-35000)(won)</p>
+                                <p class="ui-li-aside2">(-35000)(won)</p>
                             </li>
                             <li>(clothes)
-                                <p class="ui-li-aside">(-50000)(won)</p>
+                                <p class="ui-li-aside2">(-50000)(won)</p>
                             </li>
                         </ul>
                     </div>
@@ -126,13 +205,15 @@
                         <div class="cd-timeline-content">
                             <ul data-role="listview">
                                 <li>(coffee)
-                                    <p class="ui-li-aside">(-6000)(won)</p>
+                                    <p class="ui-li-aside2">(-6000)(won)</p>
                                 </li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </section>
+            <ul data-role="listview" id="id1">
+            </ul>
 
 
     <!--Sangeun's code-->
@@ -150,8 +231,926 @@
 				</li>
 			</ol>
       <!--end Sangeun's code-->
-        </div>
 
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+    <div data-role="page" id="page1">
+        <div data-role="header" data-position="fixed" data-tap-toggle="false">
+            <a href="#mainpage"  data-icon="ion-chevron-left" data-iconpos="notext"></a>
+            <h1 class="header-title">Add</h1>
+            <a href="#mainpage" data-icon="ion-checkmark-round" data-iconpos="notext" id="addExpense"></a>
+        </div>
+        <div data-role="navbar" data-id="mode" id="navi">
+            <ul>
+                <li class="dd" ><a href="#" class="ui-btn-active ui-state-persist">expense</a>
+                </li>
+                <li><a href="#page2">income</a>
+                </li>
+            </ul>
+        </div>
+        <div data-role="content">
+            <ul data-role="listview">
+                <li data-role="fieldcontain">
+                    <label>Date</label>
+                    <input ata-corners="false" type="date" value="" data-clear-btn="true" data-clear-btn-text="" placeholder="01.01.2000" placeholder="Date" id="datepicker">
+                </li>
+                <li data-role="fieldcontain">
+                    <input data-corners="false" type="number" value="" data-clear-btn="true" data-clear-btn-text="" placeholder="Amount" id="eAmount">
+                </li>
+                <li data-role="fieldcontain">
+                    <input data-corners="false" type="text" value="" data-clear-btn-text="" data-clear-btn="true" placeholder="Usage" id="eUsed">
+                </li>
+                <li data-role="fieldcontain">
+                    <label for="select1">Category</label>
+                    <select name="select1" id="select1" data-mini="true">
+                        <option>food</option>
+                        <option>clothes</option>
+                        <option>house</option>
+                        <option>health</option>
+                        <option>beauty</option>
+                        <option>traffic</option>
+                        <option>education</option>
+                        <option>saving</option>
+                    </select>
+                </li>
+<!--Sangeun's code
+                <div data-role="collapsible" data-inset="false">
+                    <h3>Category</h3>
+                    <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true" data-corners="false">
+                        <input type="radio" name="radio3" id="cat1" checked="checked" >
+                        <label for="cat1">food</label>
+                        <input type="radio" name="radio3" id="cat2">
+                        <label for="cat2">cloth</label>
+                        <input type="radio" name="radio3" id="cat3">
+                        <label for="cat3">house</label>
+                        <input type="radio" name="radio3" id="cat4">
+                        <label for="cat4">health</label>
+                        <input type="radio" name="radio3" id="cat5">
+                        <label for="cat5">traffic</label>
+                        <input type="radio" name="radio3" id="cat6">
+                        <label for="cat6">save</label>
+                    </fieldset>
+                </div>
+-->
+                <li data-role="fieldcontain">
+                    <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true" >
+                        <legend>Methods</legend>
+                        <input type="radio" name="radio" id="radio1" value="on" checked="checked">
+                        <label for="radio1">Cash</label>
+                        <input type="radio" name="radio" id="radio2" value="off" >
+                        <label for="radio2">Credit card</label>
+                    </fieldset>
+                </li>
+                <li data-role="fieldcontain">
+                    <textarea data-corners="false" cols="30" rows="3" placeholder="Memo" id="eMemo"></textarea>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div data-role="page" id="page2">
+        <div data-role="header" data-position="fixed" data-tap-toggle="false">
+            <a href="#mainpage" data-icon="ion-chevron-left" data-iconpos="notext"></a>
+            <h1 class="header-title">Add</h1>
+            <a href="#mainpage" data-icon="ion-checkmark-round" data-iconpos="notext" id="addIncome"></a>
+        </div>
+        <div data-role="navbar" data-id="mode" data-position="fixed" class="tabbar">
+            <ul>
+                <li><a href="#page1">expense</a>
+                </li>
+                <li><a href="#" class="ui-btn-active ui-state-persist">income</a>
+                </li>
+            </ul>
+        </div>
+        <div data-role="content" id="Div1">
+            <ul data-role="listview">
+                <li data-role="fieldcontain">
+                    <label>Date</label>
+                    <input type="date" id="datepicker2" placeholder="Date" >
+                </li>
+                <li data-role="fieldcontain">
+                    <input type="number" id="iAmount" placeholder="Amount" >
+                </li>
+                <li data-role="fieldcontain">
+                    <input id="iUsed" placeholder="From" >
+                </li>
+                <li data-role="fieldcontain">
+                    <textarea id="iMemo" placeholder="Memo" ></textarea>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div data-role="page" id="fixed">
+        <div data-role="header" data-position="fixed" data-tap-toggle="false">
+            <a href="#sidebar3" data-icon="ion-navicon-round" data-iconpos="notext"></a>
+            <h1 class="header-title">Fixed expenses</h1>
+            <a href="#fixedadd" data-ajax="false" data-icon="ion-plus" data-iconpos="notext"></a>
+        </div>
+        <div data-role="panel" data-display="push" id="sidebar3">
+            <ul data-role="listview">
+                <li class="aa"><div><img class="ui-center" src="images/panel.png" width="150" height="45"></div>
+                </li>
+                <li><a href="#mainpage" data-ajax="false"><i class="ui-icon-ion-android-home"></i>
+                Home</a>
+                </li>
+                <li><a href="#slidebar" data-ajax="false"><i class="ui-icon-ion-card"></i>
+                Fixed expenses</a>
+                </li>
+                <li><a href="test.html#analysis" data-ajax="false"><i class="ui-icon-ion-pie-graph"></i>
+                Analysis</a>
+                </li>
+                <li><a href="#share" data-ajax="false"><i class="ui-icon-ion-android-people"></i>
+                Share</a>
+                </li>
+                <li><a href="#setting" data-ajax="false"><i class="ui-icon-ion-android-settings"></i>
+                Setting</a>
+                </li>
+            </ul>
+        </div>
+        <div data-role="content">
+            <ul id="alarmList"data-role="listview" data-inset="true">
+                <li><a href="#fixededit" data-ajax="false">(day) of every month (category) (amount)</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div data-role="page" id="fixedadd">
+        <div data-role="header" data-position="fixed" data-tap-toggle="false">
+            <a href="#fixed" rel="external" data-icon="ion-chevron-left" data-iconpos="notext"></a>
+            <h1 class="header-title">Add</h1>
+            <a id="fixed-add-btn" data-icon="ion-checkmark-round" data-iconpos="notext"></a>
+        </div>
+        <div data-role="content">
+            <ul data-role="listview">
+                <li data-role="fieldcontain">
+                    <div class="ui-field-contain">
+                        <label for="select1">day of every month</label>
+                        <select name="select1" id="select2" data-mini="true">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>7</option>
+                            <option>8</option>
+                            <option>9</option>
+                            <option>10</option>
+                            <option>11</option>
+                            <option>12</option>
+                            <option>13</option>
+                            <option>14</option>
+                            <option>15</option>
+                            <option>16</option>
+                            <option>17</option>
+                            <option>18</option>
+                            <option>19</option>
+                            <option>20</option>
+                            <option>21</option>
+                            <option>22</option>
+                            <option>23</option>
+                            <option>24</option>
+                            <option>25</option>
+                            <option>26</option>
+                            <option>27</option>
+                            <option>28</option>
+                            <option>29</option>
+                            <option>30</option>
+                            <option>31</option>
+                        </select>
+                    </div>
+                </li>
+                <li data-role="fieldcontain">
+                    <input id="fixedAmount"data-corners="false" type="number" value="" placeholder="Amount">
+                </li>
+                <li data-role="fieldcontain">
+                    <input id="fixedUsage"data-corners="false" type="text" value="" placeholder="Usage">
+                </li>
+                <li data-role="fieldcontain">
+                    <label for="select2">Category</label>
+                    <select name="select2" id="select3" data-mini="true">
+                        <option>food</option>
+                        <option>clothes</option>
+                        <option>house</option>
+                        <option>health</option>
+                        <option>beauty</option>
+                        <option>traffic</option>
+                        <option>education</option>
+                        <option>saving</option>
+                    </select>
+                </li>
+                <li data-role="fieldcontain">
+                    <fieldset id="fixedMethod" data-role="controlgroup" data-type="horizontal" data-mini="true">
+                        <legend>Methods</legend>
+                        <input type="radio" name="radio" id="radio3" value="on" checked="checked">
+                        <label for="radio1">Cash</label>
+                        <input type="radio" name="radio" id="radio4" value="off">
+                        <label for="radio2">Credit card</label>
+                    </fieldset>
+                </li>
+                <li data-role="fieldcontain">
+                    <textarea id="fixedMemo"cols="40" rows="5" placeholder="Memo"></textarea>
+                </li>
+                <li class="ui-grid-a" data-role="fieldcontain">
+                    <div class="ui-block-a">
+                        <div class="ui-field-contain">
+                            <label>Alarm</label>
+                            <select data-role="flipswitch" data-mini="true">
+                                <option value="off">Off</option>
+                                <option value="on">On</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="ui-block-b">
+                        <div class="ui-field-contain">
+                            <label>Time</label>
+                            <input type="time" id="fixedTime">
+                        </div>
+                    </div>
+                </li>
+                <li data-role="fieldcontain">
+                    <fieldset id="fixedBefore"data-role="controlgroup" data-type="horizontal" data-mini="true" data-corners="false">
+                        <legend>Day's before</legend>
+                        <input type="radio" name="radio2" id="radio5" checked="checked">
+                        <label for="radio3">one day</label>
+                        <input type="radio" name="radio2" id="radio6">
+                        <label for="radio4">two days</label>
+                        <input type="radio" name="radio2" id="radio7">
+                        <label for="radio5">three days</label>
+                    </fieldset>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+        <div data-role="page" id="fixededit">
+        <div data-role="header" data-position="fixed" data-tap-toggle="false">
+            <a href="#fixed" rel="external" data-icon="ion-chevron-left" data-iconpos="notext"></a>
+            <h1 class="header-title">Edit</h1>
+            <a href="#" data-icon="ion-checkmark-round" data-iconpos="notext"></a>
+        </div>
+        <div data-role="content">
+            <ul data-role="listview">
+                <li data-role="fieldcontain">
+                    <div class="ui-field-contain">
+                        <label for="select1">day of every month</label>
+                        <select name="select1" id="select4" data-mini="true">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>7</option>
+                            <option>8</option>
+                            <option>9</option>
+                            <option>10</option>
+                            <option>11</option>
+                            <option>12</option>
+                            <option>13</option>
+                            <option>14</option>
+                            <option>15</option>
+                            <option>16</option>
+                            <option>17</option>
+                            <option>18</option>
+                            <option>19</option>
+                            <option>20</option>
+                            <option>21</option>
+                            <option>22</option>
+                            <option>23</option>
+                            <option>24</option>
+                            <option>25</option>
+                            <option>26</option>
+                            <option>27</option>
+                            <option>28</option>
+                            <option>29</option>
+                            <option>30</option>
+                            <option>31</option>
+                        </select>
+                    </div>
+                </li>
+                <li data-role="fieldcontain">
+                    <input data-corners="false" type="number" value="" placeholder="Amount">
+                </li>
+                <li data-role="fieldcontain">
+                    <input data-corners="false" type="text" value="" placeholder="Usage">
+                </li>
+                <li data-role="fieldcontain">
+                    <label for="select2">Category</label>
+                    <select name="select2" id="select5" data-mini="true">
+                        <option>food</option>
+                        <option>clothes</option>
+                        <option>house</option>
+                        <option>health</option>
+                        <option>beauty</option>
+                        <option>traffic</option>
+                        <option>education</option>
+                        <option>saving</option>
+                    </select>
+                </li>
+                <li data-role="fieldcontain">
+                    <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+                        <legend>Methods</legend>
+                        <input type="radio" name="radio3" id="radio8" value="on" checked="checked">
+                        <label for="radio6">Cash</label>
+                        <input type="radio" name="radio3" id="radio9" value="off">
+                        <label for="radio7">Credit card</label>
+                    </fieldset>
+                </li>
+                <li data-role="fieldcontain">
+                    <textarea cols="40" rows="5" placeholder="Memo"></textarea>
+                </li>
+                <li class="ui-grid-a" data-role="fieldcontain">
+                    <div class="ui-block-a">
+                        <div class="ui-field-contain">
+                            <label>Alarm</label>
+                            <select data-role="flipswitch" data-mini="true">
+                                <option value="off">Off</option>
+                                <option value="on">On</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="ui-block-b">
+                        <div class="ui-field-contain">
+                            <label>Time</label>
+                            <input type="time" value="">
+                        </div>
+                    </div>
+                </li>
+                <li data-role="fieldcontain">
+                    <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true" data-corners="false">
+                        <legend>Day's before</legend>
+                        <input type="radio" name="radio4" id="radio10" checked="checked">
+                        <label for="radio8">one day</label>
+                        <input type="radio" name="radio4" id="radio11">
+                        <label for="radio9">two days</label>
+                        <input type="radio" name="radio4" id="radio12">
+                        <label for="radio10">three days</label>
+                    </fieldset>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div data-role="page" id="analysis">
+        <div data-role="header" data-position="fixed" data-tap-toggle="false">
+            <a href="#sidebar2" data-icon="ion-navicon-round" data-iconpos="notext"></a>
+            <h1 class="header-title">Analysis</h1>
+        </div>
+        <div data-role="panel" data-display="push" id="sidebar2">
+            <ul data-role="listview">
+                <li class="aa"><div><img class="ui-center" src="images/panel.png" width="150" height="45"></div>
+                </li>
+                <li><a href="#mainpage" data-ajax="false"><i class="ui-icon-ion-android-home"></i> Home</a>
+                </li>
+                <li><a href="#fixed" data-ajax="false"><i class="ui-icon-ion-card"></i> Fixed expenses</a>
+                </li>
+                <li><a href="#slidebar" data-ajax="false"><i class="ui-icon-ion-pie-graph"></i> Analysis</a>
+                </li>
+                <li><a href="#share" data-ajax="false"><i class="ui-icon-ion-android-people"></i> Share</a>
+                </li>
+                <li><a href="#setting" data-ajax="false"><i class="ui-icon-ion-android-settings"></i> Setting</a>
+                </li>
+            </ul>
+        </div>
+        <div data-role="content">
+            <ul data-role="listview" data-divider-theme="a">
+                <li style="background: #fefdfe;">
+                    <h2><a href="#"><i class="ui-icon-ion-ios-arrow-back"></i></a>
+                    2016.09 
+                    <a href="#"><i class="ui-icon-ion-ios-arrow-forward"></i></a></h2>
+                </li>
+                <li>
+                    <div id="chart" style="height:300px;"></div>
+                </li>
+                <li data-role="list-divider">Total
+                    <p class="ui-li-aside">(Monthly sum)</p>
+                </li>
+                <li>(Category)
+                    <p class="ui-li-aside">(amount) (%)</p>
+                </li>
+                <li>(Category)
+                    <p class="ui-li-aside">(amount) (%)</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div data-role="page" id="share">
+        <div data-role="header" data-position="fixed" data-tap-toggle="false">
+            <a href="#sidebar4" data-icon="ion-navicon-round" data-iconpos="notext"></a>
+            <h1 class="header-title">Share</h1>
+            <a href="" data-ajax="false" data-icon="ion-refresh" data-iconpos="notext"></a>
+        </div>
+        <div data-role="panel" data-display="push" id="sidebar4">
+            <ul data-role="listview">
+                <li class="aa"><div><img class="ui-center" src="images/panel.png" width="150" height="45"></div>
+                </li>
+                <li><a href="#mainpage" data-ajax="false"><i class="ui-icon-ion-android-home"></i> Home</a>
+                </li>
+                <li><a href="#fixed" data-ajax="false"><i class="ui-icon-ion-card"></i> Fixed expenses</a>
+                </li>
+                <li><a href="test.html#analysis" data-ajax="false"><i class="ui-icon-ion-pie-graph"></i> Analysis</a>
+                </li>
+                <li><a href="#slidebar" data-ajax="false"><i class="ui-icon-ion-android-people"></i> Share</a>
+                </li>
+                <li><a href="#setting" data-ajax="false"><i class="ui-icon-ion-android-settings"></i> Setting</a>
+                </li>
+            </ul>
+        </div>
+        <div data-role="content">
+            <ul data-role="listview">
+                <li><a href="#shareadd" data-ajax="false"><i class="ui-icon-ion-plus-round"></i>
+                Add new</a>
+                </li>
+                <li><a href="#shareedit" data-ajax="false"><i class="ui-icon-"></i>
+                My accountbook</a>
+                </li>
+                <li><a href="" data-ajax="false"><i class="ui-icon-"></i>
+                (Goldlucks)</a>
+                </li>
+                <li><a href="" data-ajax="false"><i class="ui-icon-"></i>
+                (Company)</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div data-role="page" id="shareadd">
+        <div data-role="header" data-position="fixed" data-tap-toggle="false">
+            <a href="#share" data-icon="ion-chevron-left" data-iconpos="notext"></a>
+            <h1 class="header-title">add</h1>
+            <a href="" data-ajax="false" data-icon="ion-checkmark-round" data-iconpos="notext"></a>
+        </div>
+        <div data-role="content">
+            <ul data-role="listview">
+                <li data-role="fieldcontain">
+                    <input id="Text2" placeholder="Book name">
+                </li>
+                <li data-role="fieldcontain">
+                    <input id="Text1" placeholder="Group name">
+                </li>
+                <li data-role="fieldcontain">
+                <label for="with"><a href="#" data-ajax="false"><i class="ui-icon-ion-plus-round"></i></a></label>
+                    <input id="with" placeholder=" Share with">
+                </li>            
+            </ul>
+        </div>
+    </div>
+    
+     <div data-role="page" id="shareedit">
+        <div data-role="header" data-position="fixed" data-tap-toggle="false">
+            <a href=# data-icon="ion-trash-b" data-iconpos="notext"></a>
+            <h1 class="header-title">Edit</h1>
+            <a href="#share" data-ajax="false" data-icon="ion-checkmark-round" data-iconpos="notext"></a>
+        </div>
+        <div data-role="content">
+            <ul data-role="listview">
+                <li data-role="fieldcontain">
+                    <input id="Text3" placeholder="Book name">
+                </li>
+                <li data-role="fieldcontain">
+                    <input id="Text4" placeholder="Group name">
+                </li>
+                <li data-role="fieldcontain">
+                    <input id="Text5" placeholder="Share with">
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+
+
+    <div data-role="page" id="setting">
+        <div data-role="header" data-position="fixed" data-tap-toggle="false">
+            <a href="#sidebar5" data-icon="ion-navicon-round" data-iconpos="notext"></a>
+            <h1 class="header-title">Setting</h1>
+        </div>
+        <div data-role="panel" data-display="push" id="sidebar5">
+            <ul data-role="listview">
+                <li class="aa"><div><img class="ui-center" src="images/panel.png" width="150" height="45"></div>
+                </li>
+                <li><a href="#mainpage" data-ajax="false"><i class="ui-icon-ion-android-home"></i>
+                Home</a>
+                </li>
+                <li><a href="#fixed" data-ajax="false"><i class="ui-icon-ion-card"></i>
+                Fixed expenses</a>
+                </li>
+                <li><a href="test.html#analysis" data-ajax="false"><i class="ui-icon-ion-pie-graph"></i>
+                Analysis</a>
+                </li>
+                <li><a href="#share" data-ajax="false"><i class="ui-icon-ion-android-people"></i>
+                Share</a>
+                </li>
+                <li><a href="#slidebar" data-ajax="false"><i class="ui-icon-ion-android-settings"></i>
+                Setting</a>
+                </li>
+            </ul>
+        </div>
+        <div data-role="content">
+            <div class="ui-padding-left">
+                <p>User setting</p>
+                <ul data-role="listview">
+                    <li><a href="#signup" data-rel="popup" data-position-to="window"><i class="ui-icon-ion-android-people"></i>
+                Sign up</a>
+                        <div data-role="popup" id="signup">
+                            <div data-role="header" data-theme="c">
+                                <h2 class="header-title">Sign up</h2>
+                            </div>
+                            <form>
+                                <ul data-role="listview">
+                                    <li data-role="fieldcontain">
+                                        <label for="un" class="ui-hidden-accessible">Username:</label>
+                                        <input type="text" id="un" value="" placeholder="Username">
+                                    </li>
+                                   <!-- <li data-role="fieldcontain">
+                                        <label for="pw" class="ui-hidden-accessible">Password:</label>
+                                        <input type="password" id="pw" value="" placeholder="Password">
+                                    </li> --> 
+                                </ul>
+                            </form>
+                            <div role="main" class="ui-content ui-padding">
+                                <a href="#" data-rel="back" class="ui-btn ui-btn-c ui-btn-inline ui-mini">Cancel</a>
+                                <a href="#" data-rel="back" class="ui-btn ui-btn-c ui-btn-inline ui-mini">Sign up</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a href="#signin" data-rel="popup" data-position-to="window"><i class="ui-icon-ion-android-people"></i>
+                Sign in</a>
+                        <div data-role="popup" id="signin">
+                            <div data-role="header" data-theme="c">
+                                <h2 class="header-title">Sign in</h2>
+                            </div>
+                            <form>
+                                <ul data-role="listview">
+                                    <li data-role="fieldcontain">
+                                        <label for="un" class="ui-hidden-accessible">Username:</label>
+                                        <input type="text" id="Text6" value="" placeholder="Username">
+                                    </li>
+                                  <!-- <li data-role="fieldcontain">
+                                        <label for="pw" class="ui-hidden-accessible">Password:</label>
+                                        <input type="password" id="pw" value="" placeholder="Password">
+                                    </li> -->  
+                                </ul>
+                            </form>
+                            <div role="main" class="ui-content ui-padding">
+                                <a href="#" data-rel="back" class="ui-btn ui-btn-c ui-btn-inline ui-mini">Cancel</a>
+                                <a href="#" data-rel="back" class="ui-btn ui-btn-c ui-btn-inline ui-mini">Sign in</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <p>Basic setting</p>
+                <ul data-role="listview">
+                    <li><a href="#startpop" data-rel="popup" data-position-to="window"><i class="ui-icon-ion-android-calendar"></i>
+                Month start day</a>
+                        <div data-role="popup" id="startpop">
+                            <div data-role="header" data-theme="c">
+                                <h2 class="header-title">Select</h2>
+                            </div>
+                            <div>
+                                <ul data-role="listview" data-inset="true" style="min-width:250px;">
+                                    <li data-role="fieldcontain">
+                                        <select name="select1" id="select6" data-mini="true">
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                            <option>5</option>
+                                            <option>6</option>
+                                            <option>7</option>
+                                            <option>8</option>
+                                            <option>9</option>
+                                            <option>10</option>
+                                            <option>11</option>
+                                            <option>12</option>
+                                            <option>13</option>
+                                            <option>14</option>
+                                            <option>15</option>
+                                            <option>16</option>
+                                            <option>17</option>
+                                            <option>18</option>
+                                            <option>19</option>
+                                            <option>20</option>
+                                            <option>21</option>
+                                            <option>22</option>
+                                            <option>23</option>
+                                            <option>24</option>
+                                            <option>25</option>
+                                            <option>26</option>
+                                            <option>27</option>
+                                            <option>28</option>
+                                            <option>29</option>
+                                            <option>30</option>
+                                            <option>31</option>
+                                        </select>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div role="main" class="ui-content ui-padding">
+                                <a href="#" data-rel="back" class="ui-btn ui-btn-c ui-btn-inline ui-mini">Cancel</a>
+                                <a href="#" data-rel="back" class="ui-btn ui-btn-c ui-btn-inline ui-mini">Submit</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a href="#catpop" data-rel="popup" data-position-to="window"><i class="ui-icon-ion-grid"></i>
+                Category</a>
+                        <div data-role="popup" id="catpop">
+                            <div data-role="header" data-theme="c">
+                                <h2 class="header-title">Category</h2>
+                            </div>
+                            <ul data-role="listview" style="width:250px;">
+                                <li data-role="fieldcontain">
+                                    <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+                                        <select name="select1" id="select7">
+                                            <option>food</option>
+                                            <option>clothes</option>
+                                            <option>house</option>
+                                            <option>health</option>
+                                            <option>beauty</option>
+                                            <option>traffic</option>
+                                            <option>education</option>
+                                            <option>saving</option>
+                                        </select>
+                                        <a href="#" class="ui-btn ui-btn-c ui-btn-inline">Delete</a>
+                                    </fieldset>
+                                </li>
+                            </ul>
+                            <div role="main" class="ui-content ui-padding">
+                                <ul data-role="listview">
+                                    <li data-role="fieldcontain">
+                                        <input type="text" data-wrapper-class="controlgroup-textinput ui-btn" placeholder="New category name" data-mini="true">
+                                        <a href="#" data-rel="back" class="ui-btn ui-btn-c ui-btn-inline">Add new</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a href="#curpop" data-rel="popup" data-position-to="window"><i class="ui-icon-ion-social-usd"></i>
+                Currency</a>
+                        <div data-role="popup" id="curpop">
+                            <div data-role="header" data-theme="c">
+                                <h2 class="header-title">Select</h2>
+                            </div>
+                            <ul data-role="listview" data-inset="true" style="min-width:250px;">
+                                <li data-role="fieldcontain">
+                                    <select name="select2" id="select8" data-mini="true">
+                                        <option>(USD $)</option>
+                                        <option>(KRW ₩)</option>
+                                        <option>(...)</option>
+                                    </select>
+                                </li>
+                            </ul>
+                            <div role="main" class="ui-content ui-padding">
+                                <a href="#" data-rel="back" class="ui-btn ui-btn-c ui-btn-inline ui-mini">Cancel</a>
+                                <a href="#" data-rel="back" class="ui-btn ui-btn-c ui-btn-inline ui-mini">Submit</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a href="#langpop" data-rel="popup" data-position-to="window"><i class="ui-icon-ion-android-globe"></i>
+                Language</a>
+                        <div data-role="popup" id="langpop">
+                            <div data-role="header" data-theme="c">
+                                <h2 class="header-title">Select</h2>
+                            </div>
+                            <ul data-role="listview" data-inset="true" style="min-width:250px;">
+                                <li data-role="fieldcontain">
+                                    <select name="select3" id="select9" data-mini="true">
+                                        <option>(English)</option>
+                                        <option>(Korean)</option>
+                                        <option>(...)</option>
+                                    </select>
+                                </li>
+                            </ul>
+                            <div role="main" class="ui-content ui-padding">
+                                <a href="#" data-rel="back" class="ui-btn ui-btn-c ui-btn-inline ui-mini">Cancel</a>
+                                <a href="#" data-rel="back" class="ui-btn ui-btn-c ui-btn-inline ui-mini">Delete</a>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- <li><a href="" data-ajax="false"><i class="ui-icon-ion-android-time"></i>
+                Alarm</a></li>-->
+                <li><a href="" data-ajax="false"><i class="ui-icon-ion-android-lock"></i>
+                Password</a></li>
+                </ul>
+                <p>Data setting</p>
+                <ul data-role="listview">
+                    <li><a href="#backup" data-rel="popup" data-position-to="window"><i class="ui-icon-ion-ios-download"></i>
+                Backup</a>
+                        <div data-role="popup" id="backup">
+                            <div data-role="header" data-theme="c">
+                                <h2 class="header-title">Data backup</h2>
+                            </div>
+                            <div role="main" class="ui-content ui-padding">
+                                <p class="ui-title">Send backup file (csv) to your mail account.</p>
+                            </div>
+                            <div role="main" class="ui-content ui-padding">
+                                <a href="#" data-rel="back" class="ui-btn ui-btn-c ui-btn-inline ui-mini">Cancel</a>
+                                <a href="#" data-rel="back" class="ui-btn ui-btn-c ui-btn-inline ui-mini">Submit</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a href="#initial" data-rel="popup" data-position-to="window"><i class="ui-icon-ion-trash-b"></i>
+                Data initialization</a>
+                        <div data-role="popup" id="initial">
+                            <div data-role="header" data-theme="c">
+                                <h2 class="header-title">Delete data</h2>
+                            </div>
+                            <div role="main" class="ui-content ui-padding">
+                                <p class="ui-title">Do you want to delete all personal data?</p>
+                                <p>This action cannot be undone.</p>
+                            </div>
+                            <div role="main" class="ui-content ui-padding">
+                                <a href="#" data-rel="back" class="ui-btn ui-btn-c ui-btn-inline ui-mini">Cancel</a>
+                                <a href="#" data-rel="back" class="ui-btn ui-btn-c ui-btn-inline ui-mini">Delete</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <p></p>
+                <ul data-role="listview">
+                    <li><a href="#about" data-rel="popup" data-position-to="window"><i class="ui-icon-ion-android-people"></i>
+                About us</a>
+                        <div data-role="popup" id="about">
+                            <div data-role="header" data-theme="c">
+                                <h2 class="header-title">About</h2>
+                            </div>
+                            <div role="main" class="ui-content ui-padding ui-center">
+                                <div class="ui-margin" style="min-width:250px;">
+                                    <img class="ui-center" src="images/logo.png" width="150" height="45">
+                                    <h3>Team wonderladies</h3>
+                                    <p>1315022 김지현 Director</p>
+                                    <p>1315048 이상은 Database</p>
+                                    <p>1205054 함현지 Function</p>
+                                    <p>1015096 이지인 UI</p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <p></p><p></p><p></p><p></p>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+    <div data-role="page" id="page-alarm">
+    	<div data-role="header">
+    	    <h1>FIXED EXPENSES</h1>
+    	</div>
+    	<div data-role="content">
+
+            <div data-role="fieldcontain">
+                <label for="textarea">Usage</label>
+                <input type="text" id="usage" data-clear-btn="true"/>
+            </div>
+            <div data-role="fieldcontain">
+                <label for="textarea">Amount</label>
+                <input id="textarea" />
+            </div>
+            <div data-role="fieldcontain" class="ui-grid-a">
+                <label>Date</label>
+                <div class="ui-block-a">
+                    <select>
+                        <option>1st</option><option>2nd</option><option>3rd</option><option>4th</option><option>5th</option>
+                        <option>6th</option><option>7th</option><option>8th</option><option>9th</option><option>10th</option>
+                        <option>11th</option><option>12th</option><option>13th</option> <option>14th</option><option>15th</option>
+                        <option>16th</option><option>17th</option><option>18th</option><option>19th</option><option>20th</option>
+                        <option>21th</option><option>22th</option><option>23th</option><option>24th</option><option>25th</option>
+                        <option>26th</option><option>27th</option><option>28th</option><option>29th</option><option>30th</option>
+                        <option>31th</option>
+                    </select>
+                </div>
+
+                <label class="ui-block-b">day of each month</label>
+            </div>
+            <div data-role="fieldcontain">
+                <div data-role="collapsible">
+                    <h1>Category</h1>
+                    <div class ="ui-grid-b" id="category">
+                    <div class="ui-block-a"><a data-role="button">food</a></div>
+                    <div class="ui-block-b"><a data-role="button">cloth</a></div>
+                    <div class="ui-block-c"><a data-role="button">house </a></div>
+                    <div class="ui-block-a"><a data-role="button">health </a></div>
+                    <div class="ui-block-b"><a data-role="button">traffic </a></div>
+                    <div class="ui-block-c"><a data-role="button">save </a></div>
+                    </div>
+                </div>
+            </div>
+            <div data-role="fieldcontain" class="ui-grid-a" id="method">
+                <label>Method</label>
+                <div class ="ui-block-a"><a data-role="button" class="ui-btn-active">cash</a></div>
+                <div class ="ui-block-b"><a data-role="button" class="button">credit card</a></div>
+            </div>
+
+            <div data-role="fieldcontain">
+                <label>Alarm</label>
+                <div class="ui-grid-c">
+                    <div class="ui-block-a">
+                        <select data-role="slider">
+                            <option>OFF</option>
+                            <option>ON</option>
+                        </select>
+                    </div>
+
+                    <div class="ui-block-a">
+                        <select data-inline="true">
+                            <option>0</option>
+                            <option>1</option>
+                            <option>3</option>
+                            <option>5</option>
+                            <option>7</option>
+                        </select>
+                    </div>
+                    <label class="ui-block-b" for="before">days before</label>
+                    <div class="ui-block-c">
+                        <select data-inline="false">
+                            <option>0</option>
+                            <option>9</option>
+                            <option>12</option>
+                            <option>17</option>
+                            <option>21</option>
+                        </select>
+                    </div>
+                    <div class="ui-block-d">o'clock</div>
+
+
+                </div>
+            </div>
+
+            <div class = "ui-grid-a">
+                <div class ="ui-block-a"><a href="#" data-role="button">submit</a></div>
+                <div class ="ui-block-b"><a href="mainpage.html" rel="external" data-role="button">cancel</a></div>
+            </div>
+    	</div>
     </div>
 </body>
 
