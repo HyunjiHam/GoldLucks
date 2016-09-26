@@ -10,8 +10,8 @@
     <script type="text/javascript" src="js/jquery.mobile-1.4.5.js"></script>
     <script type="text/javascript" src="js/alarm.js"></script>
     <script type="text/javascript" src="js/database.js"></script>
+    <script type="text/javascript" src="js/echarts.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
-        <script src="js/echarts.js"></script>
     <script type="text/javascript">
         // configure for module loader
         require.config({
@@ -83,7 +83,7 @@
                             ]
                         }
                     ]
-                };               // Load data into the ECharts instance 
+                };               // Load data into the ECharts instance
                 myChart.setOption(option);
             }
         );
@@ -107,7 +107,7 @@
                 <li><a href="#fixed" data-ajax="false"><i class="ui-icon-ion-card"></i>
                 Fixed expenses</a>
                 </li>
-                <li><a href="test.html#analysis" data-ajax="false"><i class="ui-icon-ion-pie-graph"></i>
+                <li><a href="index.html#analysis" data-ajax="false"><i class="ui-icon-ion-pie-graph"></i>
                 Analysis</a>
                 </li>
                 <li><a href="#share" data-ajax="false"><i class="ui-icon-ion-android-people"></i>
@@ -381,7 +381,7 @@
                 <li><a href="#slidebar" data-ajax="false"><i class="ui-icon-ion-card"></i>
                 Fixed expenses</a>
                 </li>
-                <li><a href="test.html#analysis" data-ajax="false"><i class="ui-icon-ion-pie-graph"></i>
+                <li><a href="index.html#analysis" data-ajax="false"><i class="ui-icon-ion-pie-graph"></i>
                 Analysis</a>
                 </li>
                 <li><a href="#share" data-ajax="false"><i class="ui-icon-ion-android-people"></i>
@@ -410,8 +410,8 @@
             <ul data-role="listview">
                 <li data-role="fieldcontain">
                     <div class="ui-field-contain">
-                        <label for="select1">day of every month</label>
-                        <select name="select1" id="select2" data-mini="true">
+                        <label for="select2">day of every month</label>
+                        <select name="select2" id="select2" data-mini="true">
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>
@@ -453,8 +453,8 @@
                     <input id="fixedUsage"data-corners="false" type="text" value="" placeholder="Usage">
                 </li>
                 <li data-role="fieldcontain">
-                    <label for="select2">Category</label>
-                    <select name="select2" id="select3" data-mini="true">
+                    <label for="select3">Category</label>
+                    <select name="select3" id="select3" data-mini="true">
                         <option>food</option>
                         <option>clothes</option>
                         <option>house</option>
@@ -468,9 +468,9 @@
                 <li data-role="fieldcontain">
                     <fieldset id="fixedMethod" data-role="controlgroup" data-type="horizontal" data-mini="true">
                         <legend>Methods</legend>
-                        <input type="radio" name="radio" id="radio3" value="on" checked="checked">
+                        <input type="radio" name="radio" id="radio1" value="on" checked="checked">
                         <label for="radio1">Cash</label>
-                        <input type="radio" name="radio" id="radio4" value="off">
+                        <input type="radio" name="radio" id="radio2" value="off">
                         <label for="radio2">Credit card</label>
                     </fieldset>
                 </li>
@@ -497,11 +497,11 @@
                 <li data-role="fieldcontain">
                     <fieldset id="fixedBefore"data-role="controlgroup" data-type="horizontal" data-mini="true" data-corners="false">
                         <legend>Day's before</legend>
-                        <input type="radio" name="radio2" id="radio5" checked="checked">
+                        <input type="radio" name="radio2" id="radio3" checked="checked">
                         <label for="radio3">one day</label>
-                        <input type="radio" name="radio2" id="radio6">
+                        <input type="radio" name="radio2" id="radio4">
                         <label for="radio4">two days</label>
-                        <input type="radio" name="radio2" id="radio7">
+                        <input type="radio" name="radio2" id="radio5">
                         <label for="radio5">three days</label>
                     </fieldset>
                 </li>
@@ -519,8 +519,8 @@
             <ul data-role="listview">
                 <li data-role="fieldcontain">
                     <div class="ui-field-contain">
-                        <label for="select1">day of every month</label>
-                        <select name="select1" id="select4" data-mini="true">
+                        <label for="select4">day of every month</label>
+                        <select name="select4" id="select4" data-mini="true">
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>
@@ -562,8 +562,8 @@
                     <input data-corners="false" type="text" value="" placeholder="Usage">
                 </li>
                 <li data-role="fieldcontain">
-                    <label for="select2">Category</label>
-                    <select name="select2" id="select5" data-mini="true">
+                    <label for="select5">Category</label>
+                    <select name="select5" id="select5" data-mini="true">
                         <option>food</option>
                         <option>clothes</option>
                         <option>house</option>
@@ -663,11 +663,11 @@
             <ul data-role="listview" data-divider-theme="a">
                 <li style="background: #fefdfe;">
                     <h2><a href="#"><i class="ui-icon-ion-ios-arrow-back"></i></a>
-                    2016.09 
+                    2016.09
                     <a href="#"><i class="ui-icon-ion-ios-arrow-forward"></i></a></h2>
                 </li>
                 <li>
-                    <div id="chart" style="height:300px;"></div>
+                    <div id="chart" style="height:300px;width:340px;" align="center"></div>
                 </li>
                 <li data-role="list-divider">Total
                     <p class="ui-li-aside">(Monthly sum)</p>
@@ -681,7 +681,7 @@
             </ul>
         </div>
     </div>
-    
+
 
 
 
@@ -710,7 +710,7 @@
                 </li>
                 <li><a href="#fixed" data-ajax="false"><i class="ui-icon-ion-card"></i> Fixed expenses</a>
                 </li>
-                <li><a href="test.html#analysis" data-ajax="false"><i class="ui-icon-ion-pie-graph"></i> Analysis</a>
+                <li><a href="index.html#analysis" data-ajax="false"><i class="ui-icon-ion-pie-graph"></i> Analysis</a>
                 </li>
                 <li><a href="#slidebar" data-ajax="false"><i class="ui-icon-ion-android-people"></i> Share</a>
                 </li>
@@ -753,11 +753,11 @@
                 <li data-role="fieldcontain">
                 <label for="with"><a href="#" data-ajax="false"><i class="ui-icon-ion-plus-round"></i></a></label>
                     <input id="with" placeholder=" Share with">
-                </li>            
+                </li>
             </ul>
         </div>
     </div>
-    
+
      <div data-role="page" id="shareedit">
         <div data-role="header" data-position="fixed" data-tap-toggle="false">
             <a href=# data-icon="ion-trash-b" data-iconpos="notext"></a>
@@ -797,7 +797,7 @@
                 <li><a href="#fixed" data-ajax="false"><i class="ui-icon-ion-card"></i>
                 Fixed expenses</a>
                 </li>
-                <li><a href="test.html#analysis" data-ajax="false"><i class="ui-icon-ion-pie-graph"></i>
+                <li><a href="index.html#analysis" data-ajax="false"><i class="ui-icon-ion-pie-graph"></i>
                 Analysis</a>
                 </li>
                 <li><a href="#share" data-ajax="false"><i class="ui-icon-ion-android-people"></i>
@@ -827,7 +827,7 @@
                                    <!-- <li data-role="fieldcontain">
                                         <label for="pw" class="ui-hidden-accessible">Password:</label>
                                         <input type="password" id="pw" value="" placeholder="Password">
-                                    </li> --> 
+                                    </li> -->
                                 </ul>
                             </form>
                             <div role="main" class="ui-content ui-padding">
@@ -851,7 +851,7 @@
                                   <!-- <li data-role="fieldcontain">
                                         <label for="pw" class="ui-hidden-accessible">Password:</label>
                                         <input type="password" id="pw" value="" placeholder="Password">
-                                    </li> -->  
+                                    </li> -->
                                 </ul>
                             </form>
                             <div role="main" class="ui-content ui-padding">
@@ -872,7 +872,7 @@
                             <div>
                                 <ul data-role="listview" data-inset="true" style="min-width:250px;">
                                     <li data-role="fieldcontain">
-                                        <select name="select1" id="select6" data-mini="true">
+                                        <select name="select6" id="select6" data-mini="true">
                                             <option>1</option>
                                             <option>2</option>
                                             <option>3</option>
@@ -923,7 +923,7 @@
                             <ul data-role="listview" style="width:250px;">
                                 <li data-role="fieldcontain">
                                     <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
-                                        <select name="select1" id="select7">
+                                        <select name="select7" id="select7">
                                             <option>food</option>
                                             <option>clothes</option>
                                             <option>house</option>
@@ -955,7 +955,7 @@
                             </div>
                             <ul data-role="listview" data-inset="true" style="min-width:250px;">
                                 <li data-role="fieldcontain">
-                                    <select name="select2" id="select8" data-mini="true">
+                                    <select name="select8" id="select8" data-mini="true">
                                         <option>(USD $)</option>
                                         <option>(KRW ₩)</option>
                                         <option>(...)</option>
@@ -976,7 +976,7 @@
                             </div>
                             <ul data-role="listview" data-inset="true" style="min-width:250px;">
                                 <li data-role="fieldcontain">
-                                    <select name="select3" id="select9" data-mini="true">
+                                    <select name="select9" id="select9" data-mini="true">
                                         <option>(English)</option>
                                         <option>(Korean)</option>
                                         <option>(...)</option>
