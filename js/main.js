@@ -40,7 +40,7 @@ $('#fixed').on('pagebeforeshow',function beforeshow(){
 	$('#startTime').val(startTime);
 });
 */
-
+var moneys=[];
 $(document).ready(function () {
     var mainList = $('#cd-timeline');
     var date = new Date(),
@@ -57,6 +57,7 @@ $(document).ready(function () {
     $("#addExpense").click(function(){
   		GoldLucksDB.insertData("fromExpense");
       getMoney(firstDay,lastDay);
+      alert(moneys.length);
   	});
 
   	$("#addIncome").click(function(){
@@ -99,12 +100,10 @@ $(document).ready(function () {
         }
     }
     home_init();
-
+    //alert(typeof(moneys));
 
     function getMoney(firstDay,lastDay){
-      var moneys={};
-      moneys=GoldLucksDB.getMoney(firstDay,lastDay);
-      alert(moneys.length);
+     GoldLucksDB.getMoney(firstDay,lastDay);
     }
 
 });

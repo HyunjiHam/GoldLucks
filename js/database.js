@@ -201,8 +201,7 @@ $(document).ready(function(){
                     //     newEntryRow.find(".showIncome").text(row.income);
                     //     newEntryRow.find(".showMemo").text(row.memo);
                     // }
-										var moneys=[],
-												money={};
+										var money={};
                     for(var i=0;i<r.rows.length;i++){
                         var row = r.rows.item(i);
 	                      var date = row.date,
@@ -223,8 +222,7 @@ $(document).ready(function(){
                         }
                     }
                     moneys.push(money);
-                    //alert('selecting');
-										return moneys;
+                    alert('selecting');
                 },function(tx,e){
                     alert("Error:"+e.message);
                 }

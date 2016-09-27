@@ -108,7 +108,7 @@ window.onload=function(){
                     list += '<li><a href="#fixedadd"> usage:'+expense.usage+' amount:' + expense.amount + ' time:' + expense.time + '</a></li>';
                 }
                 alarmList.innerHTML = list;
-                $('#alarmList').listview('refresh');
+                $('#alarmList').listview().listview('refresh');
             }
 
 
