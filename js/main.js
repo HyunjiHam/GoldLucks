@@ -56,8 +56,9 @@ $(document).ready(function () {
 
     $("#addExpense").click(function(){
   		GoldLucksDB.insertData("fromExpense");
+      GoldLucksDB.getMoney(firstDay,lastDay);
       getMoney(firstDay,lastDay);
-      alert(moneys.length);
+      //console.log(moneys.length);
   	});
 
   	$("#addIncome").click(function(){
@@ -74,7 +75,7 @@ $(document).ready(function () {
             year = date.getFullYear(),
             eDay = (new Date(year, month, 0)).getDate();
 
-        $('#mainMonths').html(year + '-' + month);
+        $('#mainMonth').html(year + '-' + month);
         mainList.empty();
 
         for (var i = 1; i < eDay+1; i++) {
@@ -103,7 +104,7 @@ $(document).ready(function () {
     //alert(typeof(moneys));
 
     function getMoney(firstDay,lastDay){
-     GoldLucksDB.getMoney(firstDay,lastDay);
+
     }
 
 });

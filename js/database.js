@@ -1,4 +1,5 @@
-var GoldLucksDB={};
+var GoldLucksDB={
+};
 var db;
 $(document).ready(function(){
 	// $("#addExpense").click(function(){
@@ -8,6 +9,7 @@ $(document).ready(function(){
 	// $("#addIncome").click(function(){
 	// 	GoldLucksDB.insertData("fromIncome");
 	// });
+	//GoldLucksDB.moneys=[];
 
 	var catId=1;
 	$("#cat1, #cat2, #cat3, #cat4, #cat5, #cat6").click(function(){
@@ -56,6 +58,7 @@ $(document).ready(function(){
 			t.executeSql("SELECT * FROM money", [],
 				function(tran, r) {
 					for (var i = 0; i < r.rows.length; i++) {
+						console.log('dataView:'+i);
 //						var id = r.rows.item(i).id;
 //						var date = r.rows.item(i).date;
 //						var amount = r.rows.item(i).amount;
@@ -107,7 +110,7 @@ $(document).ready(function(){
 					"INSERT INTO money(date, amount, used, category, method, income, memo) VALUES (?,?,?,?,?,?,?);",
 					[inputDate, inputAmount, inputused, inputCategory, inputMethod, 0, inputMemo],
 					function onSuccess() {//run if SQL succeeds
-						GoldLucksDB.dataView();
+						//GoldLucksDB.dataView();
 					},
 					function onError(e) { //run if SQL fails
 						alert("Error:" + e.message);
@@ -185,22 +188,23 @@ $(document).ready(function(){
 
 		GoldLucksDB.getMoney=function get_money(firstDay,lastDay){
         db.transaction(function (tx) {
-                tx.executeSql("SELECT * FROM money WHERE date>=? AND date<=?",[firstDay,lastDay],
+                tx.executeSql("SELECT * FROM money WHERE (date>=? AND date<=?)",[firstDay,lastDay],
                 function(tran,r){
-                    // for(var i=0;i<r.rows.length;i++){
-                    //   var row = r.rows.item(i);
-                    //     var newEntryRow = $("#sampleList").clone();
-                    //     newEntryRow.removeAttr("id");
-                    //     newEntryRow.removeAttr("style");
-                    //     newEntryRow.appendTo("ol");
-                    //     newEntryRow.find(".showDate").text(row.date);
-                    //     newEntryRow.find(".showAmount").text(row.amount);
-                    //     newEntryRow.find(".showUsed").text(row.used);
-                    //     newEntryRow.find(".showCat").text(row.category);
-                    //     newEntryRow.find(".showMethod").text(row.method);
-                    //     newEntryRow.find(".showIncome").text(row.income);
-                    //     newEntryRow.find(".showMemo").text(row.memo);
-                    // }
+                    for(var i=0;i<r.rows.length;i++){
+                      var row = r.rows.item(i);
+                        var newEntryRow = $("#sampleList").clone();
+                        newEntryRow.removeAttr("id");
+                        newEntryRow.removeAttr("style");
+                        newEntryRow.appendTo("ol");
+                        newEntryRow.find(".showDate").text(row.date);
+                        newEntryRow.find(".showAmount").text(row.amount);
+                        newEntryRow.find(".showUsed").text(row.used);
+                        newEntryRow.find(".showCat").text(row.category);
+                        newEntryRow.find(".showMethod").text(row.method);
+                        newEntryRow.find(".showIncome").text(row.income);
+                        newEntryRow.find(".showMemo").text(row.memo);
+                    }
+										//console.log(r.rows.length);
 										var money={};
                     for(var i=0;i<r.rows.length;i++){
                         var row = r.rows.item(i);
@@ -220,6 +224,7 @@ $(document).ready(function(){
                             'income' : income,
                             'memo' : memo
                         }
+												//console.log(date);
                     }
                     moneys.push(money);
                     alert('selecting');
