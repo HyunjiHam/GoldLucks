@@ -226,7 +226,7 @@ $(document).ready(function(){
                         }
 												//console.log(date);
                     }
-                    moneys.push(money);
+                    Mainpage.moneys.push(money);
                     alert('selecting');
                 },function(tx,e){
                     alert("Error:"+e.message);

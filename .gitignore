@@ -2,4 +2,5 @@
 *.tmp
 *.xml
 *.wgt
+*.rds_delta
 !config.xml
