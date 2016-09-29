@@ -40,3 +40,71 @@ $('#fixed').on('pagebeforeshow',function beforeshow(){
 	$('#startTime').val(startTime);
 });
 */
+
+$(document).ready(function () {
+    var mainList = $('#cd-timeline');
+    var date = new Date(),
+        year = date.getFullYear(),
+        month = date.getMonth() + 1,
+        eDay = (new Date(year, month, 0)).getDate();
+
+    if(month<10)
+      month='0'+month;
+    var firstDay = year+"-"+month+"-"+"01",
+        lastDay = year+"-"+month+"-"+eDay;
+
+
+    $("#addExpense").click(function(){
+  		GoldLucksDB.insertData("fromExpense");
+      getMoney(firstDay,lastDay);
+  	});
+
+  	$("#addIncome").click(function(){
+  		GoldLucksDB.insertData("fromIncome");
+  	});
+
+    function computeDate(){
+
+    }
+
+    function home_init() {
+        var date = new Date(),
+            month = date.getMonth() + 1,
+            year = date.getFullYear(),
+            eDay = (new Date(year, month, 0)).getDate();
+
+        $('#mainMonths').html(year + '-' + month);
+        mainList.empty();
+
+        for (var i = 1; i < eDay+1; i++) {
+            /*list += '<div class = "cd-timeline-block">'
+                        + '<div class="cd-timeline-img">'
+                            + '<span class="cd-date">' + i + '</span>'
+                        + '</div>'
+                        + '<div class = "cd-timeline-content">'
+                            + '<ul data-role="listview">'
+                                + '<li>Food'
+                                    + '<p class="ui-li-aside">(-1200)(won)</p>'
+                                + '</li>'
+                            + '</ul>'
+                        + '</div>'
+                    + '</div>';
+                    */
+            mainList.append('<div class="cd-timeline-block"id="block' + i + '"></div>');
+            $('.cd-timeline-block#block' + i).append('<div class="cd-timeline-img" id="img' + i + '"></div>', '<div class="cd-timeline-content"id="content' + i + '"></div>');
+            $('div[id="img' + i + '"]').append('<span class="cd-date">' + i + '</span>');
+            $('.cd-timeline-content#content' + i).append('<ul data-role="listview" id="ul' + i + '"></ul>');
+            $('ul[id="ul' + i + '"]').append('<li>Food<p class="ui-li-aside">(-1200)(won)</p></li>');
+            $('ul[id="ul' + i + '"]').listview().listview('refresh');
+        }
+    }
+    home_init();
+
+
+    function getMoney(firstDay,lastDay){
+      var moneys={};
+      moneys=GoldLucksDB.getMoney(firstDay,lastDay);
+      alert(moneys.length);
+    }
+
+});

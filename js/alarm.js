@@ -1,4 +1,5 @@
-$(document).ready(function(){
+window.onload=function(){
+			//initDB();
             var expenses = window.localStorage.getItem('expenses');
             expenses = expenses ? JSON.parse(expenses) : [];
             //alert('document ready' + expenses.length);
@@ -17,7 +18,7 @@ $(document).ready(function(){
                     test = null;
                 alert('fixedadd page before show');
                 $('#select1>option:first').val();
-                
+
                 $('#fixedTime').val(padZero(date.getHours()) + ':' + padZero(date.getMinutes()));
 
                 $('#fixedAmount').val('');
@@ -118,6 +119,7 @@ $(document).ready(function(){
                 expense.usage = $('#fixedUsage').val().trim();
                 expense.time = $('#fixedTime').val();
                 saveAlarm(expense);
+                //insertData("fromFixed");
                 $.mobile.changePage('#fixed');
             });
 
@@ -125,7 +127,7 @@ $(document).ready(function(){
                 alert('pagebeforeshow');
                 displayList(expenses);
             });
-            
+
 
             /*$('#fixed-add-btn').click(function () {
                 for (var i = 0; i < 10; i++) {
@@ -133,4 +135,4 @@ $(document).ready(function(){
                     $('#alarmList').listview('refresh');
                 }
             });*/
-});
+};
