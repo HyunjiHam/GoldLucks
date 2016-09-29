@@ -3,16 +3,25 @@ var db;
 $(document).ready(function(){
 	$("#addExpense").click(function(){
 		GoldLucksDB.insertData("fromExpense");
+		$("#datepicker").val("");
+		$("#eAmount").val("");
+		$("#eUsed").val("");
+		$("#select1").val("");
+		catId=0;
+		methodId=1;
+		$("#eMemo").val("");
 	});
 	
 	$("#addIncome").click(function(){
 		GoldLucksDB.insertData("fromIncome");
 	});
 	
-	var catId=1;
+	var catId=0;
 	$("#select1").change(function(){
 		catId = $(this).val();
+		console.log("when i choose catID is: "+catId);
 	});
+	
 	
 	var methodId = 1;
 	$("#radio1, #radio2").click(function(){
@@ -74,10 +83,10 @@ $(document).ready(function(){
 							"cat" : category,
 							"amount" : sumAmount
 						};
-						
-						expenseArray.push(expensePerCat);
+						expenseArray.push(expensePerCat);						
 					} 
 					callBack(expenseArray);
+					expenseArray=[];
 				}, function(t, e) {
 					alert("Error:" + e.message);
 				}
@@ -167,7 +176,7 @@ $(document).ready(function(){
 				inputCategory = catId,
 				inputMethod = methodId,
 				inputMemo = $("#eMemo").val();
-			
+				console.log("before save in db catId is "+inputCategory);
 			db.transaction(function(tx){
 				tx.executeSql(
 					"INSERT INTO money(date, amount, used, category, method, income, memo) VALUES (?,?,?,?,?,?,?);",
@@ -182,12 +191,7 @@ $(document).ready(function(){
 				);	
 			});
 			
-			$("#datepicker").val("");
-			$("#eAmount").val("");
-			$("#eUsed").val("");
-			catId=1;
-			methodId=1;
-			$("#eMemo").val("");
+
 		}
 		
 		if(fromWhere === "fromIncome"){
