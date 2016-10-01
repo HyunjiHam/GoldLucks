@@ -30,18 +30,20 @@ Main.prototype={
   printMoney: function Main_print_money(moneys){
         var mainList = $('#cd-timeline');
         mainList.empty();
-        var moneyList = moneys;
+        var moneyList=[];
+        moneyList=moneys;
         var money;
-        var date;
-        if(moneyList!==null){
+        if(moneyList!==undefined){
           for (var j in moneyList){
-            date = moneyList[j].date;
-            console.log(date);
-            alert(date);
+            money = moneyList[j];
+            console.log(money);
           }
+          console.log("printMoney");
+          console.log(this.moneys.length);
+          /*moneys is undefined object..why..?
+          console.log(moneys.length);*/
         }else{
-            console.log('nothing');
-            alert('nothing');
+            console.log('nothing in money DB yet');
         }
         //alert('Hi');
         for (var i = 1; i < this.eDay+1; i++) {
@@ -54,7 +56,6 @@ Main.prototype={
         }
   },
   getData : function get_input(){
-
     var money={};
     money.date = $("#datepicker").val();
 		money.amount = $("#eAmount").val();
@@ -69,24 +70,26 @@ Main.prototype={
 
 
  $(document).ready(function(){
-  $("#page1").on('pagebeforeshow',function(){
-    $("#addExpense").click(function(){
-      var money = {};
-      money = mainpage.getData();
-      mainpage.db.insertData("fromExpense",money);
-      // GoldLucksDB.getMoney(Mainpage.firstDay,Mainpage.lastDay);
-      // Mainpage.printMoney;
-      mainpage.init();
-      //mainpage.printMoney();
-      //getMoney(firstDay,lastDay);
-      //console.log(moneys.length);
-    });
 
-    $("#addIncome").click(function(){
-      mainpage.db.insertData("fromIncome");
-    });
+  $("#addExpense").click(function(){
+    var money = {};
+    money = mainpage.getData();
+    mainpage.db.insertData("fromExpense",money);
+    // GoldLucksDB.getMoney(Mainpage.firstDay,Mainpage.lastDay);
+    // Mainpage.printMoney;
+    mainpage.init();
+    //mainpage.printMoney();
+    //getMoney(firstDay,lastDay);
+    //console.log(moneys.length);
+  });
+
+  $("#addIncome").click(function(){
+    mainpage.db.insertData("fromIncome");
+  });
+
+
+  $("#page1").on('pagebeforeshow',function(){
   });
   var mainpage = new Main();
   mainpage.init();
-  mainpage.printMoney();
 });

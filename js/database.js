@@ -110,15 +110,15 @@ function GoldLucksDB(){
 		}
 
 		if(fromWhere === "fromIncome"){
-			var inputDate = $("#datepicker2").val(),
-			inputAmount = $("#iAmount").val(),
-			inputused = $("#iUsed").val(),
-			inputMemo = $("#iMemo").val();
+			// var inputDate = $("#datepicker2").val(),
+			// inputAmount = $("#iAmount").val(),
+			// inputused = $("#iUsed").val(),
+			// inputMemo = $("#iMemo").val();
 
 			db.transaction(function(tx){
 				tx.executeSql(
 					"INSERT INTO money(date, amount, used, income, memo) VALUES (?,?,?,?,?);",
-					[inputDate, inputAmount, inputused, 1, inputMemo],
+					[money.date, money.amount, money.used, 1, money.memo],
 					function onSuccess() {//run if SQL succeeds
 						this.dataView();
 					},
@@ -169,8 +169,10 @@ function GoldLucksDB(){
     },
 
 
-    getMoney : function getMoney(firstDay,lastDay,callback,callbackObj){
+    getMoney : function getMoney(firstDay,lastDay,printMoney,mainpage){
+      var money={};
       var db = this.db;
+      mainpage.moneys=[];
       db.transaction(function (tx) {
                 tx.executeSql("SELECT * FROM money WHERE (date>=? AND date<=?)",[firstDay,lastDay],
                 function(tran,r){
@@ -189,8 +191,6 @@ function GoldLucksDB(){
                         newEntryRow.find(".showMemo").text(row.memo);
                     }
 										//console.log(r.rows.length);
-										var money={};
-                    var moneys=[];
                     for(var i=0;i<r.rows.length;i++){
                         var row = r.rows.item(i);
 	                      var date = row.date,
@@ -210,11 +210,13 @@ function GoldLucksDB(){
                             'memo' : memo
                         }
 												//console.log(date);
+                        mainpage.moneys.push(money);
+                        console.log(typeof(mainpage.moneys)+mainpage.moneys.length);
                     }
-                    moneys.push(money);
-                    alert('selecting');
-                    if(typeof(callback)==="function"){
-                      callback.apply(callbackObj,moneys);
+                    console.log('getMoney() in database is done');
+                    if(typeof(printMoney)==="function"){
+                      console.log(mainpage);
+                      printMoney.apply(mainpage,mainpage.moneys);
                     }
 										//Mainpage.printMoney;
                 },function(tx,e){
