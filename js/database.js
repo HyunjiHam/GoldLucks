@@ -83,7 +83,7 @@ $(document).ready(function(){
 							"cat" : category,
 							"amount" : sumAmount
 						};
-						expenseArray.push(expensePerCat);						
+						expenseArray.push(expensePerCat);							
 					} 
 					callBack(expenseArray);
 					expenseArray=[];

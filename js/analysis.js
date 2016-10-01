@@ -20,7 +20,9 @@ $(document).ready(function() {
         	var catSync=array[idx].cat;
         	array[idx].cat = catArr[catSync];            
         });
-        chart = JSON.stringify(array);
+        if(array.length === 0) chart="";
+        else
+        	chart = JSON.stringify(array);
         analysis.makeChartJson();
     };
 
@@ -137,6 +139,6 @@ $(document).ready(function() {
         );
 
     };
-
-    (analysis.makeChartJson());
+    (GoldLucksDB.getExpenses(analysis.catNum2Text));
+    //(analysis.makeChartJson());
 });
