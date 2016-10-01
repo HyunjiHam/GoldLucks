@@ -1,154 +1,50 @@
-/*window.onload = function() {
-    // TODO:: Do your initialization job
+function Main(){
+  this.moneys=[];
+  this.money={};
+  this.db = new GoldLucksDB();
+  this.db.init();
+}
 
-    // add eventListener for tizenhwkey
-    document.addEventListener('tizenhwkey', function(e) {
-        if (e.keyName === "back") {
-            try {
-                tizen.application.getCurrentApplication().exit();
-            } catch (ignore) {}
-        }
-    });
+Main.prototype={
+  init: function Main_init(){
+    var db = this.db;
+        this.compute();
+        $('#mainMonth').html(this.year + '-' + this.month);
+        //this.getMoney();
+        //db.getMoney(this.firstDay,this.lastDay,this.printMoney);
+        db.getMoney(this.firstDay,this.lastDay,this.printMoney,this);
+        //this.moneys = db.moneys;
+  },
 
-    // Sample code
-    var mainPage = document.querySelector('#main');
+  compute : function Main_compute_date(){
+        this.date = new Date(),
+        this.year = this.date.getFullYear(),
+        this.month = this.date.getMonth() + 1,
+        this.eDay = (new Date(this.year, this.month, 0)).getDate();
+        if(this.month<10)
+          this.month='0'+this.month;
+        this.firstDay = this.year+"-"+this.month+"-"+"01",
+        this.lastDay = this.year+"-"+this.month+"-"+this.eDay;
+  },
 
-    mainPage.addEventListener("click", function() {
-        var contentText = document.querySelector('#content-text');
-
-        contentText.innerHTML = (contentText.innerHTML === "Basic") ? "Tizen" : "Basic";
-    });
-};*/
-
-/*window.onload = function(){
-	document.addEventListener('tizenhwkey',function(e){
-		var activePageId = $.mobile.activePage.attr('id');
-		if(e.keyName==='back'){
-				if(activePageId==='page1'||activePageId==='page2'){
-					$.mobile.changePage('#home');
-				}else{
-					history.back();
-				}
-		}
-	});
-};
-
-$('#fixed').on('pagebeforeshow',function beforeshow(){
-	var date = new Date(),
-		startTime = date.getHours()+':'+date.getMinutes();
-	alert('hi');
-	$('#startTime').val(startTime);
-});
-*/
-//var moneys=[];
-// $(document).ready(function () {
-//     var mainList = $('#cd-timeline');
-//     var date = new Date(),
-//         year = date.getFullYear(),
-//         month = date.getMonth() + 1,
-//         eDay = (new Date(year, month, 0)).getDate();
-//
-//     if(month<10)
-//       month='0'+month;
-//     var firstDay = year+"-"+month+"-"+"01",
-//         lastDay = year+"-"+month+"-"+eDay;
-//
-//
-//     $("#addExpense").click(function(){
-//   		GoldLucksDB.insertData("fromExpense");
-//       GoldLucksDB.getMoney(firstDay,lastDay);
-//       getMoney(firstDay,lastDay);
-//       //console.log(moneys.length);
-//   	});
-//
-//   	$("#addIncome").click(function(){
-//   		GoldLucksDB.insertData("fromIncome");
-//   	});
-//
-//     function computeDate(){
-//
-//     }
-//
-//     function home_init() {
-//         var date = new Date(),
-//             month = date.getMonth() + 1,
-//             year = date.getFullYear(),
-//             eDay = (new Date(year, month, 0)).getDate();
-//
-//         $('#mainMonth').html(year + '-' + month);
-//         mainList.empty();
-//
-//         for (var i = 1; i < eDay+1; i++) {
-//             /*list += '<div class = "cd-timeline-block">'
-//                         + '<div class="cd-timeline-img">'
-//                             + '<span class="cd-date">' + i + '</span>'
-//                         + '</div>'
-//                         + '<div class = "cd-timeline-content">'
-//                             + '<ul data-role="listview">'
-//                                 + '<li>Food'
-//                                     + '<p class="ui-li-aside">(-1200)(won)</p>'
-//                                 + '</li>'
-//                             + '</ul>'
-//                         + '</div>'
-//                     + '</div>';
-//                     */
-//             mainList.append('<div class="cd-timeline-block"id="block' + i + '"></div>');
-//             $('.cd-timeline-block#block' + i).append('<div class="cd-timeline-img" id="img' + i + '"></div>', '<div class="cd-timeline-content"id="content' + i + '"></div>');
-//             $('div[id="img' + i + '"]').append('<span class="cd-date">' + i + '</span>');
-//             $('.cd-timeline-content#content' + i).append('<ul data-role="listview" id="ul' + i + '"></ul>');
-//             $('ul[id="ul' + i + '"]').append('<li>Food<p class="ui-li-aside">(-1200)(won)</p></li>');
-//             $('ul[id="ul' + i + '"]').listview().listview('refresh');
-//         }
-//     }
-//     home_init();
-//     //alert(typeof(moneys));
-//
-//     function getMoney(firstDay,lastDay){
-//
-//     }
-//
-// });
-
-
-var Mainpage = {};
-$(document).ready(function(){
-
-  Mainpage.init = function Main_init(){
-
-        Mainpage.moneys=[];
-        Mainpage.compute();
-        $('#mainMonth').html(Mainpage.year + '-' + Mainpage.month);
-        Mainpage.printMoney;
-
-        $("#addExpense").click(function(){
-      		GoldLucksDB.insertData("fromExpense");
-          GoldLucksDB.getMoney(Mainpage.firstDay,Mainpage.lastDay);
-          Mainpage.printMoney;
-          //getMoney(firstDay,lastDay);
-          //console.log(moneys.length);
-      	});
-      	$("#addIncome").click(function(){
-      		GoldLucksDB.insertData("fromIncome");
-      	});
-  }
-
-  Mainpage.compute = function Main_compute_date(){
-        Mainpage.date = new Date(),
-        Mainpage.year = Mainpage.date.getFullYear(),
-        Mainpage.month = Mainpage.date.getMonth() + 1,
-        Mainpage.eDay = (new Date(Mainpage.year, Mainpage.month, 0)).getDate();
-        if(Mainpage.month<10)
-          Mainpage.month='0'+Mainpage.month;
-        Mainpage.firstDay = Mainpage.year+"-"+Mainpage.month+"-"+"01",
-        Mainpage.lastDay = Mainpage.year+"-"+Mainpage.month+"-"+Mainpage.eDay;
-  }
-
-  Mainpage.printMoney = function Main_print_money(){
+  printMoney: function Main_print_money(moneys){
         var mainList = $('#cd-timeline');
         mainList.empty();
-        var moneyList = mainList.moneys;
-
-        for (var i = 1; i < Mainpage.eDay+1; i++) {
+        var moneyList = moneys;
+        var money;
+        var date;
+        if(moneyList!==null){
+          for (var j in moneyList){
+            date = moneyList[j].date;
+            console.log(date);
+            alert(date);
+          }
+        }else{
+            console.log('nothing');
+            alert('nothing');
+        }
+        //alert('Hi');
+        for (var i = 1; i < this.eDay+1; i++) {
           mainList.append('<div class="cd-timeline-block" id="block' + i + '"></div>');
           $('.cd-timeline-block#block' + i).append('<div class="cd-timeline-img" id="img' + i + '"></div>', '<div class="cd-timeline-content"id="content' + i + '"></div>');
           $('div[id="img' + i + '"]').append('<span class="cd-date">' + i + '</span>');
@@ -156,61 +52,41 @@ $(document).ready(function(){
           $('ul[id="ul' + i + '"]').append('<li>Food<p class="ui-li-aside">(-1200)(won)</p></li>');
           $('ul[id="ul' + i + '"]').listview().listview('refresh');
         }
+  },
+  getData : function get_input(){
+
+    var money={};
+    money.date = $("#datepicker").val();
+		money.amount = $("#eAmount").val();
+		money.used = $("#eUsed").val();
+		money.category = $("#select1>option:selected").val();
+		money.method = $("input:radio[name='radio1']:checked").val();
+		money.memo = $("#eMemo").val();
+    return money;
   }
+}
 
-  
 
-  (Mainpage.init());
 
+ $(document).ready(function(){
+  $("#page1").on('pagebeforeshow',function(){
+    $("#addExpense").click(function(){
+      var money = {};
+      money = mainpage.getData();
+      mainpage.db.insertData("fromExpense",money);
+      // GoldLucksDB.getMoney(Mainpage.firstDay,Mainpage.lastDay);
+      // Mainpage.printMoney;
+      mainpage.init();
+      //mainpage.printMoney();
+      //getMoney(firstDay,lastDay);
+      //console.log(moneys.length);
+    });
+
+    $("#addIncome").click(function(){
+      mainpage.db.insertData("fromIncome");
+    });
+  });
+  var mainpage = new Main();
+  mainpage.init();
+  mainpage.printMoney();
 });
-
-// var Mainpage = {};
-// (function strict(){
-//   Mainpage = function Mainpage(){
-//     return;
-//   };
-//   Mainpage.prototype={
-//
-//     init : function Main_init(){
-//         $("#addExpense").click(function(){
-//       		GoldLucksDB.insertData("fromExpense");
-//           GoldLucksDB.getMoney(this.firstDay,this.lastDay);
-//           Mainpage.printMoney;
-//           //getMoney(firstDay,lastDay);
-//           //console.log(moneys.length);
-//       	});
-//       	$("#addIncome").click(function(){
-//       		GoldLucksDB.insertData("fromIncome");
-//       	});
-//         this.moneys=[];
-//         this.compute();
-//         $('#mainMonth').html(this.year + '-' + this.month);
-//         Mainpage.printMoney;
-//     },
-//
-//     compute: function Main_compute_date(){
-//         Mainpage.date = new Date(),
-//         Mainpage.year = Mainpage.date.getFullYear(),
-//         Mainpage.month = Mainpage.date.getMonth() + 1,
-//         Mainpage.eDay = (new Date(Mainpage.year, Mainpage.month, 0)).getDate();
-//         if(Mainpage.month<10)
-//           Mainpage.month='0'+Mainpage.month;
-//         Mainpage.firstDay = Mainpage.year+"-"+Mainpage.month+"-"+"01",
-//         Mainpage.lastDay = Mainpage.year+"-"+Mainpage.month+"-"+Mainpage.eDay;
-//     },
-//
-//     printMoney : function Main_print_money(){
-//         var mainList = $('#cd-timeline');
-//         mainList.empty();
-//         console.log(Mainpage.eDay);
-//         for (var i = 1; i < Mainpage.eDay+1; i++) {
-//           mainList.append('<div class="cd-timeline-block" id="block' + i + '"></div>');
-//           $('.cd-timeline-block#block' + i).append('<div class="cd-timeline-img" id="img' + i + '"></div>', '<div class="cd-timeline-content"id="content' + i + '"></div>');
-//           $('div[id="img' + i + '"]').append('<span class="cd-date">' + i + '</span>');
-//           $('.cd-timeline-content#content' + i).append('<ul data-role="listview" id="ul' + i + '"></ul>');
-//           $('ul[id="ul' + i + '"]').append('<li>Food<p class="ui-li-aside">(-1200)(won)</p></li>');
-//           $('ul[id="ul' + i + '"]').listview().listview('refresh');
-//         }
-//     }
-//   }
-// }());

@@ -1,72 +1,62 @@
-var GoldLucksDB={
-};
-var db;
-$(document).ready(function(){
-	// $("#addExpense").click(function(){
-	// 	GoldLucksDB.insertData("fromExpense");
-	// });
-	//
-	// $("#addIncome").click(function(){
-	// 	GoldLucksDB.insertData("fromIncome");
-	// });
-	//GoldLucksDB.moneys=[];
+// var catId=1;
+// $("#cat1, #cat2, #cat3, #cat4, #cat5, #cat6").click(function(){
+//   catId = this.id;
+//   if (catId === "cat2")
+//     catId = 2;
+//   else if (catId === "cat3")
+//     catId = 3;
+//   else if (catId === "cat4")
+//     catId = 4;
+//   else if (catId === "cat5")
+//     catId = 5;
+//   else if (catId === "cat6")
+//     catId = 6;
+//   else
+//     catId = 1;
+// });
+//
+// var methodId = 1;
+// $("#radio1, #radio2").click(function(){
+//   methodId = this.id;
+//   if(methodId === "radio2")
+//     methodId = 2;
+//   else methodId = 1;
+// });
 
-	var catId=1;
-	$("#cat1, #cat2, #cat3, #cat4, #cat5, #cat6").click(function(){
-		catId = this.id;
-		if (catId === "cat2")
-			catId = 2;
-		else if (catId === "cat3")
-			catId = 3;
-		else if (catId === "cat4")
-			catId = 4;
-		else if (catId === "cat5")
-			catId = 5;
-		else if (catId === "cat6")
-			catId = 6;
-		else
-			catId = 1;
-	});
+function GoldLucksDB(){
 
-	var methodId = 1;
-	$("#radio1, #radio2").click(function(){
-		methodId = this.id;
-		if(methodId === "radio2")
-			methodId = 2;
-		else methodId = 1;
-	});
+}
 
-	//database version setting
-	var version = 1.0;
-	//database name setting
-	var dbName = "GoldLucksDB";
-	//database display name setting
-	var dbDisplayName = "GoldLucksDisplay";
-	//database size setting
-	var dbSize = 2 * 1024 * 1024;
-	GoldLucksDB.openDatabase = function(){
+(function strict(){
+  GoldLucksDB.prototype={
+
+  init : function init(){
+    this.db={};
+    this.version = 1.0;
+    this.dbName="GoldLucksDB";
+    this.dbDisplayName="GoldLucksDisplay";
+    this.dbSize = 2*1024*1024;
+    this.moneys=[];
+    this.openDatabase();
+  },
+
+  openDatabase : function(){
 		if(window.openDatabase){
-			db = openDatabase(dbName, version, dbDisplayName, dbSize);
-			GoldLucksDB.createTable(db);
+			this.db = openDatabase(this.dbName, this.version, this.dbDisplayName, this.dbSize);
+			this.createTable(this.db);
 		}else {
 	        alert("Web SQL Database not supported");
 		}
-	};
-	//reads and displays values from the 'places' table
-	GoldLucksDB.dataView = function dataView() {
-		db.transaction(function(t) {
+	},
+
+  dataView : function dataView(){
+    var db = this.db;
+    db.transaction(function(t) {
 			t.executeSql("SELECT * FROM money", [],
 				function(tran, r) {
 					for (var i = 0; i < r.rows.length; i++) {
 						console.log('dataView:'+i);
-//						var id = r.rows.item(i).id;
-//						var date = r.rows.item(i).date;
-//						var amount = r.rows.item(i).amount;
-//						var used = r.rows.item(i).used;
-//						var category = r.rows.item(i).category;
-//						var method = r.rows.item(i).method;
-//						var memo = r.rows.item(i).memo;
-						var row = r.rows.item(i);
+            var row = r.rows.item(i);
 						var newEntryRow = $("#sampleList").clone();
 						newEntryRow.removeAttr("id");
 						newEntryRow.removeAttr("style");
@@ -78,38 +68,31 @@ $(document).ready(function(){
 						newEntryRow.find(".showMethod").text(row.method);
 						newEntryRow.find(".showIncome").text(row.income);
 						newEntryRow.find(".showMemo").text(row.memo);
+          }
+      }, function(t, e) {
+        alert("Error:" + e.message);
+        }
+    );
+  });
+},
 
-
-						//data list rendering
-//						html.innerHTML += " " + id + " " + date + " " + amount + " " + used + " " + memo + "<br/>";
-
-
-//						if(toWhere === "page1"){ //page1
-//							var innerHtml = $("#testcase").html();
-//							$("#testcase").html(innerHtml + id + " " + date + " " + amount + " " + used + " " + memo+"<br/>");
-
-//						}
-					}
-				}, function(t, e) {
-					alert("Error:" + e.message);
-				}
-			);
-		});
-	};
-	GoldLucksDB.insertData = function insertData(fromWhere){
-		if(fromWhere === "fromExpense"){
-			var inputDate = $("#datepicker").val(),
-				inputAmount = $("#eAmount").val(),
-				inputused = $("#eUsed").val(),
-				inputCategory = catId,
-				inputMethod = methodId,
-				inputMemo = $("#eMemo").val();
+  insertData : function insertData(fromWhere,money){
+    var db = this.db;
+    if(fromWhere === "fromExpense"){
+			// var inputDate = $("#datepicker").val(),
+			// 	inputAmount = $("#eAmount").val(),
+			// 	inputused = $("#eUsed").val(),
+			// 	inputCategory = catId,
+			// 	inputMethod = methodId,
+			// 	inputMemo = $("#eMemo").val();
 
 			db.transaction(function(tx){
 				tx.executeSql(
 					"INSERT INTO money(date, amount, used, category, method, income, memo) VALUES (?,?,?,?,?,?,?);",
-					[inputDate, inputAmount, inputused, inputCategory, inputMethod, 0, inputMemo],
+					//[inputDate, inputAmount, inputused, inputCategory, inputMethod, 0, inputMemo],
+          [money.date,money.amount,money.used,money.category,money.method,0,money.memo],
 					function onSuccess() {//run if SQL succeeds
+            return;
 						//GoldLucksDB.dataView();
 					},
 					function onError(e) { //run if SQL fails
@@ -118,12 +101,12 @@ $(document).ready(function(){
 				);
 			});
 
-			$("#datepicker").val("");
-			$("#eAmount").val("");
-			$("#eUsed").val("");
-			catId=1;
-			methodId=1;
-			$("#eMemo").val("");
+			// $("#datepicker").val("");
+			// $("#eAmount").val("");
+			// $("#eUsed").val("");
+			// catId=1;
+			// methodId=1;
+			// $("#eMemo").val("");
 		}
 
 		if(fromWhere === "fromIncome"){
@@ -137,7 +120,7 @@ $(document).ready(function(){
 					"INSERT INTO money(date, amount, used, income, memo) VALUES (?,?,?,?,?);",
 					[inputDate, inputAmount, inputused, 1, inputMemo],
 					function onSuccess() {//run if SQL succeeds
-						GoldLucksDB.dataView();
+						this.dataView();
 					},
 					function onError(e) { //run if SQL fails
 						alert("Error:" + e.message);
@@ -145,10 +128,10 @@ $(document).ready(function(){
 				);
 			});
 		}
-	};
-	GoldLucksDB.createTable = function createTable(db) {
+	},
 
-        db.transaction(function(tx) {
+  createTable : function createTable(db){
+    db.transaction(function(tx) {
             tx.executeSql("CREATE TABLE IF NOT EXISTS book"+
             		"(bookName VARCHAR(20) PRIMARY KEY,"+
             		"masterId VARCHAR(10) NOT NULL)");
@@ -183,11 +166,12 @@ $(document).ready(function(){
             		"income INT(1) NOT NULL,"+
             		"memo VARCHAR(50) )" );
         });
-    };
-    (GoldLucksDB.openDatabase());
+    },
 
-		GoldLucksDB.getMoney=function get_money(firstDay,lastDay){
-        db.transaction(function (tx) {
+
+    getMoney : function getMoney(firstDay,lastDay,callback,callbackObj){
+      var db = this.db;
+      db.transaction(function (tx) {
                 tx.executeSql("SELECT * FROM money WHERE (date>=? AND date<=?)",[firstDay,lastDay],
                 function(tran,r){
                     for(var i=0;i<r.rows.length;i++){
@@ -206,6 +190,7 @@ $(document).ready(function(){
                     }
 										//console.log(r.rows.length);
 										var money={};
+                    var moneys=[];
                     for(var i=0;i<r.rows.length;i++){
                         var row = r.rows.item(i);
 	                      var date = row.date,
@@ -226,13 +211,17 @@ $(document).ready(function(){
                         }
 												//console.log(date);
                     }
-                    Mainpage.moneys.push(money);
+                    moneys.push(money);
                     alert('selecting');
+                    if(typeof(callback)==="function"){
+                      callback.apply(callbackObj,moneys);
+                    }
+										//Mainpage.printMoney;
                 },function(tx,e){
                     alert("Error:"+e.message);
                 }
             );
         });
     }
-
-});
+}
+}());
