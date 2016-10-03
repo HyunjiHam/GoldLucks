@@ -25,6 +25,24 @@ function Analysis(goldlucksdb){
             this.chart = array;//JSON.stringify(array);
         console.log(this);
         this.makeChartJson();
+        this.printCat();
+    },
+
+    printCat : function printCat(){
+      var array = this.db.expenseArray;//JSON.parse(this.db.expenseArray);
+      var cat,
+          amount,
+          sum;
+      $('#analyList>li:gt(3)').empty();
+      sum=0;
+      for(var i in array){
+        cat = array[i].cat;
+        amount = array[i].amount;
+        $('#analyList').append('<li>'+cat+'<p class="ui-li-aside">'+amount+'$</p>');
+        $('#analyList').listview('refresh');
+        sum += parseInt(amount);
+      }
+      $('#analyTotal').html(sum+'$');
     },
 
     makeChartJson : function makeChartJson() {
@@ -144,10 +162,3 @@ function Analysis(goldlucksdb){
 
   }
 }());
-// $(document).ready(function () {
-//
-//     var analysis = new Analysis(mainpage.db);
-//     console.log(mainpage);
-//     analysis.init();
-//     analysis.getExpenses();
-// });
