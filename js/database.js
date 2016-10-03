@@ -251,7 +251,7 @@ $(document).ready(function(){
             		"method INT(1),"+
             		"income INT(1) NOT NULL,"+
             		"memo VARCHAR(50),"+
-            		"bookId INTEGER,"+
+            		"bookId INTEGER DEFAULT 0,"+
             		"FOREIGN KEY(bookId) REFERENCES book(bookId) )" );
         });
     };
