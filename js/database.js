@@ -1,11 +1,11 @@
 function GoldLucksDB(){
-
 }
 
 (function strict(){
   GoldLucksDB.prototype={
 
     init : function init(){
+      this.expenseArray = [];
       this.db={};
       this.version = 1.0;
       this.dbName="GoldLucksDB";
@@ -96,10 +96,76 @@ function GoldLucksDB(){
               		"income INT(1) NOT NULL,"+
               		"memo VARCHAR(50) )" );
           });
-      },
+    },
+
+    getExpenses : function getExpenses(catNum2Text,analysis){
+        /**
+	     * It sets variables for database query.
+	     */
+        var today = new Date();
+        var year = today.getFullYear();
+        var month = today.getMonth()+1;
+        if(month<10) month = "0"+month;
+        var day = today.getDate();
+        if(day<10) day = "0"+day;
+        var firstDay=year+"-"+month+"-"+"01";
+        var todayString = year+"-"+month+"-"+day;
+        var db = this.db;
 
 
-      getMoney : function getMoney(firstDay,lastDay,printMoney,mainpage){
+        db.transaction(function(t){
+            t.executeSql("SELECT SUM(amount) AS sumAmount, category FROM money WHERE income=? AND (date >= ? AND date <= ?) GROUP BY category",[0,firstDay, todayString],
+				function(tran, r) {
+          analysis.db.expenseArray=[];
+				    for (var i = 0; i < r.rows.length; i++){
+				        var row = r.rows.item(i);
+				        var sumAmount = row.sumAmount;
+				        var category = row["category"];
+
+				        //js obj
+				        var expensePerCat = {
+				            "cat" : category,
+				            "amount" : sumAmount
+				        };
+				        analysis.db.expenseArray.push(expensePerCat);
+				    }
+            console.log(analysis.db.expenseArray);
+				    catNum2Text.apply(analysis,analysis.db.expenseArray);
+				}, function(t, e) {
+				    alert("Error:" + e.message);
+				}
+			);
+        });
+    },
+
+    getTotalExpense : function getTotalExpense(){
+      var db = this.db;
+        db.transaction(function(t){
+            var dateee = new Date();
+            var year = dateee.getFullYear();
+            var month = dateee.getMonth()+1;
+            if(month<10) month = "0"+month;
+            var day = dateee.getDate();
+            if(day<10) day = "0"+day;
+            var firstDay=year+"-"+month+"-"+"01";
+            var dateString = year+"-"+month+"-"+day;
+
+            t.executeSql("SELECT amount FROM money WHERE income=? AND (date >= ? AND date <= ?)",[0,firstDay, dateString],
+				function(tran, r) {
+				    for (var i = 0; i < r.rows.length; i++) {
+				        var row = r.rows.item(i);
+				        var amount = row["amount"];
+				    }
+				}, function(t, e) {
+				    alert("Error:" + e.message);
+
+				}
+			);
+        });
+    },
+
+
+    getMoney : function getMoney(firstDay,lastDay,printMoney,mainpage){
         var money={};
         var db = this.db;
         mainpage.moneys=[];

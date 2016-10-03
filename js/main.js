@@ -3,6 +3,7 @@ function Main(){
   this.money={};
   this.db = new GoldLucksDB();
   this.db.init();
+  this.analysis = new Analysis(this.db);
 }
 
 Main.prototype={
@@ -112,7 +113,15 @@ Main.prototype={
   });
 
 
-  $("#page1").on('pagebeforeshow',function(){
+  $("#analysis").on('pagebeforeshow',function(){
+    var catArr=[];
+    $("#select1").find("option").each(function() {
+        catArr.push($(this).text());
+
+    });
+    //mainpage.analysis.init();
+    mainpage.analysis.catArr = catArr;
+    mainpage.db.getExpenses(mainpage.analysis.catNum2Text,mainpage.analysis);
   });
   var mainpage = new Main();
   mainpage.init();
