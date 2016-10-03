@@ -1,90 +1,119 @@
-/*window.onload = function() {
-    // TODO:: Do your initialization job
+function Main(){
+  this.moneys=[];
+  this.money={};
+  this.db = new GoldLucksDB();
+  this.db.init();
+}
 
-    // add eventListener for tizenhwkey
-    document.addEventListener('tizenhwkey', function(e) {
-        if (e.keyName === "back") {
-            try {
-                tizen.application.getCurrentApplication().exit();
-            } catch (ignore) {}
-        }
-    });
+Main.prototype={
+  init: function Main_init(){
+    var db = this.db;
+        this.compute();
+        $('#mainMonth').html(this.year + '-' + this.month);
+        db.getMoney(this.firstDay,this.lastDay,this.printMoney,this);
+  },
 
-    // Sample code
-    var mainPage = document.querySelector('#main');
+  compute : function Main_compute_date(){
+        this.date = new Date(),
+        this.year = this.date.getFullYear(),
+        this.month = this.date.getMonth() + 1,
+        this.eDay = (new Date(this.year, this.month, 0)).getDate();
+        if(this.month<10)
+          this.month='0'+this.month;
+        this.firstDay = this.year+"-"+this.month+"-"+"01",
+        this.lastDay = this.year+"-"+this.month+"-"+this.eDay;
+        this.today = new Date();
+  },
 
-    mainPage.addEventListener("click", function() {
-        var contentText = document.querySelector('#content-text');
-
-        contentText.innerHTML = (contentText.innerHTML === "Basic") ? "Tizen" : "Basic";
-    });
-};*/
-
-/*window.onload = function(){
-	document.addEventListener('tizenhwkey',function(e){
-		var activePageId = $.mobile.activePage.attr('id');
-		if(e.keyName==='back'){
-				if(activePageId==='page1'||activePageId==='page2'){
-					$.mobile.changePage('#home');
-				}else{
-					history.back();
-				}
-		}
-	});
-};
-
-$('#fixed').on('pagebeforeshow',function beforeshow(){
-	var date = new Date(),
-		startTime = date.getHours()+':'+date.getMinutes();
-	alert('hi');
-	$('#startTime').val(startTime);
-});
-*/
-
-$(document).ready(function () {
-    var mainList = $('#cd-timeline');
-        
-
-    function home_init() {
-        var date = new Date(),
-            month = date.getMonth() + 1,
-            year = date.getFullYear(),
-            eDay = (new Date(year, month, 0)).getDate();
-
-        $('#mainMonths').html(year + '-' + month);
+  printMoney: function Main_print_money(moneys){
+        var mainList = $('#cd-timeline');
         mainList.empty();
-
-        for (var i = 1; i < eDay+1; i++) {
-            /*list += '<div class = "cd-timeline-block">'
-                        + '<div class="cd-timeline-img">'
-                            + '<span class="cd-date">' + i + '</span>'
-                        + '</div>'
-                        + '<div class = "cd-timeline-content">'
-                            + '<ul data-role="listview">'
-                                + '<li>Food'
-                                    + '<p class="ui-li-aside">(-1200)(won)</p>'
-                                + '</li>'
-                            + '</ul>'
-                        + '</div>'
-                    + '</div>';
-                    */
-            mainList.append('<div class="cd-timeline-block"id="block' + i + '"></div>');
-            $('.cd-timeline-block#block' + i).append('<div class="cd-timeline-img" id="img' + i + '"></div>', '<div class="cd-timeline-content"id="content' + i + '"></div>');
-            $('div[id="img' + i + '"]').append('<span class="cd-date">' + i + '</span>');
-            $('.cd-timeline-content#content' + i).append('<ul data-role="listview" id="ul' + i + '"></ul>');
-            $('ul[id="ul' + i + '"]').append('<li>Food<p class="ui-li-aside">(-1200)(won)</p></li>');
-            $('ul[id="ul' + i + '"]').listview().listview('refresh');
+        var time,
+            money,
+            check;
+        if(moneys!==undefined){
+          for (var i = this.eDay; i >= 0; i--) {
+            check=0;
+            for(var j in this.moneys){
+              money = this.moneys[j];
+              time=money.date.split('-');
+              if(parseInt(time[2])===i){
+                //this is the first time to insert money to i-th day
+                if(check===0){
+                  mainList.append('<div class="cd-timeline-block" id="block' + i + '"></div>');
+                  $('.cd-timeline-block#block' + i).append('<div class="cd-timeline-img" id="img' + i + '"></div>', '<div class="cd-timeline-content"id="content' + i + '"></div>');
+                  $('div[id="img' + i + '"]').append('<span class="cd-date">' + i + '</span>');
+                  $('.cd-timeline-content#content' + i).append('<ul data-role="listview" id="ul' + i + '"></ul>');
+                  check=1;
+                }
+                if(check===1){
+                  if(money.income===0){//in case of expense
+                    $('ul[id="ul' + i + '"]').append('<li>'+money.used+'<p class="ui-li-aside">'+money.amount+'(won)</p></li>');
+                    $('ul[id="ul' + i + '"]').listview().listview('refresh');
+                    console.log("find expense money in moneyList");
+                  }
+                  if(money.income===1){//in case of income
+                    $('ul[id="ul' + i + '"]').append('<li>'+money.used+'<p class="ui-li-aside">'+money.amount+'(won)</p></li>');
+                    $('ul[id="ul' + i + '"]').listview().listview('refresh');
+                    console.log("find income money in moneyList");
+                  }
+                }
+              }
+            }
+          }
+        }else{
+          var today = this.today.getDate();
+          mainList.append('<div class="cd-timeline-block" id="block' + today + '"></div>');
+          $('.cd-timeline-block#block' + today).append('<div class="cd-timeline-img" id="img' + today + '"></div>', '<div class="cd-timeline-content"id="content' + today + '"></div>');
+          $('div[id="img' + today + '"]').append('<span class="cd-date">' + today + '</span>');
+          $('.cd-timeline-content#content' + today).append('<ul data-role="listview" id="ul' + today + '"></ul>');
+          $('ul[id="ul' + today + '"]').append("<li><h1>Please insert today's money list!</h1><p class='ui-li-aside'></p></li>");
+          $('ul[id="ul' + today + '"]').listview().listview('refresh');
+          console.log('nothing in money DB yet');
         }
-    }
-    home_init();
+  },
 
-    function home_change() {
-        var date = new Date(),
-            month = date.getMonth() + 1,
-            year = date.getFullYear(),
-            eDay = (new Date(year, month, 0)).getDate();
-
+  getData : function get_input(fromWhere){
+    var money={};
+    if(fromWhere==="fromExpense"){
+      money.date = $("#datepicker").val();
+  		money.amount = $("#eAmount").val();
+  		money.used = $("#eUsed").val();
+  		money.category = $("#select1>option:selected").val();
+  		money.method = $("input:radio[name='radio1']:checked").val();
+  		money.memo = $("#eMemo").val();
     }
-    
-    
+    if(fromWhere==="fromIncome"){
+      money.date = $("#datepicker2").val();
+      money.amount = $("#iAmount").val();
+      money.used = $("#iUsed").val();
+      money.memo = $("#iMemo").val();
+    }
+    return money;
+  }
+}
+
+
+
+ $(document).ready(function(){
+
+  $("#addExpense").click(function(){
+    var money = {};
+    money = mainpage.getData("fromExpense");
+    mainpage.db.insertData("fromExpense",money);
+    mainpage.init();
+  });
+
+  $("#addIncome").click(function(){
+    var money = {};
+    money = mainpage.getData("fromIncome");
+    mainpage.db.insertData("fromIncome",money);
+    mainpage.init();
+  });
+
+
+  $("#page1").on('pagebeforeshow',function(){
+  });
+  var mainpage = new Main();
+  mainpage.init();
 });

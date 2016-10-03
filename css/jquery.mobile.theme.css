@@ -3049,6 +3049,22 @@ ui-listview > li h2{
     margin: 0;
     text-align: right;
 }
+.ui-listview .ui-li-aside1 {
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    margin: 0;
+    text-align: right;
+    color: #66cc33 /*income color*/
+}
+.ui-listview .ui-li-aside2 {
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    margin: 0;
+    text-align: right;
+    color: #f06251 /*expence color*/
+}
 .ui-listview > li.ui-li-has-alt > .ui-btn {
     margin-right: 2.5em;
     border-right-width: 0;
