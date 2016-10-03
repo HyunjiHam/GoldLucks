@@ -94,9 +94,9 @@ $(document).ready(function(){
 	};
 	
 	/**
-	 * Gets total expense from the money table
+	 * Gets total expense & income from the money table
 	 */
-	GoldLucksDB.getTotalExpense = function getTotalExpense(){
+	GoldLucksDB.getTotalExpenseAndIncome = function getTotalExpense(){
 		db.transaction(function(t){
 			var dateee = new Date();
 			var year = dateee.getFullYear();
@@ -107,12 +107,17 @@ $(document).ready(function(){
 			var firstDay=year+"-"+month+"-"+"01";
 			var dateString = year+"-"+month+"-"+day;
 			
-			t.executeSql("SELECT amount FROM money WHERE income=? AND (date >= ? AND date <= ?)",[0,firstDay, dateString],
+			t.executeSql("SELECT SUM(amount) AS sumAmount FROM money WHERE (date >= ? AND date <= ?) GROUP BY income",[firstDay, dateString],
 				function(tran, r) {
+					var totalExpense, totalIncome, total;
 					for (var i = 0; i < r.rows.length; i++) {
 						var row = r.rows.item(i);
-						var amount = row["amount"];
+						if(i === 0) //expense
+							totalExpense = row.sumAmount;
+						else //income
+							totalIncome = row.sumAmount;
 					}
+					total = totalExpense + totalIncome;
 				}, function(t, e) {
 					alert("Error:" + e.message);
 					
@@ -132,10 +137,7 @@ $(document).ready(function(){
 			var day = dateee.getDate();
 			if(day<10) day = "0"+day;
 			var firstDay=year+"-"+month+"-"+"01";
-			var dateString = year+"-"+month+"-"+day;
-			
-//			t.executeSql("SELECT SUM(amount) AS sumAmount FROM money WHERE income=?",[0],
-					
+			var dateString = year+"-"+month+"-"+day;				
 			
 			t.executeSql("SELECT SUM(amount) AS sumAmount, category FROM money WHERE income=? AND (date >= ? AND date <= ?) GROUP BY category",[0,firstDay, dateString],
 				function(tran, r) {
