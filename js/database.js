@@ -6,7 +6,7 @@ $(document).ready(function(){
 		$("#datepicker").val("");
 		$("#eAmount").val("");
 		$("#eUsed").val("");
-		$("#select1").val("");
+		$("#select1").find("option:eq(0)").prop("selected", true);
 		catId=0;
 		methodId=1;
 		$("#eMemo").val("");
@@ -19,7 +19,6 @@ $(document).ready(function(){
 	var catId=0;
 	$("#select1").change(function(){
 		catId = $(this).val();
-		console.log("when i choose catID is: "+catId);
 	});
 	
 	
