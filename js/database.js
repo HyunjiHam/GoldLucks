@@ -218,7 +218,8 @@ $(document).ready(function(){
 
         db.transaction(function(tx) {
             tx.executeSql("CREATE TABLE IF NOT EXISTS book"+
-            		"(bookName VARCHAR(20) PRIMARY KEY,"+
+            		"(bookId INTEGER PRIMARY KEY,"+
+            		"bookName VARCHAR(20) NOT NULL,"+
             		"masterId VARCHAR(10) NOT NULL)");
         });
         
@@ -249,10 +250,14 @@ $(document).ready(function(){
             		"category INT(1),"+
             		"method INT(1),"+
             		"income INT(1) NOT NULL,"+
-            		"memo VARCHAR(50) )" );
+            		"memo VARCHAR(50),"+
+            		"bookId INTEGER,"+
+            		"FOREIGN KEY(bookId) REFERENCES book(bookId) )" );
         });
     };
 	
     (GoldLucksDB.openDatabase());
+    
+
 
 });
