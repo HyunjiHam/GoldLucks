@@ -116,15 +116,14 @@ function GoldLucksDB(){
           db.transaction(function(tx) {
               tx.executeSql("CREATE TABLE IF NOT EXISTS money"+
               		"(_id INTEGER PRIMARY KEY,"+
+              		"bookName VARCHAR(20) NOT NULL DEFAULT 'My Account Book',"+
               		"date DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,"+
               		"amount FLOAT NOT NULL,"+
               		"used VARCHAR(30) NOT NULL,"+
               		"category INT(1),"+
               		"method INT(1),"+
               		"income INT(1) NOT NULL,"+
-              		"memo VARCHAR(50),"+
-              		"bookId INTEGER DEFAULT 0,"+
-              		"FOREIGN KEY(bookId) REFERENCES book(bookId) )" );
+              		"memo VARCHAR(50) )" );
           });
     },
 
@@ -236,17 +235,35 @@ function GoldLucksDB(){
       },
 
     shareBook : function shareBook(bookName,groupName,userId){
-	$.ajax({
-		url: "http://localhost:3000/book/"+userId+"/"+bookName+"/"+groupName,
-		crossDomain : true,
-		success: function(result){
-			console.log(result);
-		},
-		error: function(xhr) {
-		    console.log('실패 - ', xhr);
-		}
+    	$.ajax({
+    		url: "http://localhost:3000/book/"+userId+"/"+bookName+"/"+groupName,
+    		crossDomain : true,
+    		success: function(result){
+    			console.log(result);
+    		},
+    		error: function(xhr) {
+    			console.log('실패 - ', xhr);
+    		}
         });
-      }
+      },
+      
+      
+     sendMoney : function sendMoney(){
+    	 $.ajax({
+    		   type : "POST",
+    		   url : "http://localhost:3000/money/",
+    		   crossDomain : true,
+    		   data : {bookName: bookName, amount: amount, used: used, category: category, method: method, income: income, memo: memo} ,
+    		   dataType : "json",
+    		   success: function(data){    
+    			   console.log(result);
+    		    },
+    		   error : function (data) {
+    		    alert('실패 - .', xhr);
+    		   }  
+    		  });
+     }
+      
 
 
 
