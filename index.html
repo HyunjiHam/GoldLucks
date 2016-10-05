@@ -45,7 +45,7 @@
         </div>
         <div data-role="content" id="mainContents">
             <div  data-role="content" data-theme="c" data-position="fixed" data-tap-toggle="false">
-                <h3>My Account Book</h3>
+                <h3 id="mainbookName">TEST</h3>
                 <h2>
                 <a href="#"><i class="ui-icon-ion-ios-arrow-back"></i></a>
                 <a id="mainMonth">2016.09<a>
@@ -607,7 +607,7 @@
         <div data-role="header" data-position="fixed" data-tap-toggle="false">
             <a href="#sidebar4" data-icon="ion-navicon-round" data-iconpos="notext"></a>
             <h1 class="header-title">Share</h1>
-            <a href="" data-ajax="false" data-icon="ion-refresh" data-iconpos="notext"></a>
+            <a href=""  id="refreshbtn" data-ajax="false" data-icon="ion-refresh" data-iconpos="notext"></a>
         </div>
         <div data-role="panel" data-display="push" id="sidebar4">
             <ul data-role="listview">
@@ -626,19 +626,19 @@
             </ul>
         </div>
         <div data-role="content">
-            <ul data-role="listview">
+            <ul id="shareList" data-role="listview">
                 <li><a href="#shareadd" data-ajax="false"><i class="ui-icon-ion-plus-round"></i>
                 Add new</a>
                 </li>
-                <li><a href="#shareedit" data-ajax="false"><i class="ui-icon-"></i>
+                <li id="Hey"><a href="#shareedit" data-ajax="false"><i class="ui-icon-"></i>
                 My accountbook</a>
                 </li>
-                <li><a href="" data-ajax="false"><i class="ui-icon-"></i>
+                <!--<li><a href="" data-ajax="false"><i class="ui-icon-"></i>
                 (Goldlucks)</a>
                 </li>
                 <li><a href="" data-ajax="false"><i class="ui-icon-"></i>
                 (Company)</a>
-                </li>
+              </li>-->
             </ul>
         </div>
     </div>

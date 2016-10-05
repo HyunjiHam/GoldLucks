@@ -5,6 +5,7 @@ function Main(){
   this.db.init();
   this.analysis = new Analysis(this.db);
   this.userid;
+  this.currentBook="My Account Book";
 }
 
 Main.prototype={
@@ -13,6 +14,7 @@ Main.prototype={
         this.compute();
         $('#mainMonth').html(this.year + '-' + this.month);
         db.getMoney(this.firstDay,this.lastDay,this.printMoney,this);
+        db.getID();
   },
 
   compute : function Main_compute_date(){
@@ -103,11 +105,14 @@ Main.prototype={
   },
 
   getId : function getId(){
-    if(this.userid!==undefined){
-      return this.userid;
-    }else{
-      alert('You need new ID');
-    }
+	  var db = this.db;
+	  console.log(db);
+	  db.getID(this);
+//    if(this.userid!==undefined){
+//      return this.userid;
+//    }else{
+//      alert('You need new ID');
+//    }
   },
 }
 
@@ -148,7 +153,7 @@ Main.prototype={
     if(userid!==undefined){
       mainpage.db.insertBook(bookName,userid);
       mainpage.db.shareBook(bookName,groupName,userid);
-      mainpage.db.shareBook(bookName,userid);
+      mainpage.db.sendShareBook(bookName,userid);
       $.mobile.changePage('#share');
     }else{
       $.mobile.changePage('#setting');
@@ -161,9 +166,17 @@ Main.prototype={
       mainpage.setId(userid);
       alert('Your id is "'+userid+'"');
     }
+    mainpage.db.setID(userid);
   });
 
 
   var mainpage = new Main();
   mainpage.init();
+  
+
+
+  	$('#refreshbtn').click(function(){
+  		mainpage.db.refreshFromServer(mainpage.db);
+  	});
+  
 });
