@@ -235,19 +235,18 @@ function GoldLucksDB(){
           });
       },
 
-      shareBook : function shareBook(bookName,groupName,userid){
-        $.ajax({
-          url: "http://localhost:3000/refresh/sally",
-				  crossDomain : true,
-				  success: function(result){
-            console.log(result);
-            Callback(result);
-				  },
-			    error: function(xhr) {
-			        console.log('실패 - ', xhr);
-			    }
+    shareBook : function shareBook(bookName,groupName,userId){
+	$.ajax({
+		url: "http://localhost:3000/book/"+userId+"/"+bookName+"/"+groupName,
+		crossDomain : true,
+		success: function(result){
+			console.log(result);
+		},
+		error: function(xhr) {
+		    console.log('실패 - ', xhr);
+		}
         });
-      },
+      }
 
 
 
