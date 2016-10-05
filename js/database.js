@@ -22,6 +22,19 @@ function GoldLucksDB(){
   		}else {
   	        alert("Web SQL Database not supported");
   		}
+
+      this.db.transaction(function(tx){
+        tx.executeSql(
+          "INSERT INTO book(bookName,masterId) VALUES (?,?);",
+          ['My Account Book','Default'],
+          function onSuccess() {
+            return;
+          },
+          function onError(e) {
+            alert("Error:" + e.message);
+          }
+        );
+      });
   	},
 
     insertData : function insertData(fromWhere,money){
@@ -40,7 +53,6 @@ function GoldLucksDB(){
   					}
   				);
   			});
-
   		}
 
   		if(fromWhere === "fromIncome"){
@@ -61,10 +73,11 @@ function GoldLucksDB(){
   	},
 
     createTable : function createTable(db){
-      db.transaction(function(tx) {
+          db.transaction(function(tx) {
               tx.executeSql("CREATE TABLE IF NOT EXISTS book"+
-              		"(bookName VARCHAR(20) PRIMARY KEY,"+
-              		"masterId VARCHAR(10) NOT NULL)");
+                  "(bookId INTEGER PRIMARY KEY,"+
+                  "bookName VARCHAR(20) NOT NULL,"+
+                  "masterId VARCHAR(10) NOT NULL)");
           });
 
           db.transaction(function(tx) {
@@ -87,14 +100,16 @@ function GoldLucksDB(){
 
           db.transaction(function(tx) {
               tx.executeSql("CREATE TABLE IF NOT EXISTS money"+
-              		"(id INT PRIMARY KEY,"+
+              		"(_id INTEGER PRIMARY KEY,"+
               		"date DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,"+
               		"amount FLOAT NOT NULL,"+
               		"used VARCHAR(30) NOT NULL,"+
               		"category INT(1),"+
               		"method INT(1),"+
               		"income INT(1) NOT NULL,"+
-              		"memo VARCHAR(50) )" );
+              		"memo VARCHAR(50),"+
+              		"bookId INTEGER DEFAULT 0,"+
+              		"FOREIGN KEY(bookId) REFERENCES book(bookId) )" );
           });
     },
 

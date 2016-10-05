@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <widget xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets" id="http://yourdomain/gdlkj" version="1.0.0" viewmodes="maximized">
+    <tizen:app-control>
+    	<tizen:src name="index.html#alarmpage"/>
+    	<tizen:operation name="http://tizen.org/appcontrol/operation/money"/>
+    </tizen:app-control>
     <tizen:application id="rZ2m3osuKf.gdlkj" package="rZ2m3osuKf" required_version="2.4"/>
     <content src="index.html"/>
     <feature name="http://tizen.org/feature/screen.size.all"/>
     <icon src="icon.png"/>
     <name>GoldLucks</name>
+    <tizen:privilege name="http://tizen.org/privilege/notification"/>
     <tizen:privilege name="http://tizen.org/privilege/alarm"/>
     <tizen:profile name="mobile"/>
+    <tizen:setting hwkey-event="enable"/>
 </widget>

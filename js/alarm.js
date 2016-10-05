@@ -1,6 +1,9 @@
 
 function Alarm(){
-
+  this.appControl = new tizen.ApplicationControl(
+    'http://tizen.org/appcontrol/operation/money'
+  );
+  this.APP_CONTROL_DATA_KEY = 'http://tizen.org/appcontrol/data/alarm_id';
 }
 
 Alarm.prototype={
@@ -9,6 +12,10 @@ Alarm.prototype={
     this.expenses = window.localStorage.getItem('expenses');
     this.expenses = this.expenses ? JSON.parse(this.expenses) : [];
     this.displayList(this.expenses);
+    this.date = new Date();
+    var expenseId = this.getExpenseId();
+    this.currentExpense = (expenseId!==undefined &&
+        this.getExpense('id',expenseId)) || null;
   },
 
   padZero: function padZero(number) {
@@ -23,8 +30,7 @@ Alarm.prototype={
       var date = new Date(),
           time = value.split(':'),
           day = $('#select2>option:selected').val();
-      //이달 그날이 이미 지나지 않았다면 이달부터 아니면 다음달부터..
-      date.setDate(parseInt(day), 10);
+      date.setDate(parseInt(day)-1, 10);
       date.setHours(parseInt(time[0], 10));
       date.setMinutes(parseInt(time[1], 10));
       date.setSeconds(0);
@@ -35,11 +41,13 @@ Alarm.prototype={
   addAlarm: function addAlarm(expense) {
       var alarm = {},
           date = '';
-      //appControl={};
+
       try {
           date = this.datapickerValue2Date(expense.time);
           alarm = new tizen.AlarmAbsolute(date);
-          tizen.alarm.add(alarm, tizen.application.getCurrentApplication().appInfo.id);
+          //tizen.alarm.add(alarm, tizen.application.getCurrentApplication().appInfo.id);
+          //tizen.alarm.add(alarm,mynotification);
+          tizen.alarm.add(alarm,tizen.application.getCurrentApplication().appInfo.id,this.appControl);
       } catch (e) {
           console.error(e);
       } finally {
@@ -84,11 +92,39 @@ Alarm.prototype={
       }else{
         for (var i = 0; i < len;i++) {
             expense = $.extend({}, this.expenses[i]);
-            list += '<li><a href="#fixedadd">Used:'+expense.usage+' &nbsp;&nbsp;&nbsp;Amount:' + expense.amount + '</a></li>';
+            list += '<li><a href="#fixedadd"><h1>'+expense.usage+' Amount:' + expense.amount + '</h1></a></li>';
         }
       }
       alarmList.innerHTML = list;
       $('#alarmList').listview().listview('refresh');
+  },
+
+  getExpenseId: function getExpenseId(){
+    var reqAppControl = tizen.application.getCurrentApplication().getRequestedAppControl(),
+        data = null,
+        len = 0,
+        expenseId = 0;
+    if(reqAppControl){
+      data = reqAppControl.appControl.data;
+      len = data.length -1;
+      while(len >= 0){
+        if(data[len].key===this.APP_CONTROL_DATA_KEY){
+          expenseId = data[len].value[0];
+          break;
+        }
+        len -= 1;
+      }
+      return expenseId;
+    }
+  },
+
+  getExpense: function getExpense(attr,value){
+    var val = this.expenses.filter(
+      function filter(el){
+        return el[attr] === value.toString();
+      }
+    );
+    return val[0];
   }
 }
 
@@ -123,6 +159,18 @@ window.onload=function(){
       expense.time = $('#fixedTime').val();
       alarm.saveAlarm(expense);
       $.mobile.changePage('#fixed');
+  });
+
+  $('#alarmpage').on('pagebeforeshow',function beforeShow(){
+      var month = parseInt(alarm.date.getMonth())+1;
+      if(month<10)
+        month='0'+month;
+      var day = alarm.currentExpense.date;
+      if(day<10)
+        day = '0'+day;
+      $('#aTitle').html(alarm.currentExpense.usage);
+      $('#aDate').html('Due:'+month+"/"+day);
+      $('#aAmount').html(alarm.currentExpense.amount+'$');
   });
 
   $('#fixed').on('pagebeforeshow', function beforeShow() {

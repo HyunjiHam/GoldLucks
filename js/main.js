@@ -121,8 +121,9 @@ Main.prototype={
     //mainpage.analysis.init();
     mainpage.analysis.catArr = catArr;
     mainpage.db.getExpenses(mainpage.analysis.catNum2Text,mainpage.analysis);
-
   });
+
+  $('')
   var mainpage = new Main();
   mainpage.init();
 });
