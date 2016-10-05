@@ -58,21 +58,21 @@ function GoldLucksDB(){
       			    		   crossDomain : true,
       			    		   data : {bookName: shareBN, amount: money.amount, used: money.used, category: money.category, method: money.method, income: 0, memo: money.memo} ,
       			    		   dataType : "json",
-      			    		   success: function(result){    
+      			    		   success: function(result){
       			    			   console.log(result);
       			    		    },
       			    		   error : function (result) {
       			    		    alert('실패 - .', result);
-      			    		   }  
-      			    	 }); 
+      			    		   }
+      			    	 });
       					},
       					function onError(e) { //run if SQL fails
       						alert("Error:" + e.message);
       					}
       				);
-      			}); 
+      			});
     	  }
-    		  
+
   		}
 
   		if(fromWhere === "fromIncome"){
@@ -105,19 +105,19 @@ function GoldLucksDB(){
     			    		   crossDomain : true,
     			    		   data : {bookName: shareBN, amount: money.amount, used: money.used, category: money.category, method: money.method, income: 1, memo: money.memo} ,
     			    		   dataType : "json",
-    			    		   success: function(result){    
+    			    		   success: function(result){
     			    			   console.log(result);
     			    		    },
     			    		   error : function (data) {
     			    		    alert('실패 - .', result);
-    			    		   }  
-    			    	 }); 
+    			    		   }
+    			    	 });
     					},
     					function onError(e) { //run if SQL fails
     						alert("Error:" + e.message);
     					}
     				);
-    			}); 
+    			});
   	  }
   		}
   	},
@@ -305,6 +305,7 @@ function GoldLucksDB(){
     			console.log('실패 - ', xhr);
     		}
         });
+
     },
     
     sendShareBook : function sendShareBook(bookName,userId){
@@ -359,7 +360,10 @@ function GoldLucksDB(){
        	});
 
 	},
-	
+
+
+	    
+
     shareBookInfo : function shareBookInfo(self,infoObj){
 		console.log("db.js");
 		var bookName, masterId;
@@ -387,7 +391,7 @@ function GoldLucksDB(){
 	 * 이거 수정해야되욤~~~~ userId는 사용자 고유 아이디만 들어가
 	 * @param db
 	 */
-//	refreshFromServer : function refreshFromServer(userid){
+//		refreshFromServer : function refreshFromServer(userid){
 	refreshFromServer : function refreshFromServer(db){
 		var self = db;
 		var userId = "clara";
@@ -441,12 +445,36 @@ function GoldLucksDB(){
                 }
 			);	
 		});
-	}
-	
-	
-	
-	
-	
+	},
+		
+	getBook : function getBook(mainpage,printList){
+        db=this.db;
+        db.transaction(function(t){
+          t.executeSql("SELECT bookName, masterId FROM book",[],
+            function(tran, r) {
+              var bookList = [];
+              var book = {};
+              for (var i = 0; i < r.rows.length; i++) {
+                var row = r.rows.item(i);
+                var bookName = row.bookName;
+                if(bookName==="My Account Book"){
+                  var masterid = row.masterId;
+                }
+                book = {
+                  'bookName' : bookName,
+                  'masterid' : masterid
+                }
+                bookList.push(book);
+              }
+              printList(mainpage,bookList);
+            }, function(t, e) {
+                alert("Error:" + e.message);
+              }
+            );
+        });
+      }
+		
+		
   }
 }());
 
