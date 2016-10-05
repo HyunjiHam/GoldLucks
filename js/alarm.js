@@ -173,6 +173,13 @@ window.onload=function(){
       $('#aAmount').html(alarm.currentExpense.amount+'$');
   });
 
+  $('#exit').click(function(){
+      tizen.application.getCurrentApplication().exit();
+  })
+  $('#goto').click(function(){
+    $.mobile.changePage('#mainpage');
+  })
+
   $('#fixed').on('pagebeforeshow', function beforeShow() {
       alarm.init();
   });

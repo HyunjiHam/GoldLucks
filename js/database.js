@@ -13,6 +13,9 @@ function GoldLucksDB(){
       this.dbSize = 2*1024*1024;
       this.moneys=[];
       this.openDatabase();
+      this.total;
+      this.tExpense;
+      this.tIncome;
     },
 
     openDatabase : function(){
@@ -22,24 +25,11 @@ function GoldLucksDB(){
   		}else {
   	        alert("Web SQL Database not supported");
   		}
-
-      this.db.transaction(function(tx){
-        tx.executeSql(
-          "INSERT INTO book(bookName,masterId) VALUES (?,?);",
-          ['My Account Book','Default'],
-          function onSuccess() {
-            return;
-          },
-          function onError(e) {
-            alert("Error:" + e.message);
-          }
-        );
-      });
   	},
 
     insertData : function insertData(fromWhere,money){
       var db = this.db;
-      var shareBN = "Secondbook";
+      var shareBN = "My Account Book";
       if(fromWhere === "fromExpense"){
 
     	  if(shareBN === "My Account Book"){
@@ -231,30 +221,58 @@ function GoldLucksDB(){
         });
     },
 
-    getTotalExpense : function getTotalExpense(){
+    getTotalExpense : function getTotalExpense(mainpage){
       var db = this.db;
+      var self = this;
+      var dateee = new Date();
+      var year = dateee.getFullYear();
+      var month = dateee.getMonth()+1;
+      if(month<10) month = "0"+month;
+      var day = dateee.getDate();
+      if(day<10) day = "0"+day;
+      var firstDay=year+"-"+month+"-"+"01";
+      var dateString = year+"-"+month+"-"+day;
+      var tExpense=0,
+          tIncome=0,
+          total=0;
         db.transaction(function(t){
-            var dateee = new Date();
-            var year = dateee.getFullYear();
-            var month = dateee.getMonth()+1;
-            if(month<10) month = "0"+month;
-            var day = dateee.getDate();
-            if(day<10) day = "0"+day;
-            var firstDay=year+"-"+month+"-"+"01";
-            var dateString = year+"-"+month+"-"+day;
-
-            t.executeSql("SELECT amount FROM money WHERE income=? AND (date >= ? AND date <= ?)",[0,firstDay, dateString],
-				function(tran, r) {
-				    for (var i = 0; i < r.rows.length; i++) {
-				        var row = r.rows.item(i);
-				        var amount = row["amount"];
-				    }
-				}, function(t, e) {
-				    alert("Error:" + e.message);
-
-				}
-			);
+            t.executeSql("SELECT SUM(amount) AS sumAmount FROM money WHERE income=? AND (date >= ? AND date <= ?)",[0,firstDay, dateString],
+        				function(tran, r) {
+        				    for (var i = 0; i < r.rows.length; i++) {
+        				        var row = r.rows.item(i);
+                        if(row.sumAmount!==null){
+                          self.tExpense = parseInt(row.sumAmount);
+                        }else{
+                          self.tExpense=0;
+                        }
+        				    }
+                    console.log(self.tExpense);
+                    //tExpense = r.sumAmount;
+        				}, function(t, e) {
+        				    alert("Error:" + e.message);
+        				}
+			      );
         });
+        db.transaction(function(tx){
+            tx.executeSql("SELECT SUM(amount) AS sumIncome FROM money WHERE income=? AND (date >= ? AND date <= ?)",[1,firstDay, dateString],
+          			function(tran, r) {
+          			    for (var i = 0; i < r.rows.length; i++) {
+          			        var row = r.rows.item(i);
+                        if(row.sumIncome!==null){
+                          self.tIncome = parseInt(row.sumIncome);
+                        }else{
+                          self.tIncome=0;
+                        }
+          			    }
+                    console.log(self.tIncome);
+                    //tIncome = r.sumIncome;
+                    mainpage.printTotal();
+          			}, function(t, e) {
+          			    alert("Error:" + e.message);
+          			}
+          	);
+        });
+
     },
 
 
@@ -289,6 +307,7 @@ function GoldLucksDB(){
                       console.log('getMoney() in database is done');
                       if(typeof(printMoney)==="function"){
                         console.log(mainpage);
+                        //mainpage.db.getTotalExpense();
                         printMoney.apply(mainpage,mainpage.moneys);
                       }
                   },function(tx,e){

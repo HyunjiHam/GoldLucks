@@ -15,6 +15,7 @@ Main.prototype={
         $('#mainMonth').html(this.year + '-' + this.month);
         $('#mainbookName').html(this.currentBook);
         db.getMoney(this.firstDay,this.lastDay,this.printMoney,this);
+        db.getTotalExpense(this);
   },
 
   compute : function Main_compute_date(){
@@ -52,12 +53,12 @@ Main.prototype={
                 }
                 if(check===1){
                   if(money.income===0){//in case of expense
-                    $('ul[id="ul' + i + '"]').append('<li>'+money.used+'<p class="ui-li-aside">'+money.amount+'(won)</p></li>');
+                    $('ul[id="ul' + i + '"]').append('<li>'+money.used+'<p class="ui-li-aside">'+money.amount+'$</p></li>');
                     $('ul[id="ul' + i + '"]').listview().listview('refresh');
                     console.log("find expense money in moneyList");
                   }
                   if(money.income===1){//in case of income
-                    $('ul[id="ul' + i + '"]').append('<li>'+money.used+'<p class="ui-li-aside">'+money.amount+'(won)</p></li>');
+                    $('ul[id="ul' + i + '"]').append('<li>'+money.used+'<p class="ui-li-aside">'+money.amount+'$</p></li>');
                     $('ul[id="ul' + i + '"]').listview().listview('refresh');
                     console.log("find income money in moneyList");
                   }
@@ -75,6 +76,11 @@ Main.prototype={
           $('ul[id="ul' + today + '"]').listview().listview('refresh');
           console.log('nothing in money DB yet');
         }
+  },
+
+  printTotal : function printTotal(){
+    this.db.total = parseInt(this.db.tIncome)-parseInt(this.db.tExpense);
+    $('#Balance').html('Balance '+this.db.total).append('<p id="total" class="ui-li-aside">+'+this.db.tIncome+' -'+this.db.tExpense);
   },
 
   getData : function get_input(fromWhere){
@@ -139,7 +145,7 @@ Main.prototype={
 
  $(document).ready(function(){
   $("#mainpage").on('pagebeforeshow',function(){
-    mainpage.init();
+    //mainpage.init();
   })
 
   $("#addExpense").click(function(){

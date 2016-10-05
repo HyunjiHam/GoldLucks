@@ -52,9 +52,9 @@
                 <a href="#"><i class="ui-icon-ion-ios-arrow-forward"></i></a></h2>
             </div>
             <ul data-role="listview">
-                <li data-role="fieldcontain">
+                <li id="Balance" data-role="fieldcontain">
                     Balance (+700000)
-                    <p class="ui-li-aside">+(1200000) -(500000)</p>
+                    <p id="total" class="ui-li-aside">+(1200000) -(500000)</p>
                 </li>
             </ul>
             <section id="cd-timeline" class="cd-container">
@@ -969,7 +969,7 @@
 
 
 
-    <div data-role="page" id="alarmpage">
+    <!--<div data-role="page" id="alarmpage">
       <div data-role="header">
           <h1>FIXED EXPENSES ALARM</h1>
       </div>
@@ -982,6 +982,24 @@
         <div class="ui-grid-a">
           <div class="ui-block-a"><a href="#fixed" data-role="button">List</a></div>
           <div class="ui-block-b"><a href="#" data-role="button">Exit</a></div>
+        </div>
+      </div>-->
+
+      <div data-role="page" id="alarmpage">
+        <div data-role="header" data-position="fixed" data-tap-toggle="false">
+            <h1 class="header-title">Expenses alarm</h1>
+        </div>
+        <div data-role="content">
+            <div class="ui-text-center">
+                <img class="ui-padding-img" src="images/alarm.png" height="200px" weight="200px">
+                <p id="aTitle">HOUSE MAINTAINACE FEE</p>
+                <p id="aDate">2016.10.05</p>
+                <p id="aAmount">500$</p>
+                <div data-role="footer" data-position="fixed">
+                    <button id="goto" data-inline="true">Go to app</button>
+                    <button id="exit" data-inline="true">EXIT</button>
+                </div>
+            </div>
         </div>
       </div>
 
