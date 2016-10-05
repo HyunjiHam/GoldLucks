@@ -58,29 +58,26 @@ $(document).ready(function(){
 	GoldLucksDB.shareBookInfo = function shareBookInfo(infoObj){
 		console.log("db.js");
 		var bookName, masterId;
-		for(var property in infoObj){
-			console.log(property);
-			if(property === "bookName")
-				bookName = infoObj[property];
-			else
-				masterId = infoObj[property];
-		}
-		console.log("bookName: "+bookName);
-		console.log("masterId: "+masterId);
-//		var bookInfoJson = JSON.stringify(infoObj);
-//		console.log(bookInfoJson);
-//		db.transaction(function(tx){
-//			tx.executeSql(
-//				"INSERT INTO book(bookName, masterId) VALUES (?,?);",
-//				[bookName, masterId],
-//				function onSuccess() {//run if SQL succeeds
-//					console.log("success");
-//				}, 
-//				function onError(e) { //run if SQL fails
-//					alert("Error:" + e.message);
-//				}	
-//			);	
-//		});
+		
+		$.each(infoObj, function(key, val){
+			bookName = val.bookName;
+			masterId = val.userId;
+		});
+
+		var bookInfoJson = JSON.stringify(infoObj);
+		console.log(bookInfoJson);
+		db.transaction(function(tx){
+			tx.executeSql(
+				"INSERT INTO book(bookName, masterId) VALUES (?,?);",
+				[bookName, masterId],
+				function onSuccess() {//run if SQL succeeds
+					console.log("success");
+				}, 
+				function onError(e) { //run if SQL fails
+					alert("Error:" + e.message);
+				}	
+			);	
+		});
 	};
 	
 	/**
