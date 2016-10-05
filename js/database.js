@@ -64,7 +64,7 @@ function GoldLucksDB(){
       			    		   success: function(result){
       			    			   console.log(result);
       			    		    },
-      			    		   error : function (data) {
+      			    		   error : function (result) {
       			    		    alert('실패 - .', result);
       			    		   }
       			    	 });
@@ -132,6 +132,7 @@ function GoldLucksDB(){
           "INSERT INTO book(bookName, masterId) VALUES (?,?);",
           [bName,writer],
           function onSuccess() {//run if SQL succeeds
+        	  console.log("book테이블에 저장함");
             return;
           },
           function onError(e) { //run if SQL fails
@@ -146,7 +147,14 @@ function GoldLucksDB(){
               tx.executeSql("CREATE TABLE IF NOT EXISTS book"+
                   "(bookId INTEGER PRIMARY KEY,"+
                   "bookName VARCHAR(20) NOT NULL,"+
-                  "masterId VARCHAR(10) NOT NULL)");
+                  "masterId VARCHAR(10) NOT NULL)",[],
+            		function onSuccess() {
+            	  		db.transaction(function(tx){
+            	  			tx.executeSql(
+            	  					"INSERT INTO book(bookId, bookName,masterId) VALUES (?,?,?);",
+            	  					[1,'My Account Book','Default']);
+            	  		});
+              		});
           });
 
           db.transaction(function(tx) {
@@ -322,33 +330,156 @@ function GoldLucksDB(){
     		url: "http://localhost:3000/book/"+userId+"/"+bookName+"/"+groupName,
     		crossDomain : true,
     		success: function(result){
+    			console.log("save to the book table in server!");
     			console.log(result);
     		},
     		error: function(xhr) {
     			console.log('실패 - ', xhr);
     		}
         });
-      },
+
+    },
+    
+    sendShareBook : function sendShareBook(bookName,userId){
+    	$.ajax({
+    		url: "http://localhost:3000/user/"+userId+"/"+bookName,
+    		crossDomain : true,
+    		success: function(result){
+    			console.log("save to user table");
+    			console.log(result);
+    		},
+    		error: function(xhr) {
+    			console.log('실패 - ', xhr);
+    		}
+        });
+    },
+    
+	getMoneyFromServer : function getMoneyFromServer(bookName){
+		var date, amount, used, category, method, income, memo;
+		var db = this.db;
+		$.ajax({
+				url: "http://localhost:3000/money/"+bookName,
+				crossDomain : true,
+				success: function(resultObj){
+            		console.log(resultObj);
+            		$.each(resultObj, function(key, val){
+            			date = val.date;
+            			bookName = val.bookName; 
+            			amount = val.amount;
+            			used = val.used;
+            			category = val.category;
+            			method = val.method;
+            			income = val.income;
+            			memo = val.memo;
+            		});
+            		
+            		db.transaction(function(tx){
+            			tx.executeSql(
+            					"INSERT INTO money(date, bookName, amount, used, category, method, income, memo) VALUES (?,?,?,?,?,?,?,?);",
+            				[date, bookName, amount, used, category, method, income, memo],
+            				function onSuccess() {//run if SQL succeeds
+            					console.log("서버로부터 돈 받아서 테이블에 넣었당~~~~~~~");
+            				}, 
+            				function onError(e) { //run if SQL fails
+            					alert("Error:" + e.message);
+            				}	
+            			);	
+            		});
+				},
+			    error: function(xhr) {
+			        console.log('실패 - ', xhr);
+			     }
+       	});
+
+	},
 
 
-     sendMoney : function sendMoney(){
-    	 $.ajax({
-    		   type : "POST",
-    		   url : "http://localhost:3000/money/",
-    		   crossDomain : true,
-    		   data : {bookName: bookName, amount: amount, used: used, category: category, method: method, income: income, memo: memo} ,
-    		   dataType : "json",
-    		   success: function(data){
-    			   console.log(result);
-    		    },
-    		   error : function (data) {
-    		    alert('실패 - .', xhr);
-    		   }
-    		  });
-     },
+	    
 
+    shareBookInfo : function shareBookInfo(self,infoObj){
+		console.log("db.js");
+		var bookName, masterId;
+		var db = this.db;
+		$.each(infoObj, function(key, val){
+			bookName = val.bookName;
+			masterId = val.userId;
+		});
 
-      getBook : function getBook(mainpage,printList){
+		db.transaction(function(tx){
+			tx.executeSql(
+				"INSERT INTO book(bookName, masterId) VALUES (?,?);", [bookName, masterId],
+				function onSuccess() {//run if SQL succeeds
+					console.log("정보 받아와서 book테이블에 넣었당~~~");
+					self.getMoneyFromServer(bookName);
+				}, 
+				function onError(e) { //run if SQL fails
+					alert("Error:" + e.message);
+				}	
+			);	
+		});
+	},
+    
+	/**
+	 * 이거 수정해야되욤~~~~ userId는 사용자 고유 아이디만 들어가
+	 * @param db
+	 */
+//		refreshFromServer : function refreshFromServer(userid){
+	refreshFromServer : function refreshFromServer(db){
+		var self = db;
+		var userId = "clara";
+		$.ajax({
+				url: "http://localhost:3000/refresh/"+userId,
+				crossDomain : true,
+				success: function(result){
+            		console.log(result);
+            		self.shareBookInfo(self,result);
+				},
+			    error: function(xhr) {
+			        console.log('실패 - ', xhr);
+			     }
+       	});
+	},
+	
+	setID : function setId(userId){
+		var db = this.db;
+		db.transaction(function(tx){
+			tx.executeSql(
+				"INSERT INTO user(userId) VALUES (?);",	[userId],
+				function onSuccess() {//run if SQL succeeds
+					console.log("userId 받아와서 user 테이블에 넣었당~~~");
+				}, 
+				function onError(e) { //run if SQL fails
+					alert("Error:" + e.message);
+				}	
+			);	
+		});
+	},
+	
+	getID : function getID(mainpage){
+		var db = this.db;
+		db.transaction(function(tx){
+			tx.executeSql(
+				"SELECT userId FROM user;",	[],
+				function(tran, r) {
+				    for (var i = 0; i < r.rows.length; i++) {
+				        var row = r.rows.item(i);
+				        var userId = row["userId"];
+				        console.log(userId);
+				        
+				    }
+				    mainpage.userid=userId;
+				    if(mainpage.userid===undefined){
+				    	//mainpage.setId();
+				    	alert('You need new ID');
+				    }
+				},function(tx,e){
+                    alert("You need new ID");
+                }
+			);	
+		});
+	},
+		
+	getBook : function getBook(mainpage,printList){
         db=this.db;
         db.transaction(function(t){
           t.executeSql("SELECT bookName, masterId FROM book",[],
@@ -374,6 +505,9 @@ function GoldLucksDB(){
             );
         });
       }
-
+		
+		
   }
 }());
+
+
