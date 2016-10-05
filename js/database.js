@@ -39,24 +39,59 @@ function GoldLucksDB(){
 
     insertData : function insertData(fromWhere,money){
       var db = this.db;
+      var shareBN = "Secondbook";
       if(fromWhere === "fromExpense"){
 
+    	  if(shareBN === "My Account Book"){
+    		  console.log("shareBN: "+shareBN);
   			db.transaction(function(tx){
   				tx.executeSql(
   					"INSERT INTO money(date, amount, used, category, method, income, memo) VALUES (?,?,?,?,?,?,?);",
             [money.date,money.amount,money.used,money.category,money.method,0,money.memo],
   					function onSuccess() {//run if SQL succeeds
-              return;
+  						return;
   					},
   					function onError(e) { //run if SQL fails
   						alert("Error:" + e.message);
   					}
   				);
   			});
+    	  }
+    	  else{	// When user writes sharing book account
+    			db.transaction(function(tx){
+    				console.log("shareBN: "+shareBN);
+      				tx.executeSql(
+      					"INSERT INTO money(date, bookName, amount, used, category, method, income, memo) VALUES (?,?,?,?,?,?,?,?);",
+                [money.date,shareBN,money.amount,money.used,money.category,money.method,0,money.memo],
+      					function onSuccess() {//run if SQL succeeds
+      						console.log("통신되어라 얍얍");
+      				    	 $.ajax({
+      			    		   type : "POST",
+      			    		   url : "http://localhost:3000/money/",
+      			    		   crossDomain : true,
+      			    		   data : {bookName: shareBN, amount: money.amount, used: money.used, category: money.category, method: money.method, income: 0, memo: money.memo} ,
+      			    		   dataType : "json",
+      			    		   success: function(result){
+      			    			   console.log(result);
+      			    		    },
+      			    		   error : function (data) {
+      			    		    alert('실패 - .', result);
+      			    		   }
+      			    	 });
+      					},
+      					function onError(e) { //run if SQL fails
+      						alert("Error:" + e.message);
+      					}
+      				);
+      			});
+    	  }
+
   		}
 
   		if(fromWhere === "fromIncome"){
+  			if(shareBN === "My Account Book"){
   			db.transaction(function(tx){
+  				console.log("shareBN: "+shareBN);
   				tx.executeSql(
   					"INSERT INTO money(date, amount, used, income, memo) VALUES (?,?,?,?,?);",
   					[money.date, money.amount, money.used, 1, money.memo],
@@ -68,6 +103,35 @@ function GoldLucksDB(){
   					}
   				);
   			});
+  			}
+      	  else{	// When user writes sharing account book
+  			db.transaction(function(tx){
+  				console.log("shareBN: "+shareBN);
+    				tx.executeSql(
+    					"INSERT INTO money(date, bookName, amount, used, category, method, income, memo) VALUES (?,?,?,?,?,?,?,?);",
+              [money.date,shareBN,money.amount,money.used,money.category,money.method,0,money.memo],
+    					function onSuccess() {//run if SQL succeeds
+    						console.log("통신되어라 얍얍");
+    				    	 $.ajax({
+    			    		   type : "POST",
+    			    		   url : "http://localhost:3000/money/",
+    			    		   crossDomain : true,
+    			    		   data : {bookName: shareBN, amount: money.amount, used: money.used, category: money.category, method: money.method, income: 1, memo: money.memo} ,
+    			    		   dataType : "json",
+    			    		   success: function(result){
+    			    			   console.log(result);
+    			    		    },
+    			    		   error : function (data) {
+    			    		    alert('실패 - .', result);
+    			    		   }
+    			    	 });
+    					},
+    					function onError(e) { //run if SQL fails
+    						alert("Error:" + e.message);
+    					}
+    				);
+    			});
+  	  }
   		}
   	},
 
@@ -218,7 +282,7 @@ function GoldLucksDB(){
                               'method' : method,
                               'income' : income,
                               'memo' : memo
-                          }
+                          };
                           mainpage.moneys.push(money);
                           console.log(typeof(mainpage.moneys)+mainpage.moneys.length);
                       }
@@ -246,8 +310,8 @@ function GoldLucksDB(){
     		}
         });
       },
-      
-      
+
+
      sendMoney : function sendMoney(){
     	 $.ajax({
     		   type : "POST",
@@ -255,15 +319,15 @@ function GoldLucksDB(){
     		   crossDomain : true,
     		   data : {bookName: bookName, amount: amount, used: used, category: category, method: method, income: income, memo: memo} ,
     		   dataType : "json",
-    		   success: function(data){    
+    		   success: function(data){
     			   console.log(result);
     		    },
     		   error : function (data) {
     		    alert('실패 - .', xhr);
-    		   }  
+    		   }
     		  });
-     }
-      
+     },
+
 
       getBook : function getBook(mainpage,printList){
         db=this.db;
@@ -291,8 +355,6 @@ function GoldLucksDB(){
             );
         });
       }
-
-
 
   }
 }());
