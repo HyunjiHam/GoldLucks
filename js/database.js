@@ -53,6 +53,40 @@ $(document).ready(function(){
 	};
 	
 	/**
+	 * Send share book info to the server
+	 */
+	GoldLucksDB.shareBook = function shareBook(bookName,groupName,userId){
+		$.ajax({
+			url: "http://localhost:3000/book/"+userId+"/"+bookName+"/"+groupName,
+			crossDomain : true,
+			success: function(result){
+				console.log(result);
+			},
+			error: function(xhr) {
+			    console.log('실패 - ', xhr);
+			}
+        });
+      }
+
+	/**
+	 * Store share book info in db
+	 */
+	GoldLucksDB.insertBook= function insertBook(bName,writer){
+        db.transaction(function(tx){
+          tx.executeSql(
+            "INSERT INTO book(bookName, masterId) VALUES (?,?);",
+            [bName,writer],
+            function onSuccess() {//run if SQL succeeds
+            	console.log("success");
+            },
+            function onError(e) { //run if SQL fails
+              alert("Error:" + e.message);
+            }
+          );
+        });
+     };
+	
+	/**
 	 * Store share book info into book table from 'refresh.js'
 	 */
 	GoldLucksDB.shareBookInfo = function shareBookInfo(infoObj){
@@ -64,8 +98,6 @@ $(document).ready(function(){
 			masterId = val.userId;
 		});
 
-		var bookInfoJson = JSON.stringify(infoObj);
-		console.log(bookInfoJson);
 		db.transaction(function(tx){
 			tx.executeSql(
 				"INSERT INTO book(bookName, masterId) VALUES (?,?);",
