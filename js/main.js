@@ -5,6 +5,7 @@ function Main(){
   this.db.init();
   this.analysis = new Analysis(this.db);
   this.userid;
+  this.currentBook="My Account Book";
 }
 
 Main.prototype={
@@ -12,6 +13,7 @@ Main.prototype={
     var db = this.db;
         this.compute();
         $('#mainMonth').html(this.year + '-' + this.month);
+        $('#mainbookName').html(this.currentBook);
         db.getMoney(this.firstDay,this.lastDay,this.printMoney,this);
   },
 
@@ -109,11 +111,36 @@ Main.prototype={
       alert('You need new ID');
     }
   },
+
+  printBookList : function printBookList(mainpage,bookList){
+    var bookName,
+        masterid;
+    var self=mainpage;
+    $('#shareList>li:gt(1)').remove();
+    for(var i in bookList){
+      bookName = bookList[i].bookName;
+      masterid = bookList[i].masterid;
+      if(bookName!=="My Account Book"){
+        $("#shareList").append('<li class="shareL" value="'+bookName+'"><a href="#mainpage"><i class = "ui-icon-"></i>'+bookName+'</a>');
+        $("#shareList").listview('refresh');
+      }
+    }
+    $('.shareL').click(function(){
+      var bookname = $(this).text();
+      console.log(bookname);
+      console.log(self);
+      self.currentBook = bookname;
+      $.mobile.changePage('#mainpage');
+    });
+  }
 }
 
 
 
  $(document).ready(function(){
+  $("#mainpage").on('pagebeforeshow',function(){
+    mainpage.init();
+  })
 
   $("#addExpense").click(function(){
     var money = {};
@@ -147,12 +174,16 @@ Main.prototype={
     var shareWith = $('#with1').val();
     if(userid!==undefined){
       mainpage.db.insertBook(bookName,userid);
-      mainpage.db.shareBook(bookName,groupName,userid);
-      mainpage.db.shareBook(bookName,userid);
+      //mainpage.db.shareBook(bookName,groupName,userid);
+      //mainpage.db.shareBook(bookName,userid);
       $.mobile.changePage('#share');
     }else{
       $.mobile.changePage('#setting');
     }
+  });
+
+  $('#share').on('pagebeforeshow',function(){
+    mainpage.db.getBook(mainpage,mainpage.printBookList);
   });
 
   $('#signbtn').click(function(){

@@ -33,7 +33,7 @@ function Analysis(goldlucksdb){
       var cat,
           amount,
           sum;
-      $('#analyList>li:gt(3)').empty();
+      $('#analyList>li:gt(2)').remove();
       sum=0;
       for(var i in array){
         cat = array[i].cat;

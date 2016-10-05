@@ -249,6 +249,33 @@ function GoldLucksDB(){
         });
       },
 
+      getBook : function getBook(mainpage,printList){
+        db=this.db;
+        db.transaction(function(t){
+          t.executeSql("SELECT bookName, masterId FROM book",[],
+            function(tran, r) {
+              var bookList = [];
+              var book = {};
+              for (var i = 0; i < r.rows.length; i++) {
+                var row = r.rows.item(i);
+                var bookName = row.bookName;
+                if(bookName==="My Account Book"){
+                  var masterid = row.masterId;
+                }
+                book = {
+                  'bookName' : bookName,
+                  'masterid' : masterid
+                }
+                bookList.push(book);
+              }
+              printList(mainpage,bookList);
+            }, function(t, e) {
+                alert("Error:" + e.message);
+              }
+            );
+        });
+      }
+
 
 
   }
