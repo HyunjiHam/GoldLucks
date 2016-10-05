@@ -56,7 +56,6 @@ function GoldLucksDB(){
   		}
 
   		if(fromWhere === "fromIncome"){
-
   			db.transaction(function(tx){
   				tx.executeSql(
   					"INSERT INTO money(date, amount, used, income, memo) VALUES (?,?,?,?,?);",
@@ -71,6 +70,22 @@ function GoldLucksDB(){
   			});
   		}
   	},
+
+    insertBook: function insertBook(bName,writer){
+      var db = this.db;
+      db.transaction(function(tx){
+        tx.executeSql(
+          "INSERT INTO book(bookName, masterId) VALUES (?,?);",
+          [bName,writer],
+          function onSuccess() {//run if SQL succeeds
+            return;
+          },
+          function onError(e) { //run if SQL fails
+            alert("Error:" + e.message);
+          }
+        );
+      });
+    },
 
     createTable : function createTable(db){
           db.transaction(function(tx) {
@@ -218,6 +233,23 @@ function GoldLucksDB(){
                   }
               );
           });
-      }
+      },
+
+      shareBook : function shareBook(bookName,groupName,userid){
+        $.ajax({
+          url: "http://localhost:3000/refresh/sally",
+				  crossDomain : true,
+				  success: function(result){
+            console.log(result);
+            Callback(result);
+				  },
+			    error: function(xhr) {
+			        console.log('실패 - ', xhr);
+			    }
+        });
+      },
+
+
+
   }
 }());

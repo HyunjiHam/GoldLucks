@@ -647,19 +647,19 @@
         <div data-role="header" data-position="fixed" data-tap-toggle="false">
             <a href="#share" data-icon="ion-chevron-left" data-iconpos="notext"></a>
             <h1 class="header-title">add</h1>
-            <a href="" data-ajax="false" data-icon="ion-checkmark-round" data-iconpos="notext"></a>
+            <a href="" id="sharebtn"data-ajax="false" data-icon="ion-checkmark-round" data-iconpos="notext"></a>
         </div>
         <div data-role="content">
             <ul data-role="listview">
                 <li data-role="fieldcontain">
-                    <input id="Text2" placeholder="Book name">
+                    <input id="sbook" placeholder="Book name">
                 </li>
                 <li data-role="fieldcontain">
-                    <input id="Text1" placeholder="Group name">
+                    <input id="sGroup" placeholder="Group name">
                 </li>
                 <li data-role="fieldcontain">
                 <label for="with"><a href="#" data-ajax="false"><i class="ui-icon-ion-plus-round"></i></a></label>
-                    <input id="with" placeholder=" Share with">
+                    <input id="with1" placeholder=" Share with">
                 </li>
             </ul>
         </div>
@@ -739,7 +739,7 @@
                             </form>
                             <div role="main" class="ui-content ui-padding">
                                 <a href="#" data-rel="back" class="ui-btn ui-btn-c ui-btn-inline ui-mini">Cancel</a>
-                                <a href="#" data-rel="back" class="ui-btn ui-btn-c ui-btn-inline ui-mini">Sign up</a>
+                                <a id="signbtn"href="#" data-rel="back" class="ui-btn ui-btn-c ui-btn-inline ui-mini">Sign up</a>
                             </div>
                         </div>
                     </li>

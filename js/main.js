@@ -4,6 +4,7 @@ function Main(){
   this.db = new GoldLucksDB();
   this.db.init();
   this.analysis = new Analysis(this.db);
+  this.userid;
 }
 
 Main.prototype={
@@ -91,7 +92,23 @@ Main.prototype={
       money.memo = $("#iMemo").val();
     }
     return money;
-  }
+  },
+
+  setId : function setId(userid){
+    if(this.userid===undefined){
+      this.userid=userid;
+    }else{
+      alert('You already have your own ID :'+this.userid);
+    }
+  },
+
+  getId : function getId(){
+    if(this.userid!==undefined){
+      return this.userid;
+    }else{
+      alert('You need new ID');
+    }
+  },
 }
 
 
@@ -123,7 +140,30 @@ Main.prototype={
     mainpage.db.getExpenses(mainpage.analysis.catNum2Text,mainpage.analysis);
   });
 
-  $('')
+  $('#sharebtn').click(function(){
+    var userid = mainpage.getId();
+    var bookName = $('#sbook').val();
+    var groupName = $('#sGroup').val();
+    var shareWith = $('#with1').val();
+    if(userid!==undefined){
+      mainpage.db.insertBook(bookName,userid);
+      mainpage.db.shareBook(bookName,groupName,userid);
+      mainpage.db.shareBook(bookName,userid);
+      $.mobile.changePage('#share');
+    }else{
+      $.mobile.changePage('#setting');
+    }
+  });
+
+  $('#signbtn').click(function(){
+    var userid = $('#un').val();
+    if(userid!==undefined){
+      mainpage.setId(userid);
+      alert('Your id is "'+userid+'"');
+    }
+  });
+
+
   var mainpage = new Main();
   mainpage.init();
 });
