@@ -53,6 +53,37 @@ $(document).ready(function(){
 	};
 	
 	/**
+	 * Store share book info into book table from 'refresh.js'
+	 */
+	GoldLucksDB.shareBookInfo = function shareBookInfo(infoObj){
+		console.log("db.js");
+		var bookName, masterId;
+		for(var property in infoObj){
+			console.log(property);
+			if(property === "bookName")
+				bookName = infoObj[property];
+			else
+				masterId = infoObj[property];
+		}
+		console.log("bookName: "+bookName);
+		console.log("masterId: "+masterId);
+//		var bookInfoJson = JSON.stringify(infoObj);
+//		console.log(bookInfoJson);
+//		db.transaction(function(tx){
+//			tx.executeSql(
+//				"INSERT INTO book(bookName, masterId) VALUES (?,?);",
+//				[bookName, masterId],
+//				function onSuccess() {//run if SQL succeeds
+//					console.log("success");
+//				}, 
+//				function onError(e) { //run if SQL fails
+//					alert("Error:" + e.message);
+//				}	
+//			);	
+//		});
+	};
+	
+	/**
 	 * Gets amounts per category
 	 */
 	var expenseArray = [];
@@ -183,7 +214,6 @@ $(document).ready(function(){
 					"INSERT INTO money(date, amount, used, category, method, income, memo) VALUES (?,?,?,?,?,?,?);",
 					[inputDate, inputAmount, inputused, inputCategory, inputMethod, 0, inputMemo],
 					function onSuccess() {//run if SQL succeeds
-					//	GoldLucksDB.dataView();
 						GoldLucksDB.getExpenses(analysis.catNum2Text);
 					}, 
 					function onError(e) { //run if SQL fails
