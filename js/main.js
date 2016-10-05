@@ -14,7 +14,7 @@ Main.prototype={
         this.compute();
         $('#mainMonth').html(this.year + '-' + this.month);
         db.getMoney(this.firstDay,this.lastDay,this.printMoney,this);
-        db.getID();
+ //       db.getID();
   },
 
   compute : function Main_compute_date(){

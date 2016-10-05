@@ -129,7 +129,7 @@ function GoldLucksDB(){
           "INSERT INTO book(bookName, masterId) VALUES (?,?);",
           [bName,writer],
           function onSuccess() {//run if SQL succeeds
-        	  console.log("book테이블에 정보저장함");
+        	  console.log("book테이블에 저장함");
             return;
           },
           function onError(e) { //run if SQL fails
