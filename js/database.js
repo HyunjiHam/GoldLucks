@@ -27,9 +27,10 @@ function GoldLucksDB(){
   		}
   	},
 
-    insertData : function insertData(fromWhere,money){
+    insertData : function insertData(fromWhere,money,currentBook){
       var db = this.db;
-      var shareBN = "My Account Book";
+      //var shareBN = "My Account Book";
+      var shareBN = currentBook;
       if(fromWhere === "fromExpense"){
 
     	  if(shareBN === "My Account Book"){
@@ -205,7 +206,8 @@ function GoldLucksDB(){
 
 
         db.transaction(function(t){
-            t.executeSql("SELECT SUM(amount) AS sumAmount, category FROM money WHERE income=? AND (date >= ? AND date <= ?) GROUP BY category",[0,firstDay, todayString],
+            t.executeSql("SELECT SUM(amount) AS sumAmount, category FROM money WHERE income=? AND (date >= ? AND date <= ?) GROUP BY category",
+            [0,firstDay, todayString],
 				function(tran, r) {
           analysis.db.expenseArray=[];
 				    for (var i = 0; i < r.rows.length; i++){
@@ -244,7 +246,8 @@ function GoldLucksDB(){
           tIncome=0,
           total=0;
         db.transaction(function(t){
-            t.executeSql("SELECT SUM(amount) AS sumAmount FROM money WHERE income=? AND (date >= ? AND date <= ?)",[0,firstDay, dateString],
+            t.executeSql("SELECT SUM(amount) AS sumAmount FROM money WHERE income=? AND (date >= ? AND date <= ?)",
+            [0,firstDay, dateString],
         				function(tran, r) {
         				    for (var i = 0; i < r.rows.length; i++) {
         				        var row = r.rows.item(i);
@@ -339,7 +342,7 @@ function GoldLucksDB(){
         });
 
     },
-    
+
     sendShareBook : function sendShareBook(bookName,userId){
     	$.ajax({
     		url: "http://localhost:3000/user/"+userId+"/"+bookName,
@@ -353,7 +356,7 @@ function GoldLucksDB(){
     		}
         });
     },
-    
+
 	getMoneyFromServer : function getMoneyFromServer(bookName){
 		var date, amount, used, category, method, income, memo;
 		var db = this.db;
@@ -364,7 +367,7 @@ function GoldLucksDB(){
             		console.log(resultObj);
             		$.each(resultObj, function(key, val){
             			date = val.date;
-            			bookName = val.bookName; 
+            			bookName = val.bookName;
             			amount = val.amount;
             			used = val.used;
             			category = val.category;
@@ -372,18 +375,18 @@ function GoldLucksDB(){
             			income = val.income;
             			memo = val.memo;
             		});
-            		
+
             		db.transaction(function(tx){
             			tx.executeSql(
             					"INSERT INTO money(date, bookName, amount, used, category, method, income, memo) VALUES (?,?,?,?,?,?,?,?);",
             				[date, bookName, amount, used, category, method, income, memo],
             				function onSuccess() {//run if SQL succeeds
             					console.log("서버로부터 돈 받아서 테이블에 넣었당~~~~~~~");
-            				}, 
+            				},
             				function onError(e) { //run if SQL fails
             					alert("Error:" + e.message);
-            				}	
-            			);	
+            				}
+            			);
             		});
 				},
 			    error: function(xhr) {
@@ -394,7 +397,7 @@ function GoldLucksDB(){
 	},
 
 
-	    
+
 
     shareBookInfo : function shareBookInfo(self,infoObj){
 		console.log("db.js");
@@ -411,14 +414,14 @@ function GoldLucksDB(){
 				function onSuccess() {//run if SQL succeeds
 					console.log("정보 받아와서 book테이블에 넣었당~~~");
 					self.getMoneyFromServer(bookName);
-				}, 
+				},
 				function onError(e) { //run if SQL fails
 					alert("Error:" + e.message);
-				}	
-			);	
+				}
+			);
 		});
 	},
-    
+
 	/**
 	 * 이거 수정해야되욤~~~~ userId는 사용자 고유 아이디만 들어가
 	 * @param db
@@ -439,7 +442,7 @@ function GoldLucksDB(){
 			     }
        	});
 	},
-	
+
 	setID : function setId(userId){
 		var db = this.db;
 		db.transaction(function(tx){
@@ -447,14 +450,14 @@ function GoldLucksDB(){
 				"INSERT INTO user(userId) VALUES (?);",	[userId],
 				function onSuccess() {//run if SQL succeeds
 					console.log("userId 받아와서 user 테이블에 넣었당~~~");
-				}, 
+				},
 				function onError(e) { //run if SQL fails
 					alert("Error:" + e.message);
-				}	
-			);	
+				}
+			);
 		});
 	},
-	
+
 	getID : function getID(mainpage){
 		var db = this.db;
 		db.transaction(function(tx){
@@ -465,20 +468,20 @@ function GoldLucksDB(){
 				        var row = r.rows.item(i);
 				        var userId = row["userId"];
 				        console.log(userId);
-				        
+
 				    }
 				    mainpage.userid=userId;
-				    if(mainpage.userid===undefined){
-				    	//mainpage.setId();
-				    	alert('You need new ID');
-				    }
+				    // if(mainpage.userid===undefined){
+				    // 	//mainpage.setId();
+				    // 	alert('You need new ID');
+				    // }
 				},function(tx,e){
                     alert("You need new ID");
                 }
-			);	
+			);
 		});
 	},
-		
+
 	getBook : function getBook(mainpage,printList){
         db=this.db;
         db.transaction(function(t){
@@ -505,9 +508,7 @@ function GoldLucksDB(){
             );
         });
       }
-		
-		
+
+
   }
 }());
-
-

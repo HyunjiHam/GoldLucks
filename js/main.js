@@ -16,6 +16,8 @@ Main.prototype={
         $('#mainbookName').html(this.currentBook);
         db.getMoney(this.firstDay,this.lastDay,this.printMoney,this);
         db.getTotalExpense(this);
+        this.getId(this);
+        console.log('init():'+this.userid);
   },
 
   compute : function Main_compute_date(){
@@ -103,11 +105,14 @@ Main.prototype={
   },
 
   setId : function setId(userid){
-    if(this.userid===undefined){
-      this.userid=userid;
-    }else{
-      alert('You already have your own ID :'+this.userid);
-    }
+    var db = this.db;
+    db.setID(userid);
+    this.userid=userid;
+    // if(this.userid===undefined){
+    //   this.userid=userid;
+    // }else{
+    //   alert('You already have your own ID :'+this.userid);
+    // }
   },
 
   getId : function getId(){
@@ -149,7 +154,16 @@ Main.prototype={
  $(document).ready(function(){
   $("#mainpage").on('pagebeforeshow',function(){
     //mainpage.init();
-  })
+  });
+
+  $('#page1,#page2').on('pagebeforeshow',function(){
+    $("#datepicker").val("");
+		$("#eAmount").val("");
+		$("#eUsed").val("");
+		catId=0;
+		methodId=1;
+		$("#eMemo").val("");
+  });
 
   $("#addExpense").click(function(){
     var money = {};
@@ -161,7 +175,7 @@ Main.prototype={
   $("#addIncome").click(function(){
     var money = {};
     money = mainpage.getData("fromIncome");
-    mainpage.db.insertData("fromIncome",money);
+    mainpage.db.insertData("fromIncome",money,this.currentBook);
     mainpage.init();
   });
 
@@ -177,10 +191,11 @@ Main.prototype={
   });
 
   $('#sharebtn').click(function(){
-    var userid = mainpage.getId();
+    var userid = mainpage.userid;
     var bookName = $('#sbook').val();
     var groupName = $('#sGroup').val();
     var shareWith = $('#with1').val();
+    console.log(userid);
     if(userid!==undefined){
       mainpage.db.insertBook(bookName,userid);
       mainpage.db.shareBook(bookName,groupName,userid);
@@ -188,6 +203,7 @@ Main.prototype={
       $.mobile.changePage('#share');
     }else{
       $.mobile.changePage('#setting');
+      alert('You need new ID');
     }
   });
 
@@ -197,11 +213,14 @@ Main.prototype={
 
   $('#signbtn').click(function(){
     var userid = $('#un').val();
-    if(userid!==undefined){
-      mainpage.setId(userid);
-      alert('Your id is "'+userid+'"');
+    if(mainpage.userid===undefined){
+      if(userid!==undefined){
+        mainpage.setId(userid);
+        alert('Your id is "'+userid+'"');
+      }
+    }else{
+      alert('You have already your ID'+mainpage.userid);
     }
-    mainpage.db.setID(userid);
   });
 
 
@@ -209,7 +228,7 @@ Main.prototype={
   mainpage.init();
 
 
-  
+
   	$('#refreshbtn').click(function(){
   		mainpage.db.refreshFromServer(mainpage.db);
   	});

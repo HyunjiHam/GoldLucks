@@ -45,8 +45,6 @@ Alarm.prototype={
       try {
           date = this.datapickerValue2Date(expense.time);
           alarm = new tizen.AlarmAbsolute(date);
-          //tizen.alarm.add(alarm, tizen.application.getCurrentApplication().appInfo.id);
-          //tizen.alarm.add(alarm,mynotification);
           tizen.alarm.add(alarm,tizen.application.getCurrentApplication().appInfo.id,this.appControl);
       } catch (e) {
           console.error(e);
