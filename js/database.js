@@ -27,6 +27,12 @@ function GoldLucksDB(){
   		}
   	},
 
+  	/**
+  	 * store expense/income money  
+  	 * @param fromWhere - from expense or income screen 
+  	 * @param money
+  	 * @param currentBook - sharing account book or not
+  	 */
     insertData : function insertData(fromWhere,money,currentBook){
       var db = this.db;
       //var shareBN = "My Account Book";
@@ -126,6 +132,12 @@ function GoldLucksDB(){
   		}
   	},
 
+  	/**
+  	 * When making sharing account book
+  	 * store userId & bookName info in db
+  	 * @param bName - bookName
+  	 * @param writer - user herself only can write
+  	 */
     insertBook: function insertBook(bName,writer){
       var db = this.db;
       db.transaction(function(tx){
@@ -143,6 +155,58 @@ function GoldLucksDB(){
       });
     },
 
+    /**
+     * When making sharing account book
+     * send and store sharing info(parameters) 
+     * in book table of the server
+     * @param bookName
+     * @param groupName
+     * @param userId
+     */
+    shareBook : function shareBook(bookName,groupName,userId){
+    	$.ajax({
+    		url: "http://localhost:3000/book/"+userId+"/"+bookName+"/"+groupName,
+    		crossDomain : true,
+    		success: function(result){
+    			console.log("save to the book table in server!");
+    			console.log(result);
+    		},
+    		error: function(xhr) {
+    			console.log('실패 - ', xhr);
+    		}
+        });
+
+    },
+
+    /**
+     * When making sharing account book
+     * store sharing info(parameters)
+     * in user table of the server
+     * @param bookName
+     * @param userId
+     */
+    sendShareBook : function sendShareBook(bookName,userId){
+    	$.ajax({
+    		url: "http://localhost:3000/user/"+userId+"/"+bookName,
+    		crossDomain : true,
+    		success: function(result){
+    			console.log("save to user table");
+    			console.log(result);
+    		},
+    		error: function(xhr) {
+    			console.log('실패 - ', xhr);
+    		}
+        });
+    },
+
+    sendShareMember : function sendShareMember(){
+    	
+    },
+    
+    /**
+     * Executed as soon as application runs 
+     * @param db
+     */
     createTable : function createTable(db){
           db.transaction(function(tx) {
               tx.executeSql("CREATE TABLE IF NOT EXISTS book"+
@@ -190,6 +254,11 @@ function GoldLucksDB(){
           });
     },
 
+    /**
+     * For showing chart
+     * @param catNum2Text - from analysis.js
+     * @param analysis
+     */
     getExpenses : function getExpenses(catNum2Text,analysis){
         /**
 	     * It sets variables for database query.
@@ -231,6 +300,10 @@ function GoldLucksDB(){
         });
     },
 
+    /**
+     * For showing total expense & income at main page
+     * @param mainpage
+     */
     getTotalExpense : function getTotalExpense(mainpage){
       var db = this.db;
       var self = this;
@@ -287,6 +360,13 @@ function GoldLucksDB(){
     },
 
 
+    /**
+     * For showing list at main page
+     * @param firstDay
+     * @param lastDay
+     * @param printMoney
+     * @param mainpage
+     */
     getMoney : function getMoney(firstDay,lastDay,printMoney,mainpage){
         var money={};
         var db = this.db;
@@ -318,7 +398,6 @@ function GoldLucksDB(){
                       console.log('getMoney() in database is done');
                       if(typeof(printMoney)==="function"){
                         console.log(mainpage);
-                        //mainpage.db.getTotalExpense();
                         printMoney.apply(mainpage,mainpage.moneys);
                       }
                   },function(tx,e){
@@ -328,35 +407,12 @@ function GoldLucksDB(){
           });
       },
 
-    shareBook : function shareBook(bookName,groupName,userId){
-    	$.ajax({
-    		url: "http://localhost:3000/book/"+userId+"/"+bookName+"/"+groupName,
-    		crossDomain : true,
-    		success: function(result){
-    			console.log("save to the book table in server!");
-    			console.log(result);
-    		},
-    		error: function(xhr) {
-    			console.log('실패 - ', xhr);
-    		}
-        });
 
-    },
-
-    sendShareBook : function sendShareBook(bookName,userId){
-    	$.ajax({
-    		url: "http://localhost:3000/user/"+userId+"/"+bookName,
-    		crossDomain : true,
-    		success: function(result){
-    			console.log("save to user table");
-    			console.log(result);
-    		},
-    		error: function(xhr) {
-    			console.log('실패 - ', xhr);
-    		}
-        });
-    },
-
+    /**
+     * At share page
+     * Called after 'shareBookInfo' method
+     * @param bookName
+     */
 	getMoneyFromServer : function getMoneyFromServer(bookName){
 		var date, amount, used, category, method, income, memo;
 		var db = this.db;
@@ -396,9 +452,12 @@ function GoldLucksDB(){
 
 	},
 
-
-
-
+	/**
+	 * At share page
+	 * Called after 'refreshFromServer' method
+	 * @param self
+	 * @param infoObj
+	 */
     shareBookInfo : function shareBookInfo(self,infoObj){
 		console.log("db.js");
 		var bookName, masterId;
@@ -423,6 +482,9 @@ function GoldLucksDB(){
 	},
 
 	/**
+	 * At share page
+	 * when refresh button is clicked
+	 * the sharing account book list where user is a member appears 
 	 * 이거 수정해야되욤~~~~ userId는 사용자 고유 아이디만 들어가
 	 * @param db
 	 */
@@ -442,46 +504,14 @@ function GoldLucksDB(){
 			     }
        	});
 	},
-
-	setID : function setId(userId){
-		var db = this.db;
-		db.transaction(function(tx){
-			tx.executeSql(
-				"INSERT INTO user(userId) VALUES (?);",	[userId],
-				function onSuccess() {//run if SQL succeeds
-					console.log("userId 받아와서 user 테이블에 넣었당~~~");
-				},
-				function onError(e) { //run if SQL fails
-					alert("Error:" + e.message);
-				}
-			);
-		});
-	},
-
-	getID : function getID(mainpage){
-		var db = this.db;
-		db.transaction(function(tx){
-			tx.executeSql(
-				"SELECT userId FROM user;",	[],
-				function(tran, r) {
-				    for (var i = 0; i < r.rows.length; i++) {
-				        var row = r.rows.item(i);
-				        var userId = row["userId"];
-				        console.log(userId);
-
-				    }
-				    mainpage.userid=userId;
-				    // if(mainpage.userid===undefined){
-				    // 	//mainpage.setId();
-				    // 	alert('You need new ID');
-				    // }
-				},function(tx,e){
-                    alert("You need new ID");
-                }
-			);
-		});
-	},
-
+	
+	/**
+	 * At share page
+	 * Show the sharing account book list 
+	 * that the user is a member
+	 * @param mainpage
+	 * @param printList
+	 */
 	getBook : function getBook(mainpage,printList){
         db=this.db;
         db.transaction(function(t){
@@ -507,7 +537,53 @@ function GoldLucksDB(){
               }
             );
         });
-      }
+      },
+
+	/**
+	 * Set user's own id
+	 * @param userId
+	 */
+	setID : function setId(userId){
+		var db = this.db;
+		db.transaction(function(tx){
+			tx.executeSql(
+				"INSERT INTO user(userId) VALUES (?);",	[userId],
+				function onSuccess() {//run if SQL succeeds
+					console.log("userId 받아와서 user 테이블에 넣었당~~~");
+				},
+				function onError(e) { //run if SQL fails
+					alert("Error:" + e.message);
+				}
+			);
+		});
+	},
+
+	/**
+	 * Get user's own id
+	 * for checking if user has an id 
+	 * @param mainpage
+	 */
+	getID : function getID(mainpage){
+		var db = this.db;
+		db.transaction(function(tx){
+			tx.executeSql(
+				"SELECT userId FROM user;",	[],
+				function(tran, r) {
+				    for (var i = 0; i < r.rows.length; i++) {
+				        var row = r.rows.item(i);
+				        var userId = row["userId"];
+				        console.log(userId);
+
+				    }
+				    mainpage.userid=userId;
+				},function(tx,e){
+                    alert("You need new ID");
+                }
+			);
+		});
+	}
+
+
 
 
   }
