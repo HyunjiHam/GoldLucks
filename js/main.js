@@ -144,6 +144,7 @@ Main.prototype={
       console.log(bookname);
       console.log(self);
       self.currentBook = bookname;
+      self.init();
       $.mobile.changePage('#mainpage');
     });
   }
@@ -230,7 +231,7 @@ Main.prototype={
 
 
   	$('#refreshbtn').click(function(){
-  		mainpage.db.refreshFromServer(mainpage.db);
+  		mainpage.db.refreshFromServer(mainpage,mainpage.db);
   	});
 
 });

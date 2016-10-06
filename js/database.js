@@ -427,9 +427,10 @@ function GoldLucksDB(){
 	 * @param db
 	 */
 //		refreshFromServer : function refreshFromServer(userid){
-	refreshFromServer : function refreshFromServer(db){
+	refreshFromServer : function refreshFromServer(mainpage,db){
 		var self = db;
-		var userId = "clara";
+		//var userId = "clara";
+    var userId = mainpage.userid;
 		$.ajax({
 				url: "http://localhost:3000/refresh/"+userId,
 				crossDomain : true,
