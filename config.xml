@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <widget xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets" id="http://yourdomain/gdlkj" version="1.0.0" viewmodes="maximized">
+    <access origin="*" subdomains="true"/>
     <tizen:app-control>
     	<tizen:src name="index.html#alarmpage"/>
     	<tizen:operation name="http://tizen.org/appcontrol/operation/money"/>
@@ -11,6 +12,7 @@
     <name>GoldLucks</name>
     <tizen:privilege name="http://tizen.org/privilege/notification"/>
     <tizen:privilege name="http://tizen.org/privilege/alarm"/>
+    <tizen:privilege name="http://tizen.org/privilege/internet"/>
     <tizen:profile name="mobile"/>
     <tizen:setting hwkey-event="enable"/>
 </widget>

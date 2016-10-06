@@ -64,7 +64,7 @@ function GoldLucksDB(){
       						console.log("통신되어라 얍얍");
       				    	 $.ajax({
       			    		   type : "POST",
-      			    		   url : "http://localhost:3000/money/",
+      			    		   url : "http://192.168.43.89:3000/money/",
       			    		   crossDomain : true,
       			    		   data : {bookName: shareBN, amount: money.amount, used: money.used, category: money.category, method: money.method, income: 0, memo: money.memo} ,
       			    		   dataType : "json",
@@ -111,7 +111,7 @@ function GoldLucksDB(){
     						console.log("통신되어라 얍얍");
     				    	 $.ajax({
     			    		   type : "POST",
-    			    		   url : "http://localhost:3000/money/",
+    			    		   url : "http://192.168.43.89:3000/money/",
     			    		   crossDomain : true,
     			    		   data : {bookName: shareBN, amount: money.amount, used: money.used, category: money.category, method: money.method, income: 1, memo: money.memo} ,
     			    		   dataType : "json",
@@ -165,7 +165,7 @@ function GoldLucksDB(){
      */
     shareBook : function shareBook(bookName,groupName,userId){
     	$.ajax({
-    		url: "http://localhost:3000/book/"+userId+"/"+bookName+"/"+groupName,
+    		url: "http://192.168.43.89:3000/book/"+userId+"/"+bookName+"/"+groupName,
     		crossDomain : true,
     		success: function(result){
     			console.log("save to the book table in server!");
@@ -188,7 +188,7 @@ function GoldLucksDB(){
      */
     sendShareBook : function sendShareBook(bookName,userId,shareWith){
     	$.ajax({
-    		url: "http://localhost:3000/user/"+userId+"/"+bookName,
+    		url: "http://192.168.43.89:3000/user/"+userId+"/"+bookName,
     		crossDomain : true,
     		success: function(result){
     			console.log("save to user table");
@@ -198,9 +198,9 @@ function GoldLucksDB(){
     			console.log('실패 - ', xhr);
     		}
         });
-        
+
         $.ajax({
-          url: "http://localhost:3000/user/"+shareWith+"/"+bookName,
+          url: "http://192.168.43.89:3000/user/"+shareWith+"/"+bookName,
           crossDomain : true,
           success: function(result){
             console.log("member is saved to user table");
@@ -431,7 +431,7 @@ function GoldLucksDB(){
 		var date, amount, used, category, method, income, memo;
 		var db = this.db;
 		$.ajax({
-				url: "http://localhost:3000/money/"+bookName,
+				url: "http://192.168.43.89:3000/money/"+bookName,
 				crossDomain : true,
 				success: function(resultObj){
             		console.log(resultObj);
@@ -508,7 +508,7 @@ function GoldLucksDB(){
 		//var userId = "clara";
     var userId = mainpage.userid;
 		$.ajax({
-				url: "http://localhost:3000/refresh/"+userId,
+				url: "http://192.168.43.89:3000/refresh/"+userId,
 				crossDomain : true,
 				success: function(result){
             		console.log(result);

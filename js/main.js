@@ -169,14 +169,14 @@ Main.prototype={
   $("#addExpense").click(function(){
     var money = {};
     money = mainpage.getData("fromExpense");
-    mainpage.db.insertData("fromExpense",money);
+    mainpage.db.insertData("fromExpense",money,mainpage.currentBook);
     mainpage.init();
   });
 
   $("#addIncome").click(function(){
     var money = {};
     money = mainpage.getData("fromIncome");
-    mainpage.db.insertData("fromIncome",money,this.currentBook);
+    mainpage.db.insertData("fromIncome",money,mainpage.currentBook);
     mainpage.init();
   });
 
