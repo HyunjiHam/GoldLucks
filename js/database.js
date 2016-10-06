@@ -28,8 +28,8 @@ function GoldLucksDB(){
   	},
 
   	/**
-  	 * store expense/income money  
-  	 * @param fromWhere - from expense or income screen 
+  	 * store expense/income money
+  	 * @param fromWhere - from expense or income screen
   	 * @param money
   	 * @param currentBook - sharing account book or not
   	 */
@@ -157,7 +157,7 @@ function GoldLucksDB(){
 
     /**
      * When making sharing account book
-     * send and store sharing info(parameters) 
+     * send and store sharing info(parameters)
      * in book table of the server
      * @param bookName
      * @param groupName
@@ -184,8 +184,9 @@ function GoldLucksDB(){
      * in user table of the server
      * @param bookName
      * @param userId
+     * @param shareWith
      */
-    sendShareBook : function sendShareBook(bookName,userId){
+    sendShareBook : function sendShareBook(bookName,userId,shareWith){
     	$.ajax({
     		url: "http://localhost:3000/user/"+userId+"/"+bookName,
     		crossDomain : true,
@@ -197,14 +198,27 @@ function GoldLucksDB(){
     			console.log('실패 - ', xhr);
     		}
         });
+        
+        $.ajax({
+          url: "http://localhost:3000/user/"+shareWith+"/"+bookName,
+          crossDomain : true,
+          success: function(result){
+            console.log("member is saved to user table");
+            console.log(result);
+          },
+          error: function(xhr) {
+            console.log('실패 - ', xhr);
+          }
+          });
+
     },
 
     sendShareMember : function sendShareMember(){
-    	
+
     },
-    
+
     /**
-     * Executed as soon as application runs 
+     * Executed as soon as application runs
      * @param db
      */
     createTable : function createTable(db){
@@ -484,7 +498,7 @@ function GoldLucksDB(){
 	/**
 	 * At share page
 	 * when refresh button is clicked
-	 * the sharing account book list where user is a member appears 
+	 * the sharing account book list where user is a member appears
 	 * 이거 수정해야되욤~~~~ userId는 사용자 고유 아이디만 들어가
 	 * @param db
 	 */
@@ -505,10 +519,10 @@ function GoldLucksDB(){
 			     }
        	});
 	},
-	
+
 	/**
 	 * At share page
-	 * Show the sharing account book list 
+	 * Show the sharing account book list
 	 * that the user is a member
 	 * @param mainpage
 	 * @param printList
@@ -561,7 +575,7 @@ function GoldLucksDB(){
 
 	/**
 	 * Get user's own id
-	 * for checking if user has an id 
+	 * for checking if user has an id
 	 * @param mainpage
 	 */
 	getID : function getID(mainpage){

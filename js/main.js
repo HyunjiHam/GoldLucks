@@ -200,7 +200,7 @@ Main.prototype={
     if(userid!==undefined){
       mainpage.db.insertBook(bookName,userid);
       mainpage.db.shareBook(bookName,groupName,userid);
-      mainpage.db.sendShareBook(bookName,userid);
+      mainpage.db.sendShareBook(bookName,userid,shareWith);
       $.mobile.changePage('#share');
     }else{
       $.mobile.changePage('#setting');
