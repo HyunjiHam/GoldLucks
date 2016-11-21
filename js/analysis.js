@@ -40,7 +40,7 @@ function Analysis(goldlucksdb){
         amount = array[i].amount;
         $('#analyList').append('<li>'+cat+'<p class="ui-li-aside">'+amount+'$</p>');
         $('#analyList').listview('refresh');
-        sum += parseInt(amount);
+        sum += parseFloat(amount);
       }
       $('#analyTotal').html(sum+'$');
     },

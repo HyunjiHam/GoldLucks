@@ -55,12 +55,12 @@ Main.prototype={
                 }
                 if(check===1){
                   if(money.income===0){//in case of expense
-                    $('ul[id="ul' + i + '"]').append('<li>'+money.used+'<p class="ui-li-aside">'+money.amount+'$</p></li>');
+                    $('ul[id="ul' + i + '"]').append('<li>'+money.used+'<p class="ui-li-aside2">'+money.amount+'$</p></li>');
                     $('ul[id="ul' + i + '"]').listview().listview('refresh');
                     console.log("find expense money in moneyList");
                   }
                   if(money.income===1){//in case of income
-                    $('ul[id="ul' + i + '"]').append('<li>'+money.used+'<p class="ui-li-aside">'+money.amount+'$</p></li>');
+                    $('ul[id="ul' + i + '"]').append('<li>'+money.used+'<p class="ui-li-aside1">'+money.amount+'$</p></li>');
                     $('ul[id="ul' + i + '"]').listview().listview('refresh');
                     console.log("find income money in moneyList");
                   }
@@ -81,8 +81,13 @@ Main.prototype={
   },
 
   printTotal : function printTotal(){
-    this.db.total = parseInt(this.db.tIncome)-parseInt(this.db.tExpense);
-    $('#Balance').html('Balance '+this.db.total).append('<p id="total" class="ui-li-aside">+'+this.db.tIncome+' -'+this.db.tExpense);
+	var tIncome = this.db.tIncome;
+	var tExpense = this.db.tExpense;
+	console.log(typeof(tIncome));
+	console.log(typeof(tExpense));
+    this.db.total = tIncome - tExpense;
+    console.log(this.db.total);
+    $('#Balance').html('Balance '+this.db.total).append('<p id="total" class="ui-li-aside">+'+tIncome+' -'+tExpense);
   },
 
   getData : function get_input(fromWhere){
@@ -147,7 +152,29 @@ Main.prototype={
       self.init();
       $.mobile.changePage('#mainpage');
     });
-  }
+  },
+  printBookList2 : function printBookList(mainpage,bookList){
+	    var bookName,
+	        masterid;
+	    var self=mainpage;
+	    $('#shareList2>li:gt(1)').remove();
+	    for(var i in bookList){
+	      bookName = bookList[i].bookName;
+	      masterid = bookList[i].masterid;
+	      if(bookName!=="My Account Book"){
+	        $("#shareList2").append('<li class="shareL2" value="'+bookName+'"><a href="#mainpage"><i class = "ui-icon-"></i>'+bookName+'</a>');
+	        $("#shareList2").listview('refresh');
+	      }
+	    }
+	    $('.shareL2').click(function(){
+	      var bookname = $(this).text();
+	      console.log(bookname);
+	      console.log(self);
+	      self.currentBook = bookname;
+	      self.init();
+	      $.mobile.changePage('#mainpage');
+	    });
+	  }
 }
 
 
@@ -199,8 +226,8 @@ Main.prototype={
     console.log(userid);
     if(userid!==undefined){
       mainpage.db.insertBook(bookName,userid);
-      mainpage.db.shareBook(bookName,groupName,userid);
-      mainpage.db.sendShareBook(bookName,userid,shareWith);
+      mainpage.db.shareBook(bookName,groupName,userid,shareWith);
+ //     mainpage.db.sendShareBook(bookName,userid,shareWith);
       $.mobile.changePage('#share');
     }else{
       $.mobile.changePage('#setting');
@@ -211,6 +238,10 @@ Main.prototype={
   $('#share').on('pagebeforeshow',function(){
     mainpage.db.getBook(mainpage,mainpage.printBookList);
   });
+  
+  $('#share2').on('pagebeforeshow',function(){
+	    mainpage.db.getBook(mainpage,mainpage.printBookList2);
+	  });
 
   $('#signbtn').click(function(){
     var userid = $('#un').val();
@@ -232,6 +263,7 @@ Main.prototype={
 
   	$('#refreshbtn').click(function(){
   		mainpage.db.refreshFromServer(mainpage,mainpage.db);
+  		
   	});
 
 });

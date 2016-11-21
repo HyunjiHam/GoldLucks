@@ -34,7 +34,7 @@ Alarm.prototype={
       date.setHours(parseInt(time[0], 10));
       date.setMinutes(parseInt(time[1], 10));
       date.setSeconds(0);
-      alert(date);
+      //alert(date);
       return date;
   },
 
@@ -142,7 +142,7 @@ window.onload=function(){
       $('#fixedAmount').val('');
       $('#fixedUsage').val('');
       test = $('#fixedCategory input[type="radio"]:checked').val();
-      alert('test' + test);
+      //alert('test' + test);
       $('#fixedMethod>input:first').attr('checked', true);
       $('#fixedMemo').val('');
       $('#fixedBefore input:first').attr('checked', true);

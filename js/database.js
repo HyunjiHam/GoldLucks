@@ -64,7 +64,7 @@ function GoldLucksDB(){
       						console.log("통신되어라 얍얍");
       				    	 $.ajax({
       			    		   type : "POST",
-      			    		   url : "http://192.168.43.89:3000/money/",
+      			    		   url : "http://localhost:3000/money/",
       			    		   crossDomain : true,
       			    		   data : {bookName: shareBN, amount: money.amount, used: money.used, category: money.category, method: money.method, income: 0, memo: money.memo} ,
       			    		   dataType : "json",
@@ -111,7 +111,7 @@ function GoldLucksDB(){
     						console.log("통신되어라 얍얍");
     				    	 $.ajax({
     			    		   type : "POST",
-    			    		   url : "http://192.168.43.89:3000/money/",
+    			    		   url : "http://localhost:3000/money/",
     			    		   crossDomain : true,
     			    		   data : {bookName: shareBN, amount: money.amount, used: money.used, category: money.category, method: money.method, income: 1, memo: money.memo} ,
     			    		   dataType : "json",
@@ -163,13 +163,36 @@ function GoldLucksDB(){
      * @param groupName
      * @param userId
      */
-    shareBook : function shareBook(bookName,groupName,userId){
+    shareBook : function shareBook(bookName,groupName,userId,shareWith){
+    	console.log("this in shareBook method: "+this);
     	$.ajax({
-    		url: "http://192.168.43.89:3000/book/"+userId+"/"+bookName+"/"+groupName,
+    		url: "http://localhost:3000/book/"+userId+"/"+bookName+"/"+groupName,
     		crossDomain : true,
     		success: function(result){
     			console.log("save to the book table in server!");
-    			console.log(result);
+    	    	$.ajax({
+    	    		url: "http://localhost:3000/user/"+userId+"/"+bookName,
+    	    		crossDomain : true,
+    	    		success: function(result){
+    	    			console.log("save to user table");
+    	    			console.log(result);
+    	    		},
+    	    		error: function(xhr) {
+    	    			console.log('실패 - ', xhr);
+    	    		}
+    	        });
+
+    	        $.ajax({
+    	          url: "http://localhost:3000/user/"+shareWith+"/"+bookName,
+    	          crossDomain : true,
+    	          success: function(result){
+    	            console.log("member is saved to user table");
+    	            console.log(result);
+    	          },
+    	          error: function(xhr) {
+    	            console.log('실패 - ', xhr);
+    	          }
+    	          });
     		},
     		error: function(xhr) {
     			console.log('실패 - ', xhr);
@@ -188,7 +211,7 @@ function GoldLucksDB(){
      */
     sendShareBook : function sendShareBook(bookName,userId,shareWith){
     	$.ajax({
-    		url: "http://192.168.43.89:3000/user/"+userId+"/"+bookName,
+    		url: "http://localhost:3000/user/"+userId+"/"+bookName,
     		crossDomain : true,
     		success: function(result){
     			console.log("save to user table");
@@ -200,7 +223,7 @@ function GoldLucksDB(){
         });
 
         $.ajax({
-          url: "http://192.168.43.89:3000/user/"+shareWith+"/"+bookName,
+          url: "http://localhost:3000/user/"+shareWith+"/"+bookName,
           crossDomain : true,
           success: function(result){
             console.log("member is saved to user table");
@@ -339,7 +362,7 @@ function GoldLucksDB(){
         				    for (var i = 0; i < r.rows.length; i++) {
         				        var row = r.rows.item(i);
                         if(row.sumAmount!==null){
-                          self.tExpense = parseInt(row.sumAmount);
+                          self.tExpense = parseFloat(row.sumAmount);
                         }else{
                           self.tExpense=0;
                         }
@@ -357,7 +380,7 @@ function GoldLucksDB(){
           			    for (var i = 0; i < r.rows.length; i++) {
           			        var row = r.rows.item(i);
                         if(row.sumIncome!==null){
-                          self.tIncome = parseInt(row.sumIncome);
+                          self.tIncome = parseFloat(row.sumIncome);
                         }else{
                           self.tIncome=0;
                         }
@@ -428,35 +451,41 @@ function GoldLucksDB(){
      * @param bookName
      */
 	getMoneyFromServer : function getMoneyFromServer(bookName){
+		console.log("when a user is a member of sharing account book, she gets the list of all money");
 		var date, amount, used, category, method, income, memo;
 		var db = this.db;
 		$.ajax({
-				url: "http://192.168.43.89:3000/money/"+bookName,
+				url: "http://localhost:3000/money/"+bookName,
 				crossDomain : true,
 				success: function(resultObj){
             		console.log(resultObj);
-            		$.each(resultObj, function(key, val){
-            			date = val.date;
-            			bookName = val.bookName;
-            			amount = val.amount;
-            			used = val.used;
-            			category = val.category;
-            			method = val.method;
-            			income = val.income;
-            			memo = val.memo;
-            		});
 
             		db.transaction(function(tx){
-            			tx.executeSql(
-            					"INSERT INTO money(date, bookName, amount, used, category, method, income, memo) VALUES (?,?,?,?,?,?,?,?);",
-            				[date, bookName, amount, used, category, method, income, memo],
-            				function onSuccess() {//run if SQL succeeds
-            					console.log("서버로부터 돈 받아서 테이블에 넣었당~~~~~~~");
-            				},
-            				function onError(e) { //run if SQL fails
-            					alert("Error:" + e.message);
-            				}
-            			);
+                		$.each(resultObj, function(key, val){
+                			date = val.date;
+                			bookName = val.bookName;
+                			amount = val.amount;
+                			used = val.used;
+                			category = val.category;
+                			method = val.method;
+                			income = val.income;
+                			memo = val.memo;
+                			
+                			tx.executeSql(
+                					"INSERT INTO money(date, bookName, amount, used, category, method, income, memo) VALUES (?,?,?,?,?,?,?,?);",
+                				[date, bookName, amount, used, category, method, income, memo],
+                				function onSuccess() {//run if SQL succeeds
+                					console.log("서버로부터 돈 받아서 "+bookName+" 넣었당~~~~~~~");
+
+                				},
+                				function onError(e) { //run if SQL fails
+                					alert("Error:" + e.message);
+                				}
+                			);
+                		});
+    					console.log("share2바껴라!");
+    			  		$.mobile.changePage('#share2');
+    			  		console.log("share2바꼈나?");
             		});
 				},
 			    error: function(xhr) {
@@ -472,47 +501,56 @@ function GoldLucksDB(){
 	 * @param self
 	 * @param infoObj
 	 */
-    shareBookInfo : function shareBookInfo(self,infoObj){
-		console.log("db.js");
+    shareBookInfo : function shareBookInfo(self,userId,obj){
+		console.log("get writer's info from the server and save into db");
 		var bookName, masterId;
 		var db = this.db;
-		$.each(infoObj, function(key, val){
-			bookName = val.bookName;
-			masterId = val.userId;
+		
+		
+		$.each(obj, function(k,v){
+			console.log("key: "+k);
+			console.log("val.bookName: "+v.bookName);
+	//		console.log("val.userId: "+v.userId);
+			
+			db.transaction(function(tx){
+				bookName = v.bookName;
+				masterId = userId;
+				tx.executeSql(
+					"INSERT INTO book(bookName, masterId) VALUES (?,?);", [bookName, masterId],
+					function onSuccess() {//run if SQL succeeds
+						console.log("book테이블에 회계정보 받아와서 넣었당~~~");
+						self.getMoneyFromServer(bookName);
+//						console.log("share list 갱 신 ~~~~~");
+//						mainpage.db.getBook(mainpage,mainpage.printBookList);
+					},
+					function onError(e) { //run if SQL fails
+						alert("Error:" + e.message);
+					}
+				);
+			});
 		});
+		
+		
 
-		db.transaction(function(tx){
-			tx.executeSql(
-				"INSERT INTO book(bookName, masterId) VALUES (?,?);", [bookName, masterId],
-				function onSuccess() {//run if SQL succeeds
-					console.log("정보 받아와서 book테이블에 넣었당~~~");
-					self.getMoneyFromServer(bookName);
-				},
-				function onError(e) { //run if SQL fails
-					alert("Error:" + e.message);
-				}
-			);
-		});
 	},
 
 	/**
 	 * At share page
 	 * when refresh button is clicked
 	 * the sharing account book list where user is a member appears
-	 * 이거 수정해야되욤~~~~ userId는 사용자 고유 아이디만 들어가
 	 * @param db
 	 */
-//		refreshFromServer : function refreshFromServer(userid){
 	refreshFromServer : function refreshFromServer(mainpage,db){
+		console.log("Test with "+mainpage.userid);
 		var self = db;
-		//var userId = "clara";
-    var userId = mainpage.userid;
+//		var userId = "clara";
+		var userId = mainpage.userid;
 		$.ajax({
-				url: "http://192.168.43.89:3000/refresh/"+userId,
+				url: "http://localhost:3000/refresh/"+userId,
 				crossDomain : true,
 				success: function(result){
             		console.log(result);
-            		self.shareBookInfo(self,result);
+            		self.shareBookInfo(self,userId,result);
 				},
 			    error: function(xhr) {
 			        console.log('실패 - ', xhr);

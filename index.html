@@ -169,13 +169,13 @@
             <ul data-role="listview">
                 <li data-role="fieldcontain">
                     <label>Date</label>
-                    <input ata-corners="false" type="date" value="" data-clear-btn="true" data-clear-btn-text="" placeholder="01.01.2000" placeholder="Date" id="datepicker">
+                    <input ata-corners="false" type="date" value="" data-clear-btn="" data-clear-btn-text="" placeholder="01.01.2000" placeholder="Date" id="datepicker">
                 </li>
                 <li data-role="fieldcontain">
-                    <input data-corners="false" type="number" value="" data-clear-btn="true" data-clear-btn-text="" placeholder="Amount" id="eAmount">
+                    <input data-corners="false" type="number" step="0.01" value="" data-clear-btn="" data-clear-btn-text="" placeholder="Amount" id="eAmount">
                 </li>
                 <li data-role="fieldcontain">
-                    <input data-corners="false" type="text" value="" data-clear-btn-text="" data-clear-btn="true" placeholder="Usage" id="eUsed">
+                    <input data-corners="false" type="text" value="" data-clear-btn-text="" data-clear-btn="" placeholder="Usage" id="eUsed">
                 </li>
                 <li data-role="fieldcontain">
                     <label for="select1">Category</label>
@@ -246,7 +246,7 @@
                     <input type="date" id="datepicker2" placeholder="Date" >
                 </li>
                 <li data-role="fieldcontain">
-                    <input type="number" id="iAmount" placeholder="Amount" >
+                    <input type="number" step="0.01" id="iAmount" placeholder="Amount" >
                 </li>
                 <li data-role="fieldcontain">
                     <input id="iUsed" placeholder="From" >
@@ -370,6 +370,7 @@
                         <option>traffic</option>
                         <option>education</option>
                         <option>saving</option>
+                        <option>donation</option>
                     </select>
                 </li>
                 <li data-role="fieldcontain">
@@ -642,6 +643,47 @@
             </ul>
         </div>
     </div>
+    
+    <div data-role="page" id="share2">
+        <div data-role="header" data-position="fixed" data-tap-toggle="false">
+            <a href="#sidebar4" data-icon="ion-navicon-round" data-iconpos="notext"></a>
+            <h1 class="header-title">Share</h1>
+            <a href=""  id="refreshbtn2" data-ajax="false" data-icon="ion-refresh" data-iconpos="notext"></a>
+        </div>
+        <div data-role="panel" data-display="push" id="sidebar4">
+            <ul data-role="listview">
+                <li class="aa"><div><img class="ui-center" src="images/panel.png" width="150" height="45"></div>
+                </li>
+                <li><a href="#mainpage" data-ajax="false"><i class="ui-icon-ion-android-home"></i> Home</a>
+                </li>
+                <li><a href="#fixed" data-ajax="false"><i class="ui-icon-ion-card"></i> Fixed expenses</a>
+                </li>
+                <li><a href="index.html#analysis" data-ajax="false"><i class="ui-icon-ion-pie-graph"></i> Analysis</a>
+                </li>
+                <li><a href="#slidebar" data-ajax="false"><i class="ui-icon-ion-android-people"></i> Share</a>
+                </li>
+                <li><a href="#setting" data-ajax="false"><i class="ui-icon-ion-android-settings"></i> Setting</a>
+                </li>
+            </ul>
+        </div>
+        <div data-role="content">
+            <ul id="shareList2" data-role="listview">
+                <li><a href="#shareadd" data-ajax="false"><i class="ui-icon-ion-plus-round"></i>
+                Add new</a>
+                </li>
+                <li id="Hey"><a href="#shareedit" data-ajax="false"><i class="ui-icon-"></i>
+                My accountbook</a>
+                </li>
+                <!--<li><a href="" data-ajax="false"><i class="ui-icon-"></i>
+                (Goldlucks)</a>
+                </li>
+                <li><a href="" data-ajax="false"><i class="ui-icon-"></i>
+                (Company)</a>
+              </li>-->
+            </ul>
+        </div>
+    </div>
+
 
     <div data-role="page" id="shareadd">
         <div data-role="header" data-position="fixed" data-tap-toggle="false">
@@ -992,9 +1034,9 @@
         <div data-role="content">
             <div class="ui-text-center">
                 <img class="ui-padding-img" src="images/alarm.png" height="200px" weight="200px">
-                <p id="aTitle">HOUSE MAINTAINACE FEE</p>
-                <p id="aDate">2016.10.05</p>
-                <p id="aAmount">500$</p>
+                <p id="aTitle">unicef regular donation</p>
+                <p id="aDate">2016.10.11</p>
+                <p id="aAmount">20$</p>
                 <div data-role="footer" data-position="fixed">
                     <button id="goto" data-inline="true">Go to app</button>
                     <button id="exit" data-inline="true">EXIT</button>
